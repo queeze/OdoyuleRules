@@ -28,6 +28,13 @@ namespace OdoyuleRules.Models.RuntimeModel
             return next(this);
         }
 
+        public bool Visit<TLeft, TRight>(OuterJoinNode<TLeft, TRight> node, Func<RuntimeModelVisitor, bool> next)
+            where TLeft : class 
+            where TRight : class
+        {
+            return next(this);
+        }
+
         public virtual bool Visit<T, TDiscard>(LeftJoinNode<T, TDiscard> node, Func<RuntimeModelVisitor, bool> next)
             where T : class
         {
@@ -41,7 +48,7 @@ namespace OdoyuleRules.Models.RuntimeModel
         }
 
         public virtual bool Visit<TInput, TOutput>(ConvertNode<TInput, TOutput> node,
-                                                   Func<RuntimeModelVisitor, bool> next)
+            Func<RuntimeModelVisitor, bool> next)
             where TInput : class, TOutput
             where TOutput : class
         {
@@ -105,7 +112,7 @@ namespace OdoyuleRules.Models.RuntimeModel
         }
 
         public virtual bool Visit<T, TProperty, TElement>(EachNode<T, TProperty, TElement> node,
-                                                          Func<RuntimeModelVisitor, bool> next)
+            Func<RuntimeModelVisitor, bool> next)
             where T : class
             where TProperty : class, IEnumerable
         {

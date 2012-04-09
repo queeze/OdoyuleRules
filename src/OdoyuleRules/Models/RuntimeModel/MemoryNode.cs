@@ -14,16 +14,13 @@ namespace OdoyuleRules.Models.RuntimeModel
 {
     using System.Collections.Generic;
 
-
-    
-
     public interface MemoryNode<T> :
         Activation<T>,
         RightActivation<T>
         where T : class
     {
+        IEnumerable<Activation<T>> Successors { get; }
         void AddActivation(Activation<T> activation);
         void RemoveActivation(Activation<T> activation);
-        IEnumerable<Activation<T>> Successors { get; }
     }
 }

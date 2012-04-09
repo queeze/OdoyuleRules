@@ -18,7 +18,7 @@ namespace OdoyuleRules.Models.RuntimeModel
 
     /// <summary>
     /// A property node matches a property on a fact and activates successors
-    /// with a tuple of the fact and the property
+    /// with a token of the fact and the property
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>

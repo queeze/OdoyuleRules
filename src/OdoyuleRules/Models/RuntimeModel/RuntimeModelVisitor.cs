@@ -22,6 +22,10 @@ namespace OdoyuleRules.Models.RuntimeModel
         bool Visit<T>(JoinNode<T> node, Func<RuntimeModelVisitor, bool> next)
             where T : class;
 
+        bool Visit<TLeft, TRight>(OuterJoinNode<TLeft, TRight> node, Func<RuntimeModelVisitor, bool> next)
+            where TLeft : class
+            where TRight : class;
+
         bool Visit<T, TDiscard>(LeftJoinNode<T, TDiscard> node, Func<RuntimeModelVisitor, bool> next)
             where T : class;
 

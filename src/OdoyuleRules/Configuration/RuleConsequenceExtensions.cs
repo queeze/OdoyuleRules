@@ -30,6 +30,18 @@ namespace OdoyuleRules
             configurator.AddConfigurator(consequenceConfigurator);
         }
 
+        public static void Add<T, TFact>(this ThenConfigurator<T> configurator,
+                                         Func<TFact> factFactory)
+            where T : class
+            where TFact : class
+        {
+            AddFactConsequence<T, TFact> consequence = Consequences.Add((T t) => factFactory());
+
+            var consequenceConfigurator = new RuleConsequenceConfiguratorImpl<T>(consequence);
+
+            configurator.AddConfigurator(consequenceConfigurator);
+        }
+
         public static void Delegate<T>(this ThenConfigurator<T> configurator, Action<T> callback)
             where T : class
         {
