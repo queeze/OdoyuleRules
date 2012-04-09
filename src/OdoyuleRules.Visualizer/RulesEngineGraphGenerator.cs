@@ -37,6 +37,7 @@ namespace OdoyuleRules.Visualizer
             _bg = new DictionaryCache<Type, Color>(key => defaultBg)
                 {
                     {typeof (AlphaNode<>), Color.Yellow},
+                    {typeof (ConvertNode<,>), Color.DarkKhaki},
                     {typeof (PropertyNode<,>), Color.Red},
                     {typeof (EachNode<,,>), Color.Red},
                     {typeof (EqualNode<,>), Color.Blue},
@@ -56,6 +57,7 @@ namespace OdoyuleRules.Visualizer
             _fg = new DictionaryCache<Type, Color>(key => defaultFg)
                 {
                     {typeof (AlphaNode<>), Color.Black},
+                    {typeof (ConvertNode<,>), Color.Black},
                     {typeof (PropertyNode<,>), Color.White},
                     {typeof (EachNode<,,>), Color.White},
                     {typeof (EqualNode<,>), Color.White},
@@ -76,6 +78,7 @@ namespace OdoyuleRules.Visualizer
                 {
                     {typeof (RulesEngine), Shape.Ellipse},
                     {typeof (AlphaNode<>), Shape.Ellipse},
+                    {typeof (ConvertNode<,>), Shape.Circle},
                     {typeof (ConstantNode<>), Shape.Circle},
                     {typeof (JoinNode<>), Shape.Ellipse},
                     {typeof (LeftJoinNode<,>), Shape.Ellipse},

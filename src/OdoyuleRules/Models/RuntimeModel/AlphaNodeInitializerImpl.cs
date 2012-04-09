@@ -13,19 +13,28 @@
 namespace OdoyuleRules.Models.RuntimeModel
 {
     using System;
+    using System.Reflection;
+    using Configuration.RulesEngineConfigurators;
 
     class AlphaNodeInitializerImpl<T> :
         AlphaNodeInitializer
+        where T : class
     {
         public void AddActivation<TParent>(OdoyuleRulesEngine rulesEngine, AlphaNode<TParent> activation)
             where TParent : class
         {
-            AlphaNode<TParent> alphaNode = rulesEngine.GetAlphaNode<TParent>();
+            AlphaNode<T> alphaNode = rulesEngine.GetAlphaNode<T>();
 
-            Type convertNodeType = typeof (ConvertNode<,>).MakeGenericType(typeof (TParent), typeof (T));
-            var adapter = (Activation<TParent>) Activator.CreateInstance(convertNodeType, alphaNode);
+            RunLocator(activation, alphaNode);
+        }
 
-            activation.AddActivation(adapter);
+        void RunLocator<TParent>(AlphaNode<TParent> activation, AlphaNode<T> alphaNode)
+            where TParent : class
+        {
+            Type type = typeof (ConvertNodeLocator<,>).MakeGenericType(typeof (TParent), typeof (T));
+            object obj = Activator.CreateInstance(type, activation, alphaNode);
+
+            type.InvokeMember("Find", BindingFlags.InvokeMethod, null, obj, new object[] {});
         }
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="Configuration\RuleConfigurators\DelegateRuleConsequenceConfigurator.cs" />
     <Compile Include="Configuration\RuleConfigurators\RuleBuilderConfigurator.cs" />
     <Compile Include="Configuration\RuleConsequenceExtensions.cs" />
+    <Compile Include="Configuration\RulesEngineConfigurators\ConvertNodeLocator.cs" />
     <Compile Include="Configuration\RulesEngineConfigurators\Selectors\PropertyExpressionVisitor.cs" />
     <Compile Include="Configuration\RuleConfigurators\RuleConditionConfigurator.cs" />
     <Compile Include="Configuration\RuleConfigurators\RuleConditionConfiguratorImpl.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Configuration\RulesEngineConfigurators\Selectors\NotNullNodeSelectorFactory.cs" />
     <Compile Include="Configuration\RulesEngineConfigurators\Selectors\PropertyNodeSelector.cs" />
     <Compile Include="Configuration\RulesEngineConfigurators\Selectors\PropertyNodeSelectorFactory.cs" />
+    <Compile Include="Configuration\RulesEngineConfigurators\Selectors\ShuntNodeSelectorFactory.cs" />
     <Compile Include="Configuration\RulesEngineConfigurators\Selectors\TypeNodeSelector.cs" />
     <Compile Include="Configuration\RulesEngineConfigurators\Selectors\TypeNodeSelectorFactory.cs" />
     <Compile Include="Configuration\RulesEngineConfigurators\SemanticModelRuleConfigurator.cs" />
@@ -129,7 +131,7 @@
     <Compile Include="Configuration\SessionConfigurators\StatelessSessionConfigurator.cs" />
     <Compile Include="Configuration\SessionConfigurators\StatelessSessionConfiguratorImpl.cs" />
     <Compile Include="Designer\Binding.cs" />
-    <Compile Include="Designer\BindingImpl.cs" />
+    <Compile Include="Designer\FactBinding.cs" />
     <Compile Include="Designer\ConditionExpressionExtensions.cs" />
     <Compile Include="Designer\ConditionExpressionParser.cs" />
     <Compile Include="Designer\ConditionExpressionParserImpl.cs" />
@@ -266,8 +268,8 @@
     <Compile Include="Util\Caching\MissingValueProvider.cs" />
     <Compile Include="Util\Caching\ReadCache.cs" />
     <Compile Include="Util\ExpressionExtensions.cs" />
-    <Compile Include="Util\FastProperty.cs" />
     <Compile Include="Util\Observable.cs" />
+    <Compile Include="Util\ReadOnlyProperty.cs" />
     <Compile Include="Visualization\TextRuntimeModelVisitor.cs" />
     <Compile Include="Visualization\VisualizationExtensions.cs" />
   </ItemGroup>

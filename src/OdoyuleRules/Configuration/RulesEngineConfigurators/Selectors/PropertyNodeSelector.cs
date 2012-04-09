@@ -150,7 +150,7 @@ namespace OdoyuleRules.Configuration.RulesEngineConfigurators.Selectors
 
             if (_node == null)
             {
-                var fastProperty = new FastProperty<T2, TProperty>(Property);
+                var fastProperty = new ReadOnlyProperty<T2, TProperty>(Property);
 
                 PropertyNode<Token<T1, T2>, TProperty> propertyNode =
                     _configurator.Property<Token<T1, T2>, TProperty>(Property, (x, next) =>
@@ -179,7 +179,7 @@ namespace OdoyuleRules.Configuration.RulesEngineConfigurators.Selectors
 
             if (_node == null)
             {
-                var fastProperty = new FastProperty<T2, TProperty>(Property);
+                var fastProperty = new ReadOnlyProperty<T2, TProperty>(Property);
 
                 PropertyNode<Token<T1, T2>, TProperty> propertyNode =
                     _configurator.Property<Token<T1, T2>, TProperty>(Property, (x, next) =>

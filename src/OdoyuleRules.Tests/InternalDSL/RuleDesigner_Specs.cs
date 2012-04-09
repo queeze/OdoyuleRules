@@ -134,7 +134,7 @@ namespace OdoyuleRules.Tests.InternalDSL
             {
                 Fact<Order>()
                     .When(o => o.Amount > 10000.0m)
-                    .Then(x => x.Add(o => new Violation(o.OrderId, "Large Order Hold")));
+                    .Add(o => new Violation(o.OrderId, "Large Order Hold"));
             }
         }
 

@@ -20,7 +20,7 @@ namespace OdoyuleRules.Configuration.RuleConfigurators
 
         void AddConfigurator(RuleBuilderConfigurator configurator);
 
-        Binding<T> Binding<T>()
+        Binding<T> Fact<T>()
             where T : class;
     }
 }

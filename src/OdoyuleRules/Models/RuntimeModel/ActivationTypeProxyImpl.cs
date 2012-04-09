@@ -19,13 +19,13 @@ namespace OdoyuleRules.Models.RuntimeModel
         where T : class
     {
         public FactHandle Activate(RulesEngine rulesEngine,
-                                   ActivationContext baseContext,
-                                   FactCache factCache,
-                                   object obj)
+            ActivationContext baseContext,
+            FactCache factCache,
+            object obj)
         {
             var fact = obj as T;
             if (fact == null)
-                throw new ArgumentNullException("fact");
+                throw new ArgumentException("The argument could not be cast to " + typeof (T).Name, "obj");
 
             ActivationContext<T> context = baseContext.CreateContext(fact);
 

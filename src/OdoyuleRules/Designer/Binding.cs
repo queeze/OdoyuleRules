@@ -19,6 +19,23 @@ namespace OdoyuleRules.Designer
         where T : class
     {
         Binding<T> When(Expression<Func<T, bool>> expression);
+
+        Binding<T, TRight> Join<TRight>()
+            where TRight : class;
+
         Binding<T> Then(Action<ThenConfigurator<T>> configureCallback);
+    }
+
+    public interface Binding<TLeft, TRight>
+        where TLeft : class
+        where TRight : class
+    {
+        Binding<TLeft, TRight> When(Expression<Func<TLeft, bool>> expression);
+        Binding<TLeft, TRight> When(Expression<Func<TRight, bool>> expression);
+        Binding<TLeft, TRight> When(Expression<Func<TLeft, TRight, bool>> expression);
+
+        Binding<TLeft, TRight> Then(Action<ThenConfigurator<TLeft>> leftAction);
+        Binding<TLeft, TRight> Then(Action<ThenConfigurator<TRight>> rightAction);
+        Binding<TLeft, TRight> Then(Action<ThenConfigurator<TLeft,TRight>> configureCallback);
     }
 }

@@ -37,7 +37,7 @@ namespace OdoyuleRules.Models.RuntimeModel
     }
 
 
-    public interface ActivationContext<T> :
+    public interface ActivationContext<out T> :
         ActivationContext
         where T : class
     {

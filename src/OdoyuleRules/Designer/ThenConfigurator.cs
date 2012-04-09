@@ -19,4 +19,11 @@ namespace OdoyuleRules.Designer
     {
         void AddConfigurator(RuleBuilderConfigurator consequenceConfigurator);
     }
+
+    public interface ThenConfigurator<TLeft, TRight>
+        where TLeft : class
+        where TRight : class
+    {
+        void AddConfigurator(RuleBuilderConfigurator consequenceConfigurator);
+    }
 }

@@ -75,6 +75,11 @@ namespace OdoyuleRules
             return alphaNode;
         }
 
+        public bool HasAlphaNode(Type type)
+        {
+            return _types.Has(type);
+        }
+
         public AlphaNode<T> GetAlphaNode<T>()
             where T : class
         {

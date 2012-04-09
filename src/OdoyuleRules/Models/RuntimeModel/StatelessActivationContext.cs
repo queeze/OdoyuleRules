@@ -35,7 +35,14 @@ namespace OdoyuleRules.Models.RuntimeModel
         public void Convert<TOutput>(Action<ActivationContext<TOutput>> callback)
             where TOutput : class
         {
-            throw new NotImplementedException();
+            var context = this as ActivationContext<TOutput>;
+            if(context != null)
+            {
+                callback(context);
+                return;
+            }
+
+            throw new InvalidOperationException("Unable to cast context");
         }
 
         public ActivationContext<TContext> CreateContext<TContext>(TContext fact)

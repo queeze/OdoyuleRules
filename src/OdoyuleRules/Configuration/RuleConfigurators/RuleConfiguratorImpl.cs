@@ -35,8 +35,6 @@ namespace OdoyuleRules.Configuration.RuleConfigurators
         {
             if (string.IsNullOrEmpty(_ruleName))
                 yield return this.Failure("The rule name must be specified");
-
-            yield break;
         }
 
         public RuleConfigurator SetName(string ruleName)
@@ -51,10 +49,10 @@ namespace OdoyuleRules.Configuration.RuleConfigurators
             _configurators.Add(configurator);
         }
 
-        public Binding<T> Binding<T>()
+        public Binding<T> Fact<T>()
             where T : class
         {
-            var binding = new BindingImpl<T>(this);
+            var binding = new FactBinding<T>(this);
 
             return binding;
         }

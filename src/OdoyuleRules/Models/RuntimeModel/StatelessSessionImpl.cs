@@ -81,7 +81,7 @@ namespace OdoyuleRules.Models.RuntimeModel
                 throw new ArgumentNullException("fact");
 
             Type factType = fact.GetType();
-            if (factType.IsValueType || factType.Equals(typeof (string)))
+            if (factType.IsValueType || factType == typeof (string))
                 throw new ArgumentException("Facts must be reference types", "fact");
 
             return _objectCache[factType].Activate(_rulesEngine, this, _facts, fact);
@@ -89,7 +89,9 @@ namespace OdoyuleRules.Models.RuntimeModel
 
         public void Run()
         {
-            _agenda.Run();
+            while(_agenda.Run())
+            {
+            }
         }
 
         public IEnumerable<FactHandle<T>> Facts<T>()

@@ -40,7 +40,7 @@ namespace OdoyuleRules.Designer
         protected Binding<T> Fact<T>()
             where T : class
         {
-            Binding<T> binding = _ruleConfigurator.Binding<T>();
+            Binding<T> binding = _ruleConfigurator.Fact<T>();
 
             return binding;
         }

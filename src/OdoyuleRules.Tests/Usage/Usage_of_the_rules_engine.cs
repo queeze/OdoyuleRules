@@ -12,15 +12,81 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Tests.Usage
 {
+    using System.Linq;
     using Designer;
     using NUnit.Framework;
+    using Visualizer;
 
     [TestFixture]
     public class Usage_of_the_rules_engine
     {
         [Test]
-        public void Should_support_required_features()
+        public void Should_support_a_single_fact_rule()
         {
+            var engine = RulesEngineFactory.New(x =>
+                {
+                    x.Rule<FirstRule>();
+                });
+
+
+            FactHandle<Destination>[] destinations;
+            using(var session = engine.CreateStatelessSession())
+            {
+                session.Add(new FirstSegmentImpl{SourceId = "public"});
+
+                session.Run();
+
+                destinations = session.Facts<Destination>().ToArray();
+            }
+
+            Assert.AreEqual(1, destinations.Length);
+        }
+
+        [Test]
+        public void Should_support_double_fact_rules()
+        {
+            var engine = RulesEngineFactory.New(x =>
+                {
+                    x.Rule<SecondRule>();
+                });
+
+
+            FactHandle<Destination>[] destinations;
+            using(var session = engine.CreateStatelessSession())
+            {
+                session.Add(new FirstSegmentImpl{SourceId = "public"});
+                session.Add(new SecondSegmentImpl{Amount = 10001.0m});
+
+                session.Run();
+
+                destinations = session.Facts<Destination>().ToArray();
+            }
+
+            Assert.AreEqual(1, destinations.Length);
+        }
+
+        [Test]
+        public void Should_optimize_rules_of_multiple_types()
+        {
+            var engine = RulesEngineFactory.New(x =>
+                {
+                    x.Rule<FirstRule>();
+                    x.Rule<SecondRule>();
+                });
+
+
+            FactHandle<Destination>[] destinations;
+            using(var session = engine.CreateStatelessSession())
+            {
+                session.Add(new FirstSegmentImpl{SourceId = "public"});
+                session.Add(new SecondSegmentImpl{Amount = 10001.0m});
+
+                session.Run();
+
+                destinations = session.Facts<Destination>().ToArray();
+            }
+
+            Assert.AreEqual(2, destinations.Length);
         }
 
         class FirstRule :
@@ -30,7 +96,7 @@ namespace OdoyuleRules.Tests.Usage
             {
                 Fact<FirstSegment>()
                     .When(x => x.SourceId == "public")
-                    .Then(x => x.Add(fact => new Destination("90210")));
+                    .Add(() => new Destination("90210"));
             }
         }
 
@@ -40,10 +106,10 @@ namespace OdoyuleRules.Tests.Usage
             public SecondRule()
             {
                 Fact<FirstSegment>()
-                    //.Join<SecondSegment>()
-                    .When((FirstSegment first) => first.SourceId == "public")
-                    //.When((SecondSegment second) => second.Amount > 10000.0m)
-                    .Then(x => x.Add(() => new Destination("74011")));
+                    .Join<SecondSegment>()
+                    .When(first => first.SourceId == "public")
+                    .When(second => second.Amount > 10000.0m)
+                    .Add(() => new Destination("74011"));
             }
         }
 

@@ -18,16 +18,34 @@ namespace OdoyuleRules.Designer
         ThenConfigurator<T>
         where T : class
     {
-        readonly BindingImpl<T> _binding;
+        readonly RuleConfigurator _configurator;
 
-        public ThenConfiguratorImpl(BindingImpl<T> binding)
+        public ThenConfiguratorImpl(RuleConfigurator configurator)
         {
-            _binding = binding;
+            _configurator = configurator;
         }
 
         public void AddConfigurator(RuleBuilderConfigurator configurator)
         {
-            _binding.Add(configurator);
+            _configurator.AddConfigurator(configurator);
+        }
+    }
+
+    public class ThenConfiguratorImpl<TLeft, TRight> :
+        ThenConfigurator<TLeft, TRight>
+        where TLeft : class
+        where TRight : class
+    {
+        readonly RuleConfigurator _configurator;
+
+        public ThenConfiguratorImpl(RuleConfigurator configurator)
+        {
+            _configurator = configurator;
+        }
+
+        public void AddConfigurator(RuleBuilderConfigurator configurator)
+        {
+            _configurator.AddConfigurator(configurator);
         }
     }
 }

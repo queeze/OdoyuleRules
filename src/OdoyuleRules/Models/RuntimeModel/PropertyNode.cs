@@ -36,7 +36,7 @@ namespace OdoyuleRules.Models.RuntimeModel
         {
             _property = propertyInfo;
 
-            var fastProperty = new FastProperty<T, TProperty>(propertyInfo);
+            var fastProperty = new ReadOnlyProperty<T, TProperty>(propertyInfo);
 
             _propertyMatch = (x, next) =>
                 {

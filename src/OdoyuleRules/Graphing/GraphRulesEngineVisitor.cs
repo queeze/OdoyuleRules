@@ -24,6 +24,7 @@ namespace OdoyuleRules.Graphing
         readonly List<Edge> _edges = new List<Edge>();
         readonly Stack<Vertex> _stack;
         readonly Cache<int, Vertex> _vertices;
+        int _noId;
 
         Vertex _current;
         int _rightActivation;
@@ -51,7 +52,12 @@ namespace OdoyuleRules.Graphing
             _current = _vertices.Get(node.Id, id => new Vertex(typeof (AlphaNode<>), typeof (T), typeof (T).Tokens()));
 
             if (_stack.Count > 0)
+            {
                 _edges.Add(new Edge(_stack.Peek(), _current, _current.TargetType.Name));
+
+                if (_stack.Peek().VertexType == typeof(ConvertNode<,>))
+                    return true;
+            }
 
             return Next(() => base.Visit(node, next));
         }
@@ -190,6 +196,13 @@ namespace OdoyuleRules.Graphing
         public override bool Visit<TInput, TOutput>(ConvertNode<TInput, TOutput> node,
                                                     Func<RuntimeModelVisitor, bool> next)
         {
+            _current = _vertices.Get(--_noId, id => new Vertex(typeof(ConvertNode<,>), typeof(TInput), ""));
+
+            if (_stack.Count > 0)
+            {
+                _edges.Add(new Edge(_stack.Peek(), _current, _current.TargetType.Name));
+            }
+
             return Next(() => base.Visit(node, next));
         }
 

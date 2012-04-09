@@ -54,8 +54,8 @@ namespace OdoyuleRules.Configuration.RulesEngineConfigurators.Selectors
 
                 var parentNode = node as Node<T>;
                 if (parentNode == null)
-                    throw new ArgumentException("Expected " + typeof(T).Tokens() + ", but was "
-                                                + typeof(TNode).Tokens());
+                    throw new ArgumentException("Expected " + typeof (T).Tokens() + ", but was "
+                                                + typeof (TNode).Tokens());
 
                 parentNode.AddActivation(alphaNode);
 

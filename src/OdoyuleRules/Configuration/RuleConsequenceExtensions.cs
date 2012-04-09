@@ -14,32 +14,57 @@ namespace OdoyuleRules
 {
     using System;
     using Designer;
+    using Models.RuntimeModel;
     using Models.SemanticModel;
 
     public static class RuleConsequenceExtensions
     {
-        public static void Add<T, TFact>(this ThenConfigurator<T> configurator,
-                                         Func<T, TFact> factFactory)
+        public static void Add<T, TFact>(this Binding<T> binding, Func<T, TFact> factFactory)
             where T : class
             where TFact : class
         {
-            AddFactConsequence<T, TFact> consequence = Consequences.Add(factFactory);
+            binding.Then(then =>
+                {
+                    AddFactConsequence<T, TFact> consequence = Consequences.Add(factFactory);
 
-            var consequenceConfigurator = new RuleConsequenceConfiguratorImpl<T>(consequence);
+                    var consequenceConfigurator = new RuleConsequenceConfiguratorImpl<T>(consequence);
 
-            configurator.AddConfigurator(consequenceConfigurator);
+                    then.AddConfigurator(consequenceConfigurator);
+                });
         }
 
-        public static void Add<T, TFact>(this ThenConfigurator<T> configurator,
-                                         Func<TFact> factFactory)
+        public static void Add<T, TFact>(this Binding<T> binding, Func<TFact> factFactory)
             where T : class
             where TFact : class
         {
-            AddFactConsequence<T, TFact> consequence = Consequences.Add((T t) => factFactory());
+            binding.Then(then =>
+                {
+                    AddFactConsequence<T, TFact> consequence = Consequences.Add<T, TFact>(x => factFactory());
 
-            var consequenceConfigurator = new RuleConsequenceConfiguratorImpl<T>(consequence);
+                    var consequenceConfigurator = new RuleConsequenceConfiguratorImpl<T>(consequence);
 
-            configurator.AddConfigurator(consequenceConfigurator);
+                    then.AddConfigurator(consequenceConfigurator);
+                });
+        }
+
+
+        public static Binding<TLeft, TRight> Add<TLeft, TRight, T>(this Binding<TLeft, TRight> binding,
+            Func<T> factFactory)
+            where TLeft : class
+            where TRight : class
+            where T : class
+        {
+            binding.Then((ThenConfigurator<TLeft, TRight> then) =>
+                {
+                    AddFactConsequence<Token<TLeft, TRight>, T> consequence =
+                        Consequences.Add((Token<TLeft, TRight> t) => factFactory());
+
+                    var consequenceConfigurator = new RuleConsequenceConfiguratorImpl<Token<TLeft, TRight>>(consequence);
+
+                    then.AddConfigurator(consequenceConfigurator);
+                });
+
+            return binding;
         }
 
         public static void Delegate<T>(this ThenConfigurator<T> configurator, Action<T> callback)
