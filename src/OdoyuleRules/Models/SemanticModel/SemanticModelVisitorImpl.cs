@@ -30,7 +30,7 @@ namespace OdoyuleRules.Models.SemanticModel
             return next(this);
         }
 
-        public bool Visit<T, TProperty>(PropertyCompareCondition<T, TProperty> condition,
+        public virtual bool Visit<T, TProperty>(PropertyCompareCondition<T, TProperty> condition,
                                         Func<SemanticModelVisitor, bool> next)
             where T : class
         {

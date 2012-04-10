@@ -15,8 +15,7 @@ namespace OdoyuleRules.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using Configuration.RuleConfigurators;
-    using Configuration.RulesEngineConfigurators.Selectors;
+    using Configuration.RuntimeModelConfigurators.Selectors;
     using Models.RuntimeModel;
     using NUnit.Framework;
 

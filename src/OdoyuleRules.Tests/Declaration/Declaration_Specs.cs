@@ -14,6 +14,7 @@ namespace OdoyuleRules.Tests.Declaration
 {
     using System;
     using System.Linq;
+    using Configuration;
     using Models.SemanticModel;
     using NUnit.Framework;
     using Visualization;
@@ -29,7 +30,7 @@ namespace OdoyuleRules.Tests.Declaration
 
             RulesEngine rulesEngine = RulesEngineFactory.New(x => { x.Add(_rule); });
 
-            using (StatefulSession session = rulesEngine.CreateSession())
+            using (Session session = rulesEngine.CreateSession())
             {
                 session.Add(new Order {Name = "JOE", Amount = 10001.0m});
                 session.Run();
@@ -51,7 +52,7 @@ namespace OdoyuleRules.Tests.Declaration
 
             RulesEngine rulesEngine = RulesEngineFactory.New(x => { x.Add(_rule); });
 
-            using (StatefulSession session = rulesEngine.CreateSession())
+            using (Session session = rulesEngine.CreateSession())
             {
                 session.Add(new Order {Name = "JOE", Amount = 9999.0m});
                 session.Run();
@@ -72,7 +73,7 @@ namespace OdoyuleRules.Tests.Declaration
 
             RulesEngine rulesEngine = RulesEngineFactory.New(x => { x.Add(_rule); });
 
-            using (StatefulSession session = rulesEngine.CreateSession())
+            using (Session session = rulesEngine.CreateSession())
             {
                 session.Add(new Order {Name = "MAMA", Amount = 10001.0m});
                 session.Run();
@@ -139,10 +140,12 @@ namespace OdoyuleRules.Tests.Declaration
                     Conditions.GreaterThan((Order x) => x.Amount, 10000.0m),
                 };
 
+            var consequence = new DelegateConsequence<Order>((session,x) => { _result = x; });
+            var consequence1 = new DelegateConsequence<Order>((session,x) => { _resultB = x; });
             var consequences = new RuleConsequence[]
                 {
-                    Consequences.Delegate<Order>((session,x) => { _result = x; }),
-                    Consequences.Delegate<Order>((session,x) => { _resultB = x; }),
+                    consequence,
+                    consequence1,
                 };
 
             _rule = new OdoyuleRule("RuleA", conditions, consequences);
@@ -153,9 +156,10 @@ namespace OdoyuleRules.Tests.Declaration
                     Conditions.Equal((Account a) => a.Name, "JOE"),
                 };
 
+            var consequence2 = new DelegateConsequence<Account>((Session session, Account a) => { });
             consequences = new RuleConsequence[]
                 {
-                    Consequences.Delegate((Session session, Account a) => { }),
+                    consequence2,
                 };
 
             _rule3 = new OdoyuleRule("RuleC", conditions, consequences);

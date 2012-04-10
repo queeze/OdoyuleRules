@@ -75,7 +75,7 @@ namespace OdoyuleRules.Models.RuntimeModel
                 get { return typeof (T); }
             }
 
-            public object Object
+            public object FactObject
             {
                 get { return _fact.Fact; }
             }

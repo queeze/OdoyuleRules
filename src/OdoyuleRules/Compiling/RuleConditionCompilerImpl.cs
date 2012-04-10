@@ -15,8 +15,8 @@ namespace OdoyuleRules.Compiling
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using Configuration.RulesEngineConfigurators;
-    using Configuration.RulesEngineConfigurators.Selectors;
+    using Configuration.RuntimeModelConfigurators;
+    using Configuration.RuntimeModelConfigurators.Selectors;
     using Models.RuntimeModel;
     using Models.SemanticModel;
 

@@ -16,7 +16,8 @@ namespace OdoyuleRules.Tests.InternalDSL
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using Designer;
+    using Configuration;
+    using Configuration.Designer;
     using NUnit.Framework;
     using Visualizer;
 
@@ -28,7 +29,7 @@ namespace OdoyuleRules.Tests.InternalDSL
         {
             _result = null;
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order {OrderId = "123", Amount = 10001.0m});
                 session.Run();
@@ -60,15 +61,15 @@ namespace OdoyuleRules.Tests.InternalDSL
             Stopwatch stopwatch = RunOneOrder(order, iterations);
 
             Console.WriteLine("Elapsed Time: {0}ms", stopwatch.ElapsedMilliseconds);
-            Console.WriteLine("Time per iteration: {0:0.####}ms", stopwatch.ElapsedMilliseconds * 2.0m/iterations);
-            Console.WriteLine("Fact Insertion Rate: {0:0.}/s", iterations*2000.0m/stopwatch.ElapsedMilliseconds);
+            Console.WriteLine("Time per iteration: {0:0.####}ms", stopwatch.ElapsedMilliseconds/iterations);
+            Console.WriteLine("Fact Insertion Rate: {0:0.}/s", iterations*1000.0m*2.0m/stopwatch.ElapsedMilliseconds);
 
             iterations = 1000;
             stopwatch = RunOneThousandOrders(iterations);
 
             Console.WriteLine("Elapsed Time: {0}ms", stopwatch.ElapsedMilliseconds);
-            Console.WriteLine("Time per iteration: {0:0.####}ms", stopwatch.ElapsedMilliseconds*1000.0m/iterations);
-            Console.WriteLine("Fact Insertion Rate: {0:0.}/s", iterations*1000000.0m/stopwatch.ElapsedMilliseconds);
+            Console.WriteLine("Time per iteration: {0:0.####}ms", stopwatch.ElapsedMilliseconds/iterations);
+            Console.WriteLine("Fact Insertion Rate: {0:0.}/s", iterations*1000.0m*1000.0m*2.0m/stopwatch.ElapsedMilliseconds);
         }
 
         Stopwatch RunOneOrder(Order order, int iterations)
@@ -100,7 +101,7 @@ namespace OdoyuleRules.Tests.InternalDSL
         {
             for (int i = 0; i < iterations; i++)
             {
-                using (StatefulSession session = _engine.CreateSession())
+                using (Session session = _engine.CreateSession())
                 {
                     for (int j = 0; j < orders.Length; j++)
                     {

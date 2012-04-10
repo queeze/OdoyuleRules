@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Models.RuntimeModel
 {
     using System.Linq;
-    using Configuration.RulesEngineConfigurators;
+    using Configuration.RuntimeModelConfigurators;
     using Util.Caching;
 
 

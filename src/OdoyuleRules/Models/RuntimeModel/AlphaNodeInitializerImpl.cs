@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -13,8 +13,10 @@
 namespace OdoyuleRules.Models.RuntimeModel
 {
     using System;
-    using System.Reflection;
-    using Configuration.RulesEngineConfigurators;
+    using Configuration.RuntimeModelConfigurators;
+    using Configuration.RuntimeModelConfigurators.Locators;
+    using Visualization;
+
 
     class AlphaNodeInitializerImpl<T> :
         AlphaNodeInitializer
@@ -31,10 +33,15 @@ namespace OdoyuleRules.Models.RuntimeModel
         void RunLocator<TParent>(AlphaNode<TParent> activation, AlphaNode<T> alphaNode)
             where TParent : class
         {
-            Type type = typeof (ConvertNodeLocator<,>).MakeGenericType(typeof (TParent), typeof (T));
-            object obj = Activator.CreateInstance(type, activation, alphaNode);
+            Type type = typeof (WidenTypeNodeLocator<,>).MakeGenericType(typeof (TParent), typeof (T));
+            var locator = (NodeLocator) Activator.CreateInstance(type, activation, alphaNode);
 
-            type.InvokeMember("Find", BindingFlags.InvokeMethod, null, obj, new object[] {});
+            bool found = locator.Find();
+            if (!found)
+                throw new InternalRulesEngineException("Unable to widen type "
+                                                       + typeof (TParent).GetShortName()
+                                                       + " to type "
+                                                       + typeof (T).GetShortName());
         }
     }
 }

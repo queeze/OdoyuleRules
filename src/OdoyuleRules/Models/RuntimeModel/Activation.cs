@@ -13,15 +13,15 @@
 namespace OdoyuleRules.Models.RuntimeModel
 {
     public interface Activation :
-        AcceptRuntimeModelVisitor
+        RuntimeModelVisitorSite
     {
         void Activate<T>(ActivationContext<T> context)
             where T : class;
     }
 
 
-    public interface Activation<T> :
-        AcceptRuntimeModelVisitor
+    public interface Activation<in T> :
+        RuntimeModelVisitorSite
         where T : class
     {
         void Activate(ActivationContext<T> context);

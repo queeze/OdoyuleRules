@@ -17,7 +17,7 @@ namespace OdoyuleRules.Visualization
     using Models.RuntimeModel;
 
     public class TextRuntimeModelVisitor :
-        RuntimeModelVisitorImpl
+        RuntimeModelVisitorBase
     {
         const int PaddingWidth = 2;
         readonly StringBuilder _sb;
@@ -60,7 +60,7 @@ namespace OdoyuleRules.Visualization
             return Indent(next);
         }
 
-        public override bool Visit<TInput, TOutput>(ConvertNode<TInput, TOutput> node,
+        public override bool Visit<TInput, TOutput>(WidenTypeNode<TInput, TOutput> node,
                                                     Func<RuntimeModelVisitor, bool> next)
         {
             Append("ConvertNode[{0}] => {1}", Tokens<TInput>(), Tokens<TOutput>());

@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Models.SemanticModel
 {
     public interface RuleConsequence :
-        AcceptSemanticModelVisitor
+        SemanticModelVisitorSite
     {
     }
 

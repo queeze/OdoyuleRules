@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Configuration;
     using Models.SemanticModel;
     using NUnit.Framework;
     using Visualization;
@@ -17,7 +18,7 @@
 
             RulesEngine rulesEngine = RulesEngineFactory.New(x => { x.Add(_rule); });
 
-            using (StatefulSession session = rulesEngine.CreateSession())
+            using (Session session = rulesEngine.CreateSession())
             {
                 session.Add(new Order { Name = "JOE", Amount = 10001.0m , Purchaser = new Customer{AccountNumber = "DIRT"}});
                 session.Run();
@@ -33,7 +34,7 @@
 
             RulesEngine rulesEngine = RulesEngineFactory.New(x => { x.Add(_rule); });
 
-            using (StatefulSession session = rulesEngine.CreateSession())
+            using (Session session = rulesEngine.CreateSession())
             {
                 session.Add(new Order { Name = "JOE", Amount = 9999.0m });
                 session.Run();
@@ -49,7 +50,7 @@
 
             RulesEngine rulesEngine = RulesEngineFactory.New(x => { x.Add(_rule); });
 
-            using (StatefulSession session = rulesEngine.CreateSession())
+            using (Session session = rulesEngine.CreateSession())
             {
                 session.Add(new Order { Name = "MAMA", Amount = 10001.0m });
                 session.Run();
@@ -99,10 +100,12 @@
                     Conditions.Equal((Order x) => x.Purchaser.AccountNumber, "DIRT"),
                 };
 
+            var consequence = new DelegateConsequence<Order>((Session session, Order x) => { _result = x; });
+            var consequence1 = new DelegateConsequence<Order>((Session session, Order x) => { _resultB = x; });
             var consequences = new RuleConsequence[]
                 {
-                    Consequences.Delegate((Session session, Order x) => { _result = x; }),
-                    Consequences.Delegate((Session session, Order x) => { _resultB = x; }),
+                    consequence,
+                    consequence1,
                 };
 
             _rule = new OdoyuleRule("RuleA", conditions, consequences);

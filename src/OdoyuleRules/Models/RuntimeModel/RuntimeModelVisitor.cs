@@ -19,30 +19,31 @@ namespace OdoyuleRules.Models.RuntimeModel
     {
         bool Visit(RulesEngine rulesEngine, Func<RuntimeModelVisitor, bool> next);
 
+        // Joins
+        bool Visit<T>(ConstantNode<T> node, Func<RuntimeModelVisitor, bool> next)
+            where T : class;
+
         bool Visit<T>(JoinNode<T> node, Func<RuntimeModelVisitor, bool> next)
+            where T : class;
+
+        bool Visit<T, TDiscard>(LeftJoinNode<T, TDiscard> node, Func<RuntimeModelVisitor, bool> next)
             where T : class;
 
         bool Visit<TLeft, TRight>(OuterJoinNode<TLeft, TRight> node, Func<RuntimeModelVisitor, bool> next)
             where TLeft : class
             where TRight : class;
 
-        bool Visit<T, TDiscard>(LeftJoinNode<T, TDiscard> node, Func<RuntimeModelVisitor, bool> next)
-            where T : class;
-
+        // fact nodes
         bool Visit<T>(AlphaNode<T> node, Func<RuntimeModelVisitor, bool> next)
             where T : class;
 
-        bool Visit<TInput, TOutput>(ConvertNode<TInput, TOutput> node, Func<RuntimeModelVisitor, bool> next)
+        bool Visit<TInput, TOutput>(WidenTypeNode<TInput, TOutput> node, Func<RuntimeModelVisitor, bool> next)
             where TInput : class, TOutput
             where TOutput : class;
 
-        bool Visit<T>(DelegateProductionNode<T> node, Func<RuntimeModelVisitor, bool> next)
-            where T : class;
+        // condition nodes
 
         bool Visit<T, TProperty>(PropertyNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
-            where T : class;
-
-        bool Visit<T>(ConstantNode<T> node, Func<RuntimeModelVisitor, bool> next)
             where T : class;
 
         bool Visit<T>(ConditionNode<T> node, Func<RuntimeModelVisitor, bool> next)
@@ -68,6 +69,11 @@ namespace OdoyuleRules.Models.RuntimeModel
         bool Visit<T, TProperty, TElement>(EachNode<T, TProperty, TElement> node, Func<RuntimeModelVisitor, bool> next)
             where T : class
             where TProperty : class, IEnumerable;
+
+        // production nodes
+
+        bool Visit<T>(DelegateProductionNode<T> node, Func<RuntimeModelVisitor, bool> next)
+            where T : class;
 
         bool Visit<T, TFact>(AddFactProductionNode<T, TFact> node, Func<RuntimeModelVisitor, bool> next)
             where T : class

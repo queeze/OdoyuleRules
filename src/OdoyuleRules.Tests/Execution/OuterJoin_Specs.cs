@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Tests.Execution
 {
     using System;
-    using Configuration.RulesEngineConfigurators;
+    using Configuration.RuntimeModelConfigurators;
     using Models.RuntimeModel;
     using NUnit.Framework;
 
@@ -33,7 +33,7 @@ namespace OdoyuleRules.Tests.Execution
         {
             _called = null;
 
-            var configurator = new RuntimeConfiguratorImpl();
+            var configurator = new OdoyuleRuntimeConfigurator();
 
             var productionNode = new DelegateProductionNode<Tuple<A,B>>(16, (session, x) => _called = x);
 
@@ -58,7 +58,7 @@ namespace OdoyuleRules.Tests.Execution
             AlphaNode<B> alphaNodeB = engine.GetAlphaNode<B>();
             alphaNodeB.AddActivation(joinNodeB);
 
-            using (StatefulSession session = engine.CreateSession())
+            using (Session session = engine.CreateSession())
             {
                 session.Add(new A());
                 session.Add(new B());

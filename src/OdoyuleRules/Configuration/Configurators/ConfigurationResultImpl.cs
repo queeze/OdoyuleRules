@@ -47,7 +47,7 @@ namespace OdoyuleRules.Configuration.Configurators
                                  Environment.NewLine +
                                  string.Join(Environment.NewLine, result.Results.Select(x => x.Message).ToArray());
 
-                throw new ConfigurationException(result, message);
+                throw new RulesEngineConfigurationException(result, message);
             }
 
             return result;

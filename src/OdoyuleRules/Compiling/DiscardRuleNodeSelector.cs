@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Compiling
 {
     using System;
-    using Configuration.RulesEngineConfigurators;
+    using Configuration.RuntimeModelConfigurators;
     using Models.RuntimeModel;
     using Util;
 
@@ -36,7 +36,7 @@ namespace OdoyuleRules.Compiling
         public void Match<TT, TTDiscard>(Action<LeftJoinNode<TT, TTDiscard>> callback)
             where TT : class
         {
-            this.CastAs<DiscardRuleNodeSelector<Token<TT, TTDiscard>, TDiscard>>(self =>
+            this.CallAs<DiscardRuleNodeSelector<Token<TT, TTDiscard>, TDiscard>>(self =>
                 {
                     if (_node == null)
                         _left.Match<T, TDiscard>(leftJoin => { _node = leftJoin; });

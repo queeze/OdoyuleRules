@@ -13,9 +13,10 @@
 namespace OdoyuleRules.Tests.Usage
 {
     using System.Linq;
-    using Designer;
+    using Configuration;
+    using Configuration.Designer;
     using NUnit.Framework;
-    using Visualizer;
+
 
     [TestFixture]
     public class Usage_of_the_rules_engine
@@ -25,12 +26,15 @@ namespace OdoyuleRules.Tests.Usage
         {
             var engine = RulesEngineFactory.New(x =>
                 {
-                    x.Rule<FirstRule>();
+                    x.Rules(r =>
+                        {
+                            r.Add<FirstRule>();
+                        });
                 });
 
 
             FactHandle<Destination>[] destinations;
-            using(var session = engine.CreateStatelessSession())
+            using(var session = engine.CreateSession())
             {
                 session.Add(new FirstSegmentImpl{SourceId = "public"});
 
@@ -52,7 +56,7 @@ namespace OdoyuleRules.Tests.Usage
 
 
             FactHandle<Destination>[] destinations;
-            using(var session = engine.CreateStatelessSession())
+            using(var session = engine.CreateSession())
             {
                 session.Add(new FirstSegmentImpl{SourceId = "public"});
                 session.Add(new SecondSegmentImpl{Amount = 10001.0m});
@@ -76,7 +80,7 @@ namespace OdoyuleRules.Tests.Usage
 
 
             FactHandle<Destination>[] destinations;
-            using(var session = engine.CreateStatelessSession())
+            using(var session = engine.CreateSession())
             {
                 object first = new FirstSegmentImpl {SourceId = "public"};
                 session.Add(first);
@@ -84,8 +88,6 @@ namespace OdoyuleRules.Tests.Usage
                 session.Add(second);
 
                 session.Run();
-
-                engine.ShowVisualizer();
 
                 destinations = session.Facts<Destination>().ToArray();
             }

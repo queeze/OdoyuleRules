@@ -15,7 +15,8 @@ namespace OdoyuleRules
     using System;
     using Configuration;
     using Configuration.Configurators;
-    using Configuration.RulesEngineConfigurators;
+    using Configuration.RuntimeModelConfigurators;
+
 
     public static class RulesEngineFactory
     {
@@ -39,7 +40,7 @@ namespace OdoyuleRules
             }
             catch (Exception ex)
             {
-                throw new ConfigurationException(result, "An exception was thrown during rules engine creation", ex);
+                throw new RulesEngineConfigurationException(result, "An exception was thrown during rules engine creation", ex);
             }
         }
     }

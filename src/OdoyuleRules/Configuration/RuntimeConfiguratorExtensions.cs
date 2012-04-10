@@ -17,7 +17,7 @@ namespace OdoyuleRules
     using System.Linq.Expressions;
     using System.Reflection;
     using Conditionals;
-    using Configuration.RulesEngineConfigurators;
+    using Configuration.RuntimeModelConfigurators;
     using Models.RuntimeModel;
     using Util;
 

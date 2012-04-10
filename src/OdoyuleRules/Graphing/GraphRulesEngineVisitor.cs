@@ -19,7 +19,7 @@ namespace OdoyuleRules.Graphing
     using Visualization;
 
     public class GraphRulesEngineVisitor :
-        RuntimeModelVisitorImpl
+        RuntimeModelVisitorBase
     {
         readonly List<Edge> _edges = new List<Edge>();
         readonly Stack<Vertex> _stack;
@@ -55,7 +55,7 @@ namespace OdoyuleRules.Graphing
             {
                 _edges.Add(new Edge(_stack.Peek(), _current, _current.TargetType.Name));
 
-                if (_stack.Peek().VertexType == typeof(ConvertNode<,>))
+                if (_stack.Peek().VertexType == typeof(WidenTypeNode<,>))
                     return true;
             }
 
@@ -207,10 +207,10 @@ namespace OdoyuleRules.Graphing
             return Next(node.RightActivation.Id, () => base.Visit(node, next));
         }
 
-        public override bool Visit<TInput, TOutput>(ConvertNode<TInput, TOutput> node,
+        public override bool Visit<TInput, TOutput>(WidenTypeNode<TInput, TOutput> node,
                                                     Func<RuntimeModelVisitor, bool> next)
         {
-            _current = _vertices.Get(--_noId, id => new Vertex(typeof(ConvertNode<,>), typeof(TInput), ""));
+            _current = _vertices.Get(--_noId, id => new Vertex(typeof(WidenTypeNode<,>), typeof(TInput), ""));
 
             if (_stack.Count > 0)
             {

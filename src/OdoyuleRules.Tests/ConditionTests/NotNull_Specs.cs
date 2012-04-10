@@ -12,6 +12,8 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Tests.ConditionTests
 {
+    using System;
+    using Configuration;
     using Models.SemanticModel;
     using NUnit.Framework;
 
@@ -23,7 +25,7 @@ namespace OdoyuleRules.Tests.ConditionTests
         {
             _result = null;
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order {Customer = new Account()});
                 session.Run();
@@ -37,7 +39,7 @@ namespace OdoyuleRules.Tests.ConditionTests
         {
             _result = null;
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order());
                 session.Run();
@@ -57,9 +59,10 @@ namespace OdoyuleRules.Tests.ConditionTests
                     Conditions.NotNull((Order x) => x.Customer),
                 };
 
+            var consequence = new DelegateConsequence<Order>((session,x) => { _result = x; });
             var consequences = new RuleConsequence[]
                 {
-                    Consequences.Delegate<Order>((session,x) => { _result = x; }),
+                    consequence,
                 };
 
             Rule rule = new OdoyuleRule("RuleA", conditions, consequences);

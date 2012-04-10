@@ -1,4 +1,4 @@
-﻿// Copyright 2011 Chris Patterson
+﻿// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -13,6 +13,7 @@
 namespace OdoyuleRules.Util
 {
     using System;
+
 
     static class CastExtensions
     {
@@ -30,7 +31,7 @@ namespace OdoyuleRules.Util
             return self;
         }
 
-        internal static void CastAs<T>(this object obj, Action<T> callback)
+        internal static void CallAs<T>(this object obj, Action<T> callback)
             where T : class
         {
             var self = obj as T;
@@ -39,6 +40,18 @@ namespace OdoyuleRules.Util
                 string message = string.Format("Failed to cast {0} to {1}",
                     obj.GetType().FullName, typeof (T).FullName);
                 throw new InternalRulesEngineException(message);
+            }
+
+            callback(self);
+        }
+
+        internal static void CallAs<T>(this object obj, Action<T> callback, Func<Exception> getException)
+            where T : class
+        {
+            var self = obj as T;
+            if (self == null)
+            {
+                throw getException();
             }
 
             callback(self);

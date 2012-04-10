@@ -12,7 +12,7 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Tests.Execution
 {
-    using Configuration.RulesEngineConfigurators;
+    using Configuration.RuntimeModelConfigurators;
     using Models.RuntimeModel;
     using NUnit.Framework;
 
@@ -32,7 +32,7 @@ namespace OdoyuleRules.Tests.Execution
         {
             _called = null;
 
-            var configurator = new RuntimeConfiguratorImpl();
+            var configurator = new OdoyuleRuntimeConfigurator();
 
             var engine = configurator.RulesEngine;
 
@@ -57,7 +57,7 @@ namespace OdoyuleRules.Tests.Execution
 
             edgeAlpha.AddActivation(leftNode);
 
-            using (StatefulSession session = engine.CreateSession())
+            using (Session session = engine.CreateSession())
             {
                 session.Add(new A(10001.0m));
                 session.Run();

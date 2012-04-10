@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -15,23 +15,26 @@ namespace OdoyuleRules
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Configuration.RulesEngineConfigurators;
+    using Configuration.RuntimeModelConfigurators;
     using Models.RuntimeModel;
     using Util.Caching;
+
 
     public class OdoyuleRulesEngine :
         RulesEngine
     {
-        static readonly Cache<Type, AlphaNodeInitializer> _initializers =
-            new GenericTypeCache<AlphaNodeInitializer>(typeof (AlphaNodeInitializerImpl<>));
-
         readonly RuntimeConfigurator _configurator;
+        readonly Cache<Type, AlphaNodeInitializer> _initializers;
+        readonly Cache<Type, ActivationTypeProxy> _objectCache;
         readonly Cache<Type, Activation> _types;
 
         public OdoyuleRulesEngine(RuntimeConfigurator configurator)
         {
-            _configurator = configurator;
+            _initializers = new GenericTypeCache<AlphaNodeInitializer>(typeof (AlphaNodeInitializerImpl<>));
+            _objectCache = new GenericTypeCache<ActivationTypeProxy>(typeof (ActivationTypeProxyImpl<>));
             _types = new GenericTypeCache<Activation>(typeof (AlphaNode<>));
+
+            _configurator = configurator;
         }
 
         public IEnumerable<Activation> Activations
@@ -44,24 +47,14 @@ namespace OdoyuleRules
             _types.Get(typeof (T), CreateMissingAlphaNode<T>).Activate(context);
         }
 
-        public StatefulSession CreateSession()
+        public Session CreateSession()
         {
-            StatefulSession session = StatefulSessionFactory.New(this, x =>
-                {
-                    // perhaps do some fun stuff here later, such as cloning working memory, etc.
-                });
-
-            return session;
+            return new RuntimeSession(this, _objectCache);
         }
 
-        public StatelessSession CreateStatelessSession()
+        public bool Accept(RuntimeModelVisitor visitor)
         {
-            StatelessSession session = StatelessSessionFactory.New(this, x =>
-                {
-                    // perhaps do some fun stuff here later, such as cloning working memory, etc.
-                });
-
-            return session;
+            return visitor.Visit(this, next => _types.All(activation => activation.Accept(next)));
         }
 
         Activation CreateMissingAlphaNode<T>(Type type)
@@ -125,11 +118,6 @@ namespace OdoyuleRules
                 return false;
 
             return true;
-        }
-
-        public bool Accept(RuntimeModelVisitor visitor)
-        {
-            return visitor.Visit(this, next => _types.All(activation => activation.Accept(next)));
         }
     }
 }

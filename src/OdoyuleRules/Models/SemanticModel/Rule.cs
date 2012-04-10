@@ -15,7 +15,7 @@ namespace OdoyuleRules.Models.SemanticModel
     using System.Collections.Generic;
 
     public interface Rule :
-        AcceptSemanticModelVisitor
+        SemanticModelVisitorSite
     {
         string RuleName { get; }
         IEnumerable<RuleCondition> Conditions { get; }

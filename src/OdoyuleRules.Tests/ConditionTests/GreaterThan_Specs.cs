@@ -1,5 +1,7 @@
 namespace OdoyuleRules.Tests.ConditionTests
 {
+    using System;
+    using Configuration;
     using Models.SemanticModel;
     using NUnit.Framework;
 
@@ -11,7 +13,7 @@ namespace OdoyuleRules.Tests.ConditionTests
         {
             _result = null;
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order { Amount = 10001.0m });
                 session.Run();
@@ -25,7 +27,7 @@ namespace OdoyuleRules.Tests.ConditionTests
         {
             _result = null;
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order {Amount = 10000.0m});
                 session.Run();
@@ -39,7 +41,7 @@ namespace OdoyuleRules.Tests.ConditionTests
         {
             _result = null;
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order {Amount = 9999.9m});
                 session.Run();
@@ -59,9 +61,10 @@ namespace OdoyuleRules.Tests.ConditionTests
                     Conditions.GreaterThan((Order x) => x.Amount, 10000.0m),
                 };
 
+            var consequence = new DelegateConsequence<Order>((session,x) => { _result = x; });
             var consequences = new RuleConsequence[]
                 {
-                    Consequences.Delegate<Order>((session,x) => { _result = x; }),
+                    consequence,
                 };
 
             Rule rule = new OdoyuleRule("RuleA", conditions, consequences);

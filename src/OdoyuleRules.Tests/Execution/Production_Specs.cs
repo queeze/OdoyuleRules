@@ -12,7 +12,7 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Tests.Execution
 {
-    using Configuration.RulesEngineConfigurators;
+    using Configuration.RuntimeModelConfigurators;
     using Models.RuntimeModel;
     using NUnit.Framework;
 
@@ -39,12 +39,12 @@ namespace OdoyuleRules.Tests.Execution
             var joinNode = new JoinNode<A>(69, constantNode);
             joinNode.AddActivation(productionNode);
 
-            var engine = new OdoyuleRulesEngine(new RuntimeConfiguratorImpl());
+            var engine = new OdoyuleRulesEngine(new OdoyuleRuntimeConfigurator());
 
             AlphaNode<A> alphaNode = engine.GetAlphaNode<A>();
             alphaNode.AddActivation(joinNode);
 
-            using (StatefulSession session = engine.CreateSession())
+            using (Session session = engine.CreateSession())
             {
                 session.Add(new A());
                 session.Run();
@@ -72,7 +72,7 @@ namespace OdoyuleRules.Tests.Execution
         {
             _called = null;
 
-            var configurator = new RuntimeConfiguratorImpl();
+            var configurator = new OdoyuleRuntimeConfigurator();
 
             var productionNode = new DelegateProductionNode<A>(16, (session,x) => _called = x);
 
@@ -92,7 +92,7 @@ namespace OdoyuleRules.Tests.Execution
             AlphaNode<A> alphaNode = engine.GetAlphaNode<A>();
             alphaNode.AddActivation(joinNode);
 
-            using (StatefulSession session = engine.CreateSession())
+            using (Session session = engine.CreateSession())
             {
                 session.Add(new A());
                 session.Run();

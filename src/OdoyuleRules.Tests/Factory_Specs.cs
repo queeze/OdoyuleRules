@@ -20,7 +20,7 @@ namespace OdoyuleRules.Tests
         [Test]
         public void Should_be_able_to_create_a_session()
         {
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new A());
 

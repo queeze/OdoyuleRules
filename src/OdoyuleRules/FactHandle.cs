@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -14,19 +14,40 @@ namespace OdoyuleRules
 {
     using System;
 
+
+    /// <summary>
+    /// References a fact that has been added to a session
+    /// </summary>
     public interface FactHandle
     {
+        /// <summary>
+        /// The fact type
+        /// </summary>
         Type FactType { get; }
 
-        object Object { get; }
+        /// <summary>
+        /// The fact object
+        /// </summary>
+        object FactObject { get; }
 
+        /// <summary>
+        /// Remove the fact from the session
+        /// </summary>
         void Remove();
     }
 
-    public interface FactHandle<T> :
+
+    /// <summary>
+    /// References a fact that has been added to a session
+    /// </summary>
+    /// <typeparam name="T">The fact type</typeparam>
+    public interface FactHandle<out T> :
         FactHandle
         where T : class
     {
+        /// <summary>
+        /// The fact
+        /// </summary>
         T Fact { get; }
     }
 }

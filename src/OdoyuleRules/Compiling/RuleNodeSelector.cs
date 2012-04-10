@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Compiling
 {
     using System;
-    using Configuration.RulesEngineConfigurators;
+    using Configuration.RuntimeModelConfigurators;
     using Models.RuntimeModel;
     using Util;
 
@@ -44,7 +44,7 @@ namespace OdoyuleRules.Compiling
         public void Match<TT, TTDiscard>(Action<LeftJoinNode<TT, TTDiscard>> callback)
             where TT : class
         {
-            this.CastAs<RuleNodeSelector<Token<TT, TTDiscard>>>(
+            this.CallAs<RuleNodeSelector<Token<TT, TTDiscard>>>(
                 self => _configurator.MatchLeftJoinNode(self._node, callback));
         }
 
@@ -61,7 +61,7 @@ namespace OdoyuleRules.Compiling
             if (_parent == null)
             {
                 if (!typeof (T).IsGenericType || typeof (T).GetGenericTypeDefinition() != typeof (Token<,>))
-                    throw new RulesEngineException("Unable to map " + typeof (T) + " to " + typeof (TSelect));
+                    throw new OdoyuleRulesException("Unable to map " + typeof (T) + " to " + typeof (TSelect));
 
                 Type[] arguments = typeof (T).GetGenericArguments();
 

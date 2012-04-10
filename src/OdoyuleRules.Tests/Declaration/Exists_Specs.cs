@@ -12,7 +12,9 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Tests.Declaration
 {
+    using System;
     using System.Collections.Generic;
+    using Configuration;
     using Models.SemanticModel;
     using NUnit.Framework;
     using Visualizer;
@@ -25,7 +27,7 @@ namespace OdoyuleRules.Tests.Declaration
         {
             _results.Clear();
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order {Lines = new List<OrderLine> {new OrderLine {ItemNumber = "123"}}});
                 session.Run();
@@ -39,7 +41,7 @@ namespace OdoyuleRules.Tests.Declaration
         {
             _results.Clear();
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order
                     {
@@ -60,7 +62,7 @@ namespace OdoyuleRules.Tests.Declaration
         {
             _results.Clear();
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order {Lines = new List<OrderLine> {}});
                 session.Run();
@@ -90,9 +92,10 @@ namespace OdoyuleRules.Tests.Declaration
                     //Conditions.Equal((OrderLine x) => x.ItemNumber == "123"));
                 };
 
+            var consequence = new DelegateConsequence<Order>((session,x) => _results.Add(x));
             var consequences = new RuleConsequence[]
                 {
-                    Consequences.Delegate<Order>((session,x) => _results.Add(x)),
+                    consequence,
                 };
 
             Rule rule = new OdoyuleRule("RuleA", conditions, consequences);

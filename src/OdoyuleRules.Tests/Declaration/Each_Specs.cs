@@ -14,6 +14,7 @@ namespace OdoyuleRules.Tests.Declaration
 {
     using System;
     using System.Collections.Generic;
+    using Configuration;
     using Models.RuntimeModel;
     using Models.SemanticModel;
     using NUnit.Framework;
@@ -27,7 +28,7 @@ namespace OdoyuleRules.Tests.Declaration
         {
             _results.Clear();
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order {Lines = new List<OrderLine> {new OrderLine {ItemNumber = "123"}}});
                 session.Run();
@@ -42,7 +43,7 @@ namespace OdoyuleRules.Tests.Declaration
         {
             _results.Clear();
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order
                     {
@@ -65,7 +66,7 @@ namespace OdoyuleRules.Tests.Declaration
         {
             _results.Clear();
 
-            using (StatefulSession session = _engine.CreateSession())
+            using (Session session = _engine.CreateSession())
             {
                 session.Add(new Order {Lines = new List<OrderLine> {}});
                 session.Run();
@@ -94,10 +95,10 @@ namespace OdoyuleRules.Tests.Declaration
                     Conditions.Each<Order, IList<OrderLine>, OrderLine>(x => x.Lines),
                 };
 
+            var consequence = new DelegateConsequence<Token<Token<Order, IList<OrderLine>>, Tuple<OrderLine, int>>>((session,x) => _results.Add(x.Item2));
             var consequences = new RuleConsequence[]
                 {
-                    Consequences.Delegate<Token<Token<Order, IList<OrderLine>>, Tuple<OrderLine, int>>>(
-                        (session,x) => _results.Add(x.Item2)),
+                    consequence,
                 };
 
             Rule rule = new OdoyuleRule("RuleA", conditions, consequences);

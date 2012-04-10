@@ -50,7 +50,7 @@ namespace OdoyuleRules.Conditionals
                 return x => (T) toConverter.ConvertFrom(x);
             }
 
-            throw new RulesEngineException("Could not create a type converter for " + typeof (TInput).Name);
+            throw new OdoyuleRulesException("Could not create a type converter for " + typeof (TInput).Name);
         }
     }
 }
