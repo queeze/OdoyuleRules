@@ -27,7 +27,7 @@ namespace OdoyuleRules.Visualization
                 return string.Join(",", Tokens(arguments[0]), arguments[1].GetShortName());
             }
 
-            return type.Name;
+            return type.GetShortName();
         }
 
         public static string GetShortName(this Type type)

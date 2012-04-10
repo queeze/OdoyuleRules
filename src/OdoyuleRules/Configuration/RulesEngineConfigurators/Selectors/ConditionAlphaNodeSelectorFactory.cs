@@ -19,10 +19,10 @@ namespace OdoyuleRules.Configuration.RulesEngineConfigurators.Selectors
         NodeSelectorFactory
     {
         readonly RuntimeConfigurator _configurator;
-        readonly Action<ConditionAlphaNode> _nodeCallback;
+        readonly Action<RuleNodeSelector> _nodeCallback;
 
         public ConditionAlphaNodeSelectorFactory(RuntimeConfigurator configurator,
-                                                 Action<ConditionAlphaNode> nodeCallback)
+                                                 Action<RuleNodeSelector> nodeCallback)
         {
             _configurator = configurator;
             _nodeCallback = nodeCallback;

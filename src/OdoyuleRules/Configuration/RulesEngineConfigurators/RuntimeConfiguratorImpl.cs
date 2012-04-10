@@ -19,8 +19,8 @@ namespace OdoyuleRules.Configuration.RulesEngineConfigurators
     public class RuntimeConfiguratorImpl :
         RuntimeConfigurator
     {
-        int _nextNodeId;
         readonly OdoyuleRulesEngine _rulesEngine;
+        int _nextNodeId;
 
         public RuntimeConfiguratorImpl()
         {
@@ -50,21 +50,31 @@ namespace OdoyuleRules.Configuration.RulesEngineConfigurators
             return _rulesEngine.GetAlphaNode<T>();
         }
 
-        public void MatchLeftJoinNode<T,TDiscard>(MemoryNode<Token<T, TDiscard>> start, Action<LeftJoinNode<T,TDiscard>> callback)
+        public void MatchLeftJoinNode<T, TDiscard>(MemoryNode<Token<T, TDiscard>> start,
+            Action<LeftJoinNode<T, TDiscard>> callback)
             where T : class
         {
             var locator = new LeftJoinNodeLocator<T, TDiscard>(this, start);
             locator.Find(callback);
         }
 
-        public void MatchJoinNode<T>(MemoryNode<T> left, Action<JoinNode<T>> callback) 
+        public void MatchOuterJoinNode<T1, T2>(MemoryNode<T1> leftStart, MemoryNode<T2> rightStart,
+            Action<OuterJoinNode<T1, T2>> callback) 
+            where T1 : class
+            where T2 : class
+        {
+            var locator = new OuterJoinNodeLocator<T1, T2>(this, leftStart, rightStart);
+            locator.Find(callback);
+        }
+
+        public void MatchJoinNode<T>(MemoryNode<T> left, Action<JoinNode<T>> callback)
             where T : class
         {
             var locator = new JoinNodeLocator<T>(this, left);
             locator.Find(callback);
         }
 
-        public void MatchJoinNode<T>(MemoryNode<T> left, MemoryNode<T> right, Action<JoinNode<T>> callback) 
+        public void MatchJoinNode<T>(MemoryNode<T> left, MemoryNode<T> right, Action<JoinNode<T>> callback)
             where T : class
         {
             var locator = new JoinNodeLocator<T>(this, left, right);

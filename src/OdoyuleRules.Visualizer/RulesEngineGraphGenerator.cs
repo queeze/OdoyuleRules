@@ -46,6 +46,7 @@ namespace OdoyuleRules.Visualizer
                     {typeof (NotNullNode<,>), Color.Blue},
                     {typeof (ExistsNode<,>), Color.Blue},
                     {typeof (JoinNode<>), Color.Green},
+                    {typeof (OuterJoinNode<,>), Color.Green},
                     {typeof (LeftJoinNode<,>), Color.LightGreen},
                     {typeof (ConditionNode<>), Color.Blue},
                     {typeof (DelegateProductionNode<>), Color.LightGray},
@@ -66,6 +67,7 @@ namespace OdoyuleRules.Visualizer
                     {typeof (NotNullNode<,>), Color.White},
                     {typeof (ExistsNode<,>), Color.White},
                     {typeof (JoinNode<>), Color.White},
+                    {typeof (OuterJoinNode<,>), Color.White},
                     {typeof (LeftJoinNode<,>), Color.Black},
                     {typeof (ConditionNode<>), Color.White},
                     {typeof (DelegateProductionNode<>), Color.Black},
@@ -81,6 +83,7 @@ namespace OdoyuleRules.Visualizer
                     {typeof (ConvertNode<,>), Shape.Circle},
                     {typeof (ConstantNode<>), Shape.Circle},
                     {typeof (JoinNode<>), Shape.Ellipse},
+                    {typeof (OuterJoinNode<,>), Shape.Ellipse},
                     {typeof (LeftJoinNode<,>), Shape.Ellipse},
                     {typeof (DelegateProductionNode<>), Shape.DoubleCircle},
                 };

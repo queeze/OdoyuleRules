@@ -78,15 +78,22 @@ namespace OdoyuleRules.Tests.Usage
             FactHandle<Destination>[] destinations;
             using(var session = engine.CreateStatelessSession())
             {
-                session.Add(new FirstSegmentImpl{SourceId = "public"});
-                session.Add(new SecondSegmentImpl{Amount = 10001.0m});
+                object first = new FirstSegmentImpl {SourceId = "public"};
+                session.Add(first);
+                object second = new SecondSegmentImpl {Amount = 10001.0m};
+                session.Add(second);
 
                 session.Run();
+
+                engine.ShowVisualizer();
 
                 destinations = session.Facts<Destination>().ToArray();
             }
 
             Assert.AreEqual(2, destinations.Length);
+
+            Assert.AreEqual("90210", destinations[0].Fact.Address);
+            Assert.AreEqual("74011", destinations[1].Fact.Address);
         }
 
         class FirstRule :
@@ -116,6 +123,11 @@ namespace OdoyuleRules.Tests.Usage
         class Destination
         {
             readonly string _address;
+
+            public string Address
+            {
+                get { return _address; }
+            }
 
             public Destination(string address)
             {

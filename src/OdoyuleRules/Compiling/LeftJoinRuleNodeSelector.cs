@@ -14,12 +14,13 @@ namespace OdoyuleRules.Compiling
 {
     using System;
     using Models.RuntimeModel;
-    using Models.SemanticModel;
 
-    public interface RuleConditionCompiler :
-        SemanticModelVisitor
+    /// <summary>
+    /// Matches left joins through to the type required
+    /// </summary>
+    public interface LeftJoinRuleNodeSelector
     {
-        bool MatchJoinNode<T>(Action<MemoryNode<T>> callback)
+        void Match<T, TDiscard>(Action<LeftJoinNode<T, TDiscard>> callback)
             where T : class;
     }
 }

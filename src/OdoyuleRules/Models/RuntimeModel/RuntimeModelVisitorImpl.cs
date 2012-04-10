@@ -28,7 +28,7 @@ namespace OdoyuleRules.Models.RuntimeModel
             return next(this);
         }
 
-        public bool Visit<TLeft, TRight>(OuterJoinNode<TLeft, TRight> node, Func<RuntimeModelVisitor, bool> next)
+        public virtual bool Visit<TLeft, TRight>(OuterJoinNode<TLeft, TRight> node, Func<RuntimeModelVisitor, bool> next)
             where TLeft : class 
             where TRight : class
         {

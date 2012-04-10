@@ -178,6 +178,20 @@ namespace OdoyuleRules.Graphing
             return Next(node.RightActivation.Id, () => base.Visit(node, next));
         }
 
+        public override bool Visit<TLeft, TRight>(OuterJoinNode<TLeft, TRight> node, Func<RuntimeModelVisitor, bool> next)
+        {
+            _current = _vertices.Get(node.Id, id => new Vertex(typeof(OuterJoinNode<,>), typeof(Tuple<TLeft,TRight>), typeof(TLeft).Tokens() + "," + typeof(TRight).Tokens()));
+
+            if (_rightActivation == node.Id)
+            {
+                _edges.Add(new Edge(_current, _stack.Peek(), _current.TargetType.Name));
+            }
+            else if (_stack.Count > 0)
+                _edges.Add(new Edge(_stack.Peek(), _current, _current.TargetType.Name));
+
+            return Next(node.RightActivation.Id, () => base.Visit(node, next));
+        }
+
         public override bool Visit<T, TDiscard>(LeftJoinNode<T, TDiscard> node, Func<RuntimeModelVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id,

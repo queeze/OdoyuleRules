@@ -12,12 +12,13 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Models.RuntimeModel
 {
+    using System;
     using System.Linq;
 
     public class OuterJoinNode<TLeft, TRight> :
-        MemoryNodeImpl<Token<TLeft, TRight>>,
+        MemoryNodeImpl<Tuple<TLeft, TRight>>,
         Activation<TLeft>,
-        MemoryNode<Token<TLeft, TRight>>
+        MemoryNode<Tuple<TLeft, TRight>>
         where TLeft : class
         where TRight : class
     {
@@ -29,12 +30,17 @@ namespace OdoyuleRules.Models.RuntimeModel
             _rightActivation = rightActivation;
         }
 
+        public RightActivation<TRight> RightActivation
+        {
+            get { return _rightActivation; }
+        }
+
         public void Activate(ActivationContext<TLeft> context)
         {
             _rightActivation.RightActivate(context, right =>
                 {
-                    ActivationContext<Token<TLeft, TRight>> joinContext =
-                        context.CreateContext(new Token<TLeft, TRight>(context, right.Fact));
+                    ActivationContext<Tuple<TLeft, TRight>> joinContext =
+                        context.CreateContext(new Tuple<TLeft, TRight>(context.Fact, right.Fact));
 
                     base.Activate(joinContext);
 

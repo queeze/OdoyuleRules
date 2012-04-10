@@ -12,6 +12,7 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Tests.Execution
 {
+    using System;
     using Configuration.RulesEngineConfigurators;
     using Models.RuntimeModel;
     using NUnit.Framework;
@@ -25,7 +26,7 @@ namespace OdoyuleRules.Tests.Execution
             Assert.IsNotNull(_called);
         }
 
-        Token<A,B> _called;
+        Tuple<A, B> _called;
 
         [TestFixtureSetUp]
         public void Setup()
@@ -34,7 +35,7 @@ namespace OdoyuleRules.Tests.Execution
 
             var configurator = new RuntimeConfiguratorImpl();
 
-            var productionNode = new DelegateProductionNode<Token<A,B>>(16, (session, x) => _called = x);
+            var productionNode = new DelegateProductionNode<Tuple<A,B>>(16, (session, x) => _called = x);
 
             var constantNode = new ConstantNode<A>(42);
 

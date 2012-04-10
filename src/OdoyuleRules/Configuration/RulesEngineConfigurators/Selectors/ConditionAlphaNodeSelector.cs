@@ -22,9 +22,9 @@ namespace OdoyuleRules.Configuration.RulesEngineConfigurators.Selectors
         where T : class
     {
         readonly RuntimeConfigurator _configurator;
-        readonly Action<ConditionAlphaNode> _nodeCallback;
+        readonly Action<RuleNodeSelector> _nodeCallback;
 
-        public ConditionAlphaNodeSelector(RuntimeConfigurator configurator, Action<ConditionAlphaNode> nodeCallback)
+        public ConditionAlphaNodeSelector(RuntimeConfigurator configurator, Action<RuleNodeSelector> nodeCallback)
         {
             _configurator = configurator;
             _nodeCallback = nodeCallback;
@@ -53,7 +53,7 @@ namespace OdoyuleRules.Configuration.RulesEngineConfigurators.Selectors
             if (alphaNode == null)
                 throw new ArgumentException("Only alpha nodes can be condition alpha nodes");
 
-            var conditionAlphaNode = new ConditionAlphaNode<T>(_configurator, alphaNode);
+            var conditionAlphaNode = new RuleNodeSelector<T>(_configurator, alphaNode);
 
             _nodeCallback(conditionAlphaNode);
         }

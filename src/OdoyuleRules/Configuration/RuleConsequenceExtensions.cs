@@ -56,10 +56,10 @@ namespace OdoyuleRules
         {
             binding.Then((ThenConfigurator<TLeft, TRight> then) =>
                 {
-                    AddFactConsequence<Token<TLeft, TRight>, T> consequence =
-                        Consequences.Add((Token<TLeft, TRight> t) => factFactory());
+                    AddFactConsequence<Tuple<TLeft, TRight>, T> consequence =
+                        Consequences.Add((Tuple<TLeft, TRight> t) => factFactory());
 
-                    var consequenceConfigurator = new RuleConsequenceConfiguratorImpl<Token<TLeft, TRight>>(consequence);
+                    var consequenceConfigurator = new RuleConsequenceConfiguratorImpl<Tuple<TLeft, TRight>>(consequence);
 
                     then.AddConfigurator(consequenceConfigurator);
                 });

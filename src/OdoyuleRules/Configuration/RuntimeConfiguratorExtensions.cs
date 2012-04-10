@@ -126,6 +126,14 @@ namespace OdoyuleRules
             return configurator.CreateNode(id => new JoinNode<T>(id, rightActivation));
         }
 
+        public static OuterJoinNode<T1,T2> Outer<T1,T2>(this RuntimeConfigurator configurator,
+            RightActivation<T2> rightActivation)
+            where T1 : class
+            where T2: class
+        {
+            return configurator.CreateNode(id => new OuterJoinNode<T1, T2>(id, rightActivation));
+        }
+
 
         public static DelegateProductionNode<T> Delegate<T>(this RuntimeConfigurator configurator,
                                                             Action<Session, T> callback)

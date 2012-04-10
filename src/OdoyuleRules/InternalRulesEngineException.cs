@@ -10,16 +10,29 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Compiling
+namespace OdoyuleRules
 {
     using System;
-    using Models.RuntimeModel;
-    using Models.SemanticModel;
+    using System.Runtime.Serialization;
 
-    public interface RuleConditionCompiler :
-        SemanticModelVisitor
+    [Serializable]
+    public class InternalRulesEngineException :
+        RulesEngineException
     {
-        bool MatchJoinNode<T>(Action<MemoryNode<T>> callback)
-            where T : class;
+        public InternalRulesEngineException()
+        {
+        }
+
+        public InternalRulesEngineException(string message) : base(message)
+        {
+        }
+
+        public InternalRulesEngineException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected InternalRulesEngineException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
     }
 }
