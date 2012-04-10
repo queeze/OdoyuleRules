@@ -68,6 +68,7 @@
     <Compile Include="Conditionals\ValueTypeTokenValue.cs" />
     <Compile Include="Conditionals\ValueTypeTokenValueFactory.cs" />
     <Compile Include="Configuration\AddFactConsequenceExtensions.cs" />
+    <Compile Include="Configuration\Configurators\ConfiguratorExtensions.cs" />
     <Compile Include="Configuration\Designer\DelegateRuleConsequenceConfigurator.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\DesignerRuleConfigurator.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\DesignerRuleConfiguratorImpl.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Configuration\Configurators\ValidationResultDisposition.cs" />
     <Compile Include="Configuration\Configurators\ValidationResultExtensions.cs" />
     <Compile Include="Configuration\Configurators\ValidationResultImpl.cs" />
-    <Compile Include="Configuration\DesignerExtensions.cs" />
+    <Compile Include="Configuration\RulesEngineConfiguratorExtensions.cs" />
     <Compile Include="Configuration\SemanticModelConfigurators\RuleBuilderConfigurator.cs" />
     <Compile Include="Configuration\DelegateRuleConsequenceExtensions.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\NodeLocator.cs" />

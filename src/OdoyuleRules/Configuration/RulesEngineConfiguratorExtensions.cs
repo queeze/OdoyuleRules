@@ -13,37 +13,25 @@
 namespace OdoyuleRules
 {
     using System;
-    using System.Collections.Generic;
-    using Configuration.Configurators;
     using Configuration.RuntimeModelConfigurators;
-    using Configuration.SemanticModelBuilders;
     using Configuration.SemanticModelConfigurators;
     using Models.SemanticModel;
 
 
-    public static class DesignerExtensions
+    public static class RulesEngineConfiguratorExtensions
     {
+        [Obsolete("Use the nested Rules() for multiple rules")]
         public static void Rule<TRule>(this RulesEngineConfigurator configurator)
             where TRule : RuleBuilderConfigurator, new()
         {
             Rule(configurator, () => new TRule());
         }
 
+        [Obsolete("Use the nested Rules() for multiple rules")]
         public static void Rule<TRule>(this RulesEngineConfigurator configurator, Func<TRule> ruleFactory)
             where TRule : RuleBuilderConfigurator
         {
-            TRule designer = ruleFactory();
-
-            IEnumerable<ValidationResult> results = designer.ValidateConfiguration();
-            ConfigurationResultImpl.CompileResults(results);
-
-            var builder = new OdoyuleRuleBuilder();
-
-            designer.Configure(builder);
-
-            Rule rule = builder.Build();
-
-            configurator.Add(rule);
+            configurator.Rules(x => x.Add(ruleFactory));
         }
 
         public static void Rules(this RulesEngineConfigurator configurator,

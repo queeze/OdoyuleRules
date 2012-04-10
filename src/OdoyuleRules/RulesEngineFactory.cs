@@ -1,4 +1,4 @@
-﻿// Copyright 2011 Chris Patterson
+﻿// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -13,7 +13,6 @@
 namespace OdoyuleRules
 {
     using System;
-    using Configuration;
     using Configuration.Configurators;
     using Configuration.RuntimeModelConfigurators;
 
@@ -29,8 +28,7 @@ namespace OdoyuleRules
 
             configureCallback(configurator);
 
-
-            ConfigurationResult result = ConfigurationResultImpl.CompileResults(configurator.ValidateConfiguration());
+            ConfigurationResult result = configurator.Validate();
 
             try
             {
@@ -40,7 +38,7 @@ namespace OdoyuleRules
             }
             catch (Exception ex)
             {
-                throw new RulesEngineConfigurationException(result, "An exception was thrown during rules engine creation", ex);
+                throw new RulesEngineConfigurationException(result, ex);
             }
         }
     }

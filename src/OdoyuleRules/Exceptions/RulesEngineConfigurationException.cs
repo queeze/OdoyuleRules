@@ -13,6 +13,7 @@
 namespace OdoyuleRules
 {
     using System;
+    using System.Linq;
     using System.Runtime.Serialization;
     using Configuration.Configurators;
 
@@ -25,14 +26,14 @@ namespace OdoyuleRules
         {
         }
 
-        public RulesEngineConfigurationException(ConfigurationResult result, string message)
-            : base(message)
+        public RulesEngineConfigurationException(ConfigurationResult result)
+            : this(GetMessage(result))
         {
             Result = result;
         }
 
-        public RulesEngineConfigurationException(ConfigurationResult result, string message, Exception innerException)
-            : base(message, innerException)
+        public RulesEngineConfigurationException(ConfigurationResult result, Exception innerException)
+            : this(GetMessage(result), innerException)
         {
             Result = result;
         }
@@ -50,8 +51,24 @@ namespace OdoyuleRules
         protected RulesEngineConfigurationException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
+            Result = (ConfigurationResult) info.GetValue("Result", typeof (ConfigurationResultImpl));
         }
 
-        public ConfigurationResult Result { get; protected set; }
+        public ConfigurationResult Result { get; private set; }
+
+        static string GetMessage(ConfigurationResult result)
+        {
+            return "There were errors configuring the rules engine:" +
+                   Environment.NewLine +
+                   string.Join(Environment.NewLine, result.Results
+                       .Select(x => string.Format("{0}: {1}", x.Key, x.Message)).ToArray());
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+
+            info.AddValue("Result", Result);
+        }
     }
 }

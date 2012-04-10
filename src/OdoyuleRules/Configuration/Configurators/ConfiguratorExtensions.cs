@@ -1,4 +1,4 @@
-﻿// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -12,29 +12,15 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration.Configurators
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    [Serializable]
-    public class ConfigurationResultImpl :
-        ConfigurationResult
+    public static class ConfiguratorExtensions
     {
-        readonly IList<ValidationResult> _results;
-
-        public ConfigurationResultImpl(IEnumerable<ValidationResult> results)
+        public static ConfigurationResult Validate(this Configurator configurator)
         {
-            _results = results.ToList();
-        }
+            var result = new ConfigurationResultImpl(configurator.ValidateConfiguration());
+            if (result.ContainsFailure)
+                throw new RulesEngineConfigurationException(result);
 
-        public bool ContainsFailure
-        {
-            get { return _results.Any(x => x.Disposition == ValidationResultDisposition.Failure); }
-        }
-
-        public IEnumerable<ValidationResult> Results
-        {
-            get { return _results; }
+            return result;
         }
     }
 }
