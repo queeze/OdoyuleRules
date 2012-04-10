@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Models.RuntimeModel
 {
     using System;
-    using Util;
+    using Internal;
 
 
     class SessionActivationContext<T> :

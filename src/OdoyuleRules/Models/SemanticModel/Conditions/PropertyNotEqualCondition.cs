@@ -39,7 +39,9 @@ namespace OdoyuleRules.Models.SemanticModel
 
         public bool Equals(PropertyNotEqualCondition<T, TProperty> other)
         {
-            return base.Equals(other);
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return base.Equals(other) && Equals(other._value, _value);
         }
 
         public bool Accept(SemanticModelVisitor visitor)
@@ -57,18 +59,6 @@ namespace OdoyuleRules.Models.SemanticModel
         public override int GetHashCode()
         {
             return base.GetHashCode();
-        }
-
-        public static bool operator ==(
-            PropertyNotEqualCondition<T, TProperty> left, PropertyNotEqualCondition<T, TProperty> right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(
-            PropertyNotEqualCondition<T, TProperty> left, PropertyNotEqualCondition<T, TProperty> right)
-        {
-            return !Equals(left, right);
         }
     }
 }

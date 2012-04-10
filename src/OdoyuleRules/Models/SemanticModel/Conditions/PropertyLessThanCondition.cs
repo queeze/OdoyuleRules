@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -16,6 +16,7 @@ namespace OdoyuleRules.Models.SemanticModel
     using System.Linq.Expressions;
     using System.Reflection;
 
+
     public class PropertyLessThanCondition<T, TProperty> :
         PropertyCondition<T, TProperty>,
         RuleCondition<T>,
@@ -26,8 +27,8 @@ namespace OdoyuleRules.Models.SemanticModel
         readonly TProperty _value;
 
         public PropertyLessThanCondition(PropertyInfo propertyInfo,
-                                         Expression<Func<T, TProperty>> propertyExpression,
-                                         TProperty value)
+            Expression<Func<T, TProperty>> propertyExpression,
+            TProperty value)
             : base(propertyInfo, propertyExpression)
         {
             _value = value;
@@ -63,19 +64,6 @@ namespace OdoyuleRules.Models.SemanticModel
             {
                 return (base.GetHashCode()*397) ^ _value.GetHashCode();
             }
-        }
-
-
-        public static bool operator ==(
-            PropertyLessThanCondition<T, TProperty> left, PropertyLessThanCondition<T, TProperty> right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(
-            PropertyLessThanCondition<T, TProperty> left, PropertyLessThanCondition<T, TProperty> right)
-        {
-            return !Equals(left, right);
         }
     }
 }

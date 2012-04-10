@@ -17,12 +17,12 @@ namespace OdoyuleRules.Visualizer
     using System.Drawing.Imaging;
     using System.Linq;
     using Graphing;
+    using Internal.Caching;
     using Microsoft.Glee.Drawing;
     using Microsoft.Glee.GraphViewerGdi;
     using Models.RuntimeModel;
     using QuickGraph;
     using QuickGraph.Glee;
-    using Util.Caching;
     using Color = Microsoft.Glee.Drawing.Color;
 
     public class RulesEngineGraphGenerator

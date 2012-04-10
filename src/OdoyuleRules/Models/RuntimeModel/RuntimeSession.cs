@@ -15,7 +15,7 @@ namespace OdoyuleRules.Models.RuntimeModel
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using Util.Caching;
+    using Internal.Caching;
 
 
     class RuntimeSession :

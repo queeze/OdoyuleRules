@@ -1,4 +1,4 @@
-﻿// Copyright 2011 Chris Patterson
+﻿// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -12,15 +12,8 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration.Builders
 {
-    using System;
-    using Models.SemanticModel;
-    using RuntimeModelConfigurators;
-
-
     public interface RulesEngineBuilder
     {
-        void UseRuntimeConfigurator(Func<RuntimeConfigurator> runtimeConfiguratorFactory);
-
         void AddRule(Rule rule);
 
         RulesEngine Build();

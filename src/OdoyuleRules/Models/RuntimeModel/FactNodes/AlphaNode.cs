@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Models.RuntimeModel
 {
     using System.Linq;
-    using Util;
+    using Internal;
     using Visualization;
 
 

@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
-    using OdoyuleRules.Compiling;
+    using Compilation;
     using OdoyuleRules.Models.RuntimeModel;
     using OdoyuleRules.Visualization;
 

@@ -64,17 +64,5 @@ namespace OdoyuleRules.Models.SemanticModel
                 return (base.GetHashCode()*397) ^ _value.GetHashCode();
             }
         }
-
-        public static bool operator ==(
-            PropertyGreaterThanCondition<T, TProperty> left, PropertyGreaterThanCondition<T, TProperty> right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(
-            PropertyGreaterThanCondition<T, TProperty> left, PropertyGreaterThanCondition<T, TProperty> right)
-        {
-            return !Equals(left, right);
-        }
     }
 }

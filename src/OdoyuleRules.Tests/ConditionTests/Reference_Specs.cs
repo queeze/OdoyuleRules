@@ -1,9 +1,21 @@
+// Copyright 2011-2012 Chris Patterson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
+// this file except in compliance with the License. You may obtain a copy of the 
+// License at 
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0 
+// 
+// Unless required by applicable law or agreed to in writing, software distributed 
+// under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
+// CONDITIONS OF ANY KIND, either express or implied. See the License for the 
+// specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Tests.ConditionTests
 {
-    using System;
     using Configuration;
     using Models.SemanticModel;
     using NUnit.Framework;
+
 
     [TestFixture]
     public class Conditions_against_reference_types
@@ -15,7 +27,7 @@ namespace OdoyuleRules.Tests.ConditionTests
 
             using (Session session = _engine.CreateSession())
             {
-                session.Add(new Order {Customer = new Account{ContactName = "JOE"}});
+                session.Add(new Order {Customer = new Account {ContactName = "JOE"}});
                 session.Run();
             }
 
@@ -29,7 +41,7 @@ namespace OdoyuleRules.Tests.ConditionTests
 
             using (Session session = _engine.CreateSession())
             {
-                session.Add(new Order { Customer = new Account { ContactName = "BOB" } });
+                session.Add(new Order {Customer = new Account {ContactName = "BOB"}});
                 session.Run();
             }
 
@@ -56,15 +68,14 @@ namespace OdoyuleRules.Tests.ConditionTests
         [TestFixtureSetUp]
         public void Define_rule()
         {
-            var conditions = new RuleCondition[]
+            var conditions = new[]
                 {
                     Conditions.Equal((Order x) => x.Customer.ContactName, "JOE"),
                 };
 
-            var consequence = new DelegateConsequence<Order>((session,x) => { _result = x; });
-            var consequences = new RuleConsequence[]
+            var consequences = new[]
                 {
-                    consequence,
+                    Consequences.Delegate((Order o) => _result = o),
                 };
 
             Rule rule = new OdoyuleRule("RuleA", conditions, consequences);
@@ -72,10 +83,12 @@ namespace OdoyuleRules.Tests.ConditionTests
             _engine = RulesEngineFactory.New(x => x.Add(rule));
         }
 
+
         class Order
         {
             public Account Customer { get; set; }
         }
+
 
         class Account
         {

@@ -14,8 +14,8 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
     using System.Reflection;
+    using Internal;
     using OdoyuleRules.Models.RuntimeModel;
-    using OdoyuleRules.Util;
     using OdoyuleRules.Visualization;
 
 

@@ -14,8 +14,8 @@ namespace OdoyuleRules.Graphing
 {
     using System;
     using System.Collections.Generic;
+    using Internal.Caching;
     using Models.RuntimeModel;
-    using Util.Caching;
     using Visualization;
 
     public class GraphRulesEngineVisitor :

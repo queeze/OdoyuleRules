@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -14,8 +14,19 @@ namespace OdoyuleRules.Models.RuntimeModel
 {
     using System;
 
+
+    /// <summary>
+    /// Encapsulates the activation of a fact as it moves from left to right
+    /// in the network
+    /// </summary>
     public interface ActivationContext
     {
+        /// <summary>
+        /// Create a new context linked to this context
+        /// </summary>
+        /// <typeparam name="TContext">The context type</typeparam>
+        /// <param name="fact">The fact</param>
+        /// <returns>The newly created context</returns>
         ActivationContext<TContext> CreateContext<TContext>(TContext fact)
             where TContext : class;
 
@@ -37,12 +48,25 @@ namespace OdoyuleRules.Models.RuntimeModel
     }
 
 
+    /// <summary>
+    /// Encapsulates the activation of a fact, including the fact type
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface ActivationContext<out T> :
         ActivationContext
         where T : class
     {
+        /// <summary>
+        /// The fact itself
+        /// </summary>
         T Fact { get; }
 
+        /// <summary>
+        /// Converts the activation context to the requested type, invoking the 
+        /// callback
+        /// </summary>
+        /// <typeparam name="TOutput">The output type for the callback</typeparam>
+        /// <param name="callback">The callback to invoke with the context</param>
         void Convert<TOutput>(Action<ActivationContext<TOutput>> callback)
             where TOutput : class;
     }

@@ -1,4 +1,4 @@
-﻿// Copyright 2011 Chris Patterson
+﻿// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -13,6 +13,7 @@
 namespace OdoyuleRules.Models.SemanticModel
 {
     using System;
+
 
     public class DelegateConsequence<T> :
         RuleConsequence<T>

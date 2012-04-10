@@ -17,14 +17,22 @@ namespace OdoyuleRules
     using Configuration.RuntimeModelConfigurators;
 
 
+    /// <summary>
+    /// Used to create an instance of a rules engine
+    /// </summary>
     public static class RulesEngineFactory
     {
+        /// <summary>
+        /// Configures and creates a new rules engine instance
+        /// </summary>
+        /// <param name="configureCallback">The callback to perform the configuration</param>
+        /// <returns>The new rules engine instance</returns>
         public static RulesEngine New(Action<RulesEngineConfigurator> configureCallback)
         {
             if (configureCallback == null)
                 throw new ArgumentNullException("configureCallback");
 
-            var configurator = new RulesEngineConfiguratorImpl();
+            var configurator = new OdoyuleRulesEngineConfigurator();
 
             configureCallback(configurator);
 

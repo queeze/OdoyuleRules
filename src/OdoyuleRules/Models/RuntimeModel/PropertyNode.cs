@@ -14,7 +14,8 @@ namespace OdoyuleRules.Models.RuntimeModel
 {
     using System;
     using System.Reflection;
-    using Util;
+    using Internal;
+
 
     /// <summary>
     /// A property node matches a property on a fact and activates successors

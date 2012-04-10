@@ -13,6 +13,7 @@
 namespace OdoyuleRules.Tests
 {
     using Conditionals;
+    using Configuration;
     using NUnit.Framework;
 
     [TestFixture]
@@ -21,8 +22,8 @@ namespace OdoyuleRules.Tests
         [Test]
         public void Should_match_a_string_to_an_integer()
         {
-            Value<int> left = Conditional.Constant(42);
-            Value<string> right = Conditional.Constant("42");
+            Value<int> left = Conditionals.Constant(42);
+            Value<string> right = Conditionals.Constant("42");
 
             var converter = new ValueTypeConverter<int, string>(right);
 

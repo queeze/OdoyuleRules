@@ -26,5 +26,17 @@ namespace OdoyuleRules.Configuration
 
             return consequence;
         }
+
+        public static DelegateConsequence<T> Delegate<T>(Action<T> callback)
+            where T : class
+        {
+            return new DelegateConsequence<T>((session, x) => callback(x));
+        }
+
+        public static DelegateConsequence<T> Delegate<T>(Action<Session, T> callback)
+            where T : class
+        {
+            return new DelegateConsequence<T>(callback);
+        }
     }
 }
