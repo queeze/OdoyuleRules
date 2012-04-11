@@ -23,7 +23,7 @@ desc "Cleans, compiles, il-merges, unit tests, prepares examples, packages zip"
 task :all => [:default, :package]
 
 desc "**Default**, compiles and runs tests"
-task :default => [:clean, :compile, :tests, :nuget]
+task :default => [:clean, :nuget_restore, :compile, :tests, :nuget]
 
 desc "Update the common version information for the build. You can call this task without building."
 assemblyinfo :global_version do |asm|
@@ -96,6 +96,11 @@ zip :zip_output do |zip|
 	zip.directories_to_zip = [props[:stage]]
 	zip.output_file = "OdoyuleRules-#{BUILD_NUMBER_BASE}.zip"
 	zip.output_path = [props[:artifacts]]
+end
+
+desc "Restore NuGet Packages"
+task :nuget_restore do
+  sh "lib/nuget install #{File.join(props[:src],".nuget","packages.config")} -o #{File.join(props[:src],"packages")}"
 end
 
 desc "Builds the nuget package"
