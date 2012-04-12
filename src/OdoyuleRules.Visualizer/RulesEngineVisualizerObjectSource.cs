@@ -1,4 +1,4 @@
-﻿// Copyright 2011 Chris Patterson
+﻿// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -12,10 +12,10 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Visualizer
 {
-    using System;
     using System.IO;
     using Graphing;
     using Microsoft.VisualStudio.DebuggerVisualizers;
+
 
     public class RulesEngineVisualizerObjectSource :
         VisualizerObjectSource
@@ -25,36 +25,16 @@ namespace OdoyuleRules.Visualizer
             if (target == null)
                 return;
 
-            Type machineType = target.GetType();
-            Type instanceType = GetInstanceType(machineType);
-            if (instanceType == null)
+            var engine = target as RulesEngine;
+            if (engine == null)
                 return;
 
-            object graph = GetType()
-                .GetMethod("CreateStateMachineGraph")
-                .MakeGenericMethod(machineType, instanceType)
-                .Invoke(this, new[] {target});
+            RulesEngineGraph rulesEngineGraph = CreateRulesEngineGraph(engine);
 
-            base.GetData(graph, outgoingData);
+            base.GetData(rulesEngineGraph, outgoingData);
         }
 
-        Type GetInstanceType(Type machineType)
-        {
-            while (machineType != null && machineType != typeof (object))
-            {
-                if (machineType.IsGenericType && machineType.GetGenericTypeDefinition() == typeof (OdoyuleRulesEngine))
-                {
-                    Type instanceType = machineType.GetGenericArguments()[0];
-                    return instanceType;
-                }
-
-                machineType = machineType.BaseType;
-            }
-
-            return null;
-        }
-
-        RulesEngineGraph CreateRulesEngineGraph(OdoyuleRulesEngine machine)
+        RulesEngineGraph CreateRulesEngineGraph(RulesEngine machine)
         {
             var visitor = new GraphRulesEngineVisitor();
             machine.Accept(visitor);

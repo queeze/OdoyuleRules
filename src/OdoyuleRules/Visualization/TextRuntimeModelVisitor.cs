@@ -53,6 +53,13 @@ namespace OdoyuleRules.Visualization
             return Indent(next);
         }
 
+        public override bool Visit<TLeft, TRight>(OuterJoinNode<TLeft, TRight> node, Func<RuntimeModelVisitor, bool> next)
+        {
+            Append("OuterJoinNode[{0},{1}] => {2}", Tokens<TLeft>(), Tokens<TRight>(), Tokens<Tuple<TLeft,TRight>>());
+
+            return Indent(next);
+        }
+
         public override bool Visit<T>(AlphaNode<T> node, Func<RuntimeModelVisitor, bool> next)
         {
             Append("AlphaNode[{0}]", Tokens<T>());
@@ -84,7 +91,7 @@ namespace OdoyuleRules.Visualization
 
         public override bool Visit<T, TProperty>(PropertyNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
         {
-            Append("PropertyNode[{0}].{1} ({2})", Tokens<T>(), node.PropertyInfo.Name, typeof (TProperty).Name);
+            Append("PropertyNode[{0}].{1} ({2})", Tokens<T>(), node.PropertyInfo.Name, typeof (TProperty).GetShortName());
 
             return Indent(next);
         }
@@ -106,7 +113,7 @@ namespace OdoyuleRules.Visualization
         public override bool Visit<T, TProperty>(EqualNode<T, TProperty> node,
                                                  Func<RuntimeModelVisitor, bool> next)
         {
-            Append("EqualNode[{0}] ({1})", Tokens<T>(), typeof (TProperty).Name);
+            Append("EqualNode[{0}] ({1})", Tokens<T>(), typeof (TProperty).GetShortName());
 
             return Indent(next);
         }
@@ -120,7 +127,7 @@ namespace OdoyuleRules.Visualization
 
         public override bool Visit<T, TProperty>(CompareNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
         {
-            Append("CompareNode[{0},{1}] {2} {3}", Tokens<T>(), typeof (TProperty).Name, node.Comparator.ToString(),
+            Append("CompareNode[{0},{1}] {2} {3}", Tokens<T>(), typeof (TProperty).GetShortName(), node.Comparator.ToString(),
                    node.Value.ToString());
 
             return Indent(next);
@@ -160,19 +167,7 @@ namespace OdoyuleRules.Visualization
 
         string Tokens<T>()
         {
-            return Tokens(typeof (T));
-        }
-
-        string Tokens(Type type)
-        {
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Token<,>))
-            {
-                Type[] arguments = type.GetGenericArguments();
-
-                return string.Join(",", Tokens(arguments[0]), arguments[1].Name);
-            }
-
-            return type.Name;
+            return typeof (T).Tokens();
         }
 
         bool Indent(Func<RuntimeModelVisitor, bool> next)

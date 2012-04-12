@@ -37,6 +37,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionVersion.cs">
+      <Link>SolutionVersion.cs</Link>
+    </Compile>
     <Compile Include="Compilation\LeftJoinRuleNodeSelector.cs" />
     <Compile Include="Compilation\DiscardRuleNodeSelector.cs" />
     <Compile Include="Compilation\ExpressionNormalizer.cs" />

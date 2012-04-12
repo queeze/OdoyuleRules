@@ -42,7 +42,7 @@ namespace OdoyuleRules.Graphing
 
         public override bool Visit(RulesEngine rulesEngine, Func<RuntimeModelVisitor, bool> next)
         {
-            _current = _vertices.Get(0, id => new Vertex(typeof (RulesEngine), typeof (object), "Rules Engine"));
+            _current = _vertices.Get(0, id => new Vertex(typeof (RulesEngine), typeof (object), "OdoyuleRules"));
 
             return Next(() => base.Visit(rulesEngine, next));
         }

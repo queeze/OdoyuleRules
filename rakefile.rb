@@ -1,15 +1,15 @@
 COPYRIGHT = "Copyright 2011-2012 Chris Patterson, All rights reserved."
 
+require File.dirname(__FILE__) + "/build_support/BuildUtils.rb"
+require File.dirname(__FILE__) + "/build_support/util.rb"
 include FileTest
 require 'albacore'
+require File.dirname(__FILE__) + "/build_support/versioning.rb"
 
 BUILD_NUMBER_BASE = '0.1.0'
 PRODUCT = 'OdoyuleRules'
 CLR_TOOLS_VERSION = 'v4.0.30319'
 OUTPUT_PATH = 'bin/Release'
-
-REVISION = 0
-asm_version = BUILD_NUMBER_BASE + "." + REVISION.to_s
 
 props = {
   :src => File.expand_path("src"),
@@ -23,23 +23,16 @@ desc "Cleans, compiles, il-merges, unit tests, prepares examples, packages zip"
 task :all => [:default, :package]
 
 desc "**Default**, compiles and runs tests"
-task :default => [:clean, :nuget_restore, :compile, :tests, :nuget]
+task :default => [:clean, :nuget_restore, :compile, :tests, :package]
 
 desc "Update the common version information for the build. You can call this task without building."
 assemblyinfo :global_version do |asm|
-  commit_data = get_commit_hash_and_date
-  commit = commit_data[0]
-  commit_date = commit_data[1]
-  build_number = "#{BUILD_NUMBER_BASE}.#{Date.today.strftime('%y%j')}"
-  tc_build_number = ENV["BUILD_NUMBER"]
-  build_number = "#{BUILD_NUMBER_BASE}.#{tc_build_number}" unless tc_build_number.nil?
-
   # Assembly file config
   asm.product_name = PRODUCT
   asm.description = "Odoyule Rules, a .NET rules engine"
-  asm.version = asm_version
-  asm.file_version = build_number
-  asm.custom_attributes :AssemblyInformationalVersion => "#{asm_version}",
+  asm.version = FORMAL_VERSION
+  asm.file_version = FORMAL_VERSION
+  asm.custom_attributes :AssemblyInformationalVersion => "#{BUILD_VERSION}",
 	:ComVisibleAttribute => false,
 	:CLSCompliantAttribute => true
   asm.copyright = COPYRIGHT
@@ -60,7 +53,7 @@ task :clean do
 end
 
 desc "Cleans, versions, compiles the application and generates build_output/."
-task :compile => [:global_version, :build] do
+task :compile => [:versioning, :global_version, :build] do
 	copyOutputFiles File.join(props[:src], "OdoyuleRules/bin/Release"), "OdoyuleRules.{dll,pdb,xml}", File.join(props[:output], 'net-4.0')
 	copyOutputFiles File.join(props[:src], "OdoyuleRules.Visualizer/bin/Release"), "*.{dll,pdb,xml}", File.join(props[:output], 'net-4.0')
 end
@@ -89,13 +82,13 @@ nunit :tests => [:compile] do |nunit|
           nunit.assemblies = FileList[File.join(props[:src], "OdoyuleRules.Tests/bin/Release", "OdoyuleRules.Tests.dll")]
 end
 
-task :package => [:nuget]
+task :package => [:nuget, :zip_output]
 
 desc "ZIPs up the build results."
-zip :zip_output do |zip|
-	zip.directories_to_zip = [props[:stage]]
-	zip.output_file = "OdoyuleRules-#{BUILD_NUMBER_BASE}.zip"
-	zip.output_path = [props[:artifacts]]
+zip :zip_output => [:versioning] do |zip|
+	zip.directories_to_zip = [props[:output]]
+	zip.output_file = "OdoyuleRules-#{NUGET_VERSION}.zip"
+	zip.output_path = props[:artifacts]
 end
 
 desc "Restore NuGet Packages"
@@ -104,13 +97,13 @@ task :nuget_restore do
 end
 
 desc "Builds the nuget package"
-task :nuget => ['create_nuspec'] do
+task :nuget => [:versioning, :create_nuspec] do
 	sh "lib/nuget pack #{props[:artifacts]}/OdoyuleRules.nuspec /Symbols /OutputDirectory #{props[:artifacts]}"
 end
 
 nuspec :create_nuspec do |nuspec|
   nuspec.id = 'OdoyuleRules'
-  nuspec.version = asm_version
+  nuspec.version = NUGET_VERSION
   nuspec.authors = 'Chris Patterson'
   nuspec.description = 'Odoyule Rules, a .NET rules engine'
   nuspec.title = 'OdoyuleRules'
