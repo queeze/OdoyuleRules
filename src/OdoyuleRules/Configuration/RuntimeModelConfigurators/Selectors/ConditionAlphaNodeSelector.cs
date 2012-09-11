@@ -14,8 +14,9 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
     using Compilation;
-    using OdoyuleRules.Models.RuntimeModel;
     using OdoyuleRules.Visualization;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
 
 
     public class ConditionAlphaNodeSelector<T> :

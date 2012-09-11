@@ -13,8 +13,8 @@
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
-    using OdoyuleRules.Models.RuntimeModel;
     using OdoyuleRules.Visualization;
+    using RuntimeModel;
 
 
     public class NotNullNodeSelector<T, TProperty> :

@@ -15,9 +15,9 @@ namespace OdoyuleRules.Tests.ConditionTests
     using System;
     using System.Collections.Generic;
     using Configuration;
-    using Models.RuntimeModel;
-    using Models.SemanticModel;
     using NUnit.Framework;
+    using RuntimeModel;
+    using SemanticModel;
     using Visualizer;
 
 

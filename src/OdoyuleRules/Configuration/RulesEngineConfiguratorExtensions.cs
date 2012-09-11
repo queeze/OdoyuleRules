@@ -15,7 +15,7 @@ namespace OdoyuleRules
     using System;
     using Configuration.RuntimeModelConfigurators;
     using Configuration.SemanticModelConfigurators;
-    using Models.SemanticModel;
+    using SemanticModel;
 
 
     public static class RulesEngineConfiguratorExtensions

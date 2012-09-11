@@ -14,8 +14,8 @@ namespace OdoyuleRules.Tests.ConditionTests
 {
     using System.Collections.Generic;
     using Configuration;
-    using Models.SemanticModel;
     using NUnit.Framework;
+    using SemanticModel;
 
 
     [TestFixture]

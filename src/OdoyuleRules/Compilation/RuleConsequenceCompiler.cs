@@ -12,7 +12,7 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Compilation
 {
-    using Models.SemanticModel;
+    using SemanticModel;
 
 
     public interface RuleConsequenceCompiler :

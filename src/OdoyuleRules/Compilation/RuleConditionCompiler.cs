@@ -13,8 +13,8 @@
 namespace OdoyuleRules.Compilation
 {
     using System;
-    using Models.RuntimeModel;
-    using Models.SemanticModel;
+    using RuntimeModel;
+    using SemanticModel;
 
 
     public interface RuleConditionCompiler :

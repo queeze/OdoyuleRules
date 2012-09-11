@@ -14,7 +14,10 @@ namespace OdoyuleRules.Visualization
 {
     using System;
     using System.Text;
-    using Models.RuntimeModel;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
+    using RuntimeModel.JoinNodes;
+
 
     public class TextRuntimeModelVisitor :
         RuntimeModelVisitorBase

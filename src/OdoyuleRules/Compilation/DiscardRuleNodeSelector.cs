@@ -15,7 +15,8 @@ namespace OdoyuleRules.Compilation
     using System;
     using Configuration.RuntimeModelConfigurators;
     using Internals.Extensions;
-    using Models.RuntimeModel;
+    using RuntimeModel;
+    using RuntimeModel.JoinNodes;
 
 
     public class DiscardRuleNodeSelector<T, TDiscard> :

@@ -14,7 +14,7 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
     using OdoyuleRules.Conditionals;
-    using OdoyuleRules.Models.RuntimeModel;
+    using RuntimeModel;
 
 
     public class CompareNodeSelectorFactory<TValue> :

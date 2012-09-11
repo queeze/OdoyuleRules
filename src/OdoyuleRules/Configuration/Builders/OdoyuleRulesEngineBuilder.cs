@@ -17,6 +17,7 @@ namespace OdoyuleRules.Configuration.Builders
     using Compilation;
     using Internals.Caching;
     using RuntimeModelConfigurators;
+    using SemanticModel;
 
 
     public class OdoyuleRulesEngineBuilder :

@@ -15,8 +15,9 @@ namespace OdoyuleRules.Tests.Declaration
     using System;
     using System.Linq;
     using Configuration;
-    using Models.SemanticModel;
     using NUnit.Framework;
+    using SemanticModel;
+    using SemanticModel.Consequences;
     using Visualization;
     using Visualizer;
 

@@ -14,7 +14,7 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
     using Internals.Extensions;
-    using Models.RuntimeModel;
+    using RuntimeModel;
     using Visualization;
 
 

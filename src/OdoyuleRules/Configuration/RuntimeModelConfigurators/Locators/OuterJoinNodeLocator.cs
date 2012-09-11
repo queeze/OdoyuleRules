@@ -14,7 +14,8 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Locators
 {
     using System;
     using System.Linq;
-    using OdoyuleRules.Models.RuntimeModel;
+    using RuntimeModel;
+    using RuntimeModel.JoinNodes;
 
 
     public class OuterJoinNodeLocator<T1, T2> :

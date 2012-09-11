@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
-    using OdoyuleRules.Models.RuntimeModel;
+    using RuntimeModel;
 
 
     public class ListNodeSelectorFactory<TElement> :

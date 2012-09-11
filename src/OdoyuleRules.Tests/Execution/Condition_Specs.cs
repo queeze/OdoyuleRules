@@ -14,8 +14,11 @@ namespace OdoyuleRules.Tests.Execution
 {
     using Configuration;
     using Configuration.RuntimeModelConfigurators;
-    using Models.RuntimeModel;
     using NUnit.Framework;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
+    using RuntimeModel.JoinNodes;
+
 
     [TestFixture]
     public class When_building_a_network_with_a_condition_node

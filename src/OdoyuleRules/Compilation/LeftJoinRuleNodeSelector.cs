@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Compilation
 {
     using System;
-    using Models.RuntimeModel;
+    using RuntimeModel.JoinNodes;
 
 
     /// <summary>

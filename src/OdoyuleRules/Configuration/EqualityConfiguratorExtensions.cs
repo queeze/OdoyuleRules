@@ -12,7 +12,7 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration
 {
-    using Models.RuntimeModel;
+    using RuntimeModel;
     using RuntimeModelConfigurators;
 
 

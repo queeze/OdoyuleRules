@@ -12,7 +12,7 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
-    using OdoyuleRules.Models.RuntimeModel;
+    using RuntimeModel;
 
 
     public class ShuntNodeSelectorFactory :

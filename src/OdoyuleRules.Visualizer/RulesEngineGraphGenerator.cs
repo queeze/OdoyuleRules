@@ -20,9 +20,11 @@ namespace OdoyuleRules.Visualizer
     using Internals.Caching;
     using Microsoft.Glee.Drawing;
     using Microsoft.Glee.GraphViewerGdi;
-    using Models.RuntimeModel;
     using QuickGraph;
     using QuickGraph.Glee;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
+    using RuntimeModel.JoinNodes;
     using Color = Microsoft.Glee.Drawing.Color;
 
     public class RulesEngineGraphGenerator

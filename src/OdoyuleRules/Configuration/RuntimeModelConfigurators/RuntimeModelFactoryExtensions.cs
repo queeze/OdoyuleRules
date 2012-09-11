@@ -13,7 +13,9 @@
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
 {
     using System;
-    using Models.RuntimeModel;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
+    using RuntimeModel.JoinNodes;
 
 
     public static class RuntimeModelFactoryExtensions

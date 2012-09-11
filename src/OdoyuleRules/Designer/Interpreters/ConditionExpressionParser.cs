@@ -15,7 +15,7 @@ namespace OdoyuleRules.Designer.Interpreters
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using Models.SemanticModel;
+    using SemanticModel;
 
 
     public interface ConditionExpressionParser

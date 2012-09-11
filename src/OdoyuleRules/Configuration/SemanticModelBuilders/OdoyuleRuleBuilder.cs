@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Configuration.SemanticModelBuilders
 {
     using System.Collections.Generic;
-    using Models.SemanticModel;
+    using SemanticModel;
 
 
     public class OdoyuleRuleBuilder :

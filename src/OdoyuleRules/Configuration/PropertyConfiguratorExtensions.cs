@@ -16,7 +16,8 @@ namespace OdoyuleRules.Configuration
     using System.Linq.Expressions;
     using System.Reflection;
     using Internals.Extensions;
-    using Models.RuntimeModel;
+    using RuntimeModel;
+    using RuntimeModel.JoinNodes;
     using RuntimeModelConfigurators;
 
 

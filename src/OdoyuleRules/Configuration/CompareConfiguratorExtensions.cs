@@ -13,8 +13,8 @@
 namespace OdoyuleRules.Configuration
 {
     using System;
-    using Models.RuntimeModel;
     using OdoyuleRules.Conditionals;
+    using RuntimeModel;
     using RuntimeModelConfigurators;
 
 

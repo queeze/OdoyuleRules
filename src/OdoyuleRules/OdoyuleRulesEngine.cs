@@ -17,7 +17,8 @@ namespace OdoyuleRules
     using System.Linq;
     using Configuration.RuntimeModelConfigurators;
     using Internals.Caching;
-    using Models.RuntimeModel;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
 
 
     public class OdoyuleRulesEngine :

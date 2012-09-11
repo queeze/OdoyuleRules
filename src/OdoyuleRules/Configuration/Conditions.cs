@@ -17,7 +17,7 @@ namespace OdoyuleRules.Configuration
     using System.Linq.Expressions;
     using System.Reflection;
     using Internals.Extensions;
-    using Models.SemanticModel;
+    using SemanticModel.Conditions;
 
 
     public static class Conditions

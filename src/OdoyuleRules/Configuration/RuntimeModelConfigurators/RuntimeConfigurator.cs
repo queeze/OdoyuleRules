@@ -14,7 +14,9 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
 {
     using System;
     using System.Reflection;
-    using Models.RuntimeModel;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
+    using RuntimeModel.JoinNodes;
 
 
     public interface RuntimeConfigurator

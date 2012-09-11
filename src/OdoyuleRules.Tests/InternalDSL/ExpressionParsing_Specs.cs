@@ -18,8 +18,10 @@ namespace OdoyuleRules.Tests.InternalDSL
     using System.Linq.Expressions;
     using Designer;
     using Designer.Interpreters;
-    using Models.SemanticModel;
     using NUnit.Framework;
+    using SemanticModel;
+    using SemanticModel.Conditions;
+
 
     [TestFixture]
     public class When_parsing_predicate_expressions

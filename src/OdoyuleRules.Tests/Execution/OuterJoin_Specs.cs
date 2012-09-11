@@ -14,8 +14,11 @@ namespace OdoyuleRules.Tests.Execution
 {
     using System;
     using Configuration.RuntimeModelConfigurators;
-    using Models.RuntimeModel;
     using NUnit.Framework;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
+    using RuntimeModel.JoinNodes;
+
 
     [TestFixture]
     public class When_matching_two_separate_types_into_a_single_token

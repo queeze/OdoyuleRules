@@ -15,7 +15,7 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
     using System.Collections.Generic;
     using Builders;
     using Configurators;
-    using Models.SemanticModel;
+    using SemanticModel;
 
 
     public class SemanticModelRuleConfigurator :

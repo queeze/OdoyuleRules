@@ -13,8 +13,8 @@
 namespace OdoyuleRules.Tests.ConditionTests
 {
     using Configuration;
-    using Models.SemanticModel;
     using NUnit.Framework;
+    using SemanticModel;
 
 
     [TestFixture]

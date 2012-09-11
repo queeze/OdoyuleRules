@@ -17,8 +17,9 @@ namespace OdoyuleRules.Tests
     using System.Linq.Expressions;
     using Configuration.RuntimeModelConfigurators;
     using Configuration.RuntimeModelConfigurators.Selectors;
-    using Models.RuntimeModel;
     using NUnit.Framework;
+    using RuntimeModel;
+
 
     [TestFixture]
     public class When_accessing_a_property

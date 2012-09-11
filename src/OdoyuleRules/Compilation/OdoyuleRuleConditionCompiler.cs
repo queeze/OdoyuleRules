@@ -18,8 +18,10 @@ namespace OdoyuleRules.Compilation
     using Configuration;
     using Configuration.RuntimeModelConfigurators;
     using Configuration.RuntimeModelConfigurators.Selectors;
-    using Models.RuntimeModel;
-    using Models.SemanticModel;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
+    using SemanticModel;
+    using SemanticModel.Conditions;
 
 
     public class OdoyuleRuleConditionCompiler :

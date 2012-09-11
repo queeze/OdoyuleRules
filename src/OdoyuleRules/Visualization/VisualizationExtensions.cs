@@ -14,7 +14,8 @@ namespace OdoyuleRules.Visualization
 {
     using System;
     using System.Linq;
-    using Models.RuntimeModel;
+    using RuntimeModel;
+
 
     public static class VisualizationExtensions
     {

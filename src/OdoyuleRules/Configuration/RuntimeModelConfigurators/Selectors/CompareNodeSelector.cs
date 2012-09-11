@@ -14,8 +14,8 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
     using OdoyuleRules.Conditionals;
-    using OdoyuleRules.Models.RuntimeModel;
     using OdoyuleRules.Visualization;
+    using RuntimeModel;
 
 
     public class CompareNodeSelector<T, TProperty> :

@@ -17,7 +17,7 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
     using System.Linq;
     using Builders;
     using Configurators;
-    using Models.RuntimeModel;
+    using RuntimeModel.JoinNodes;
 
 
     class OdoyuleRulesEngineConfigurator :

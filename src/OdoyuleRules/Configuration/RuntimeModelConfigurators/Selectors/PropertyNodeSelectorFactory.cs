@@ -14,7 +14,7 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
     using System.Reflection;
-    using Models.RuntimeModel;
+    using RuntimeModel;
 
 
     public static class PropertyNodeSelectorFactory

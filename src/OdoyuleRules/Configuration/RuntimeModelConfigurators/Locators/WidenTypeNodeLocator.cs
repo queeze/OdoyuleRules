@@ -13,7 +13,8 @@
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Locators
 {
     using System.Linq;
-    using OdoyuleRules.Models.RuntimeModel;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
 
 
     public class WidenTypeNodeLocator<TInput, TOutput> :

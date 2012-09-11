@@ -18,7 +18,7 @@ namespace OdoyuleRules.Configuration.SemanticModelConfigurators
     using System.Linq.Expressions;
     using Configurators;
     using Designer.Interpreters;
-    using Models.SemanticModel;
+    using SemanticModel;
     using SemanticModelBuilders;
     using Visualization;
 

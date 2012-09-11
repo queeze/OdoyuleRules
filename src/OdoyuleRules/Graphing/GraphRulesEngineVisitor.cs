@@ -15,7 +15,9 @@ namespace OdoyuleRules.Graphing
     using System;
     using System.Collections.Generic;
     using Internals.Caching;
-    using Models.RuntimeModel;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
+    using RuntimeModel.JoinNodes;
     using Visualization;
 
     public class GraphRulesEngineVisitor :

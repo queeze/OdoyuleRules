@@ -18,8 +18,10 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
     using System.Threading;
     using Internals.Caching;
     using Locators;
-    using Models.RuntimeModel;
     using Internals.Extensions;
+    using RuntimeModel;
+    using RuntimeModel.FactNodes;
+    using RuntimeModel.JoinNodes;
 
 
     public class OdoyuleRuntimeConfigurator :

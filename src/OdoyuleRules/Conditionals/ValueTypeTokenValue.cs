@@ -13,7 +13,8 @@
 namespace OdoyuleRules.Conditionals
 {
     using System;
-    using Models.RuntimeModel;
+    using RuntimeModel;
+
 
     public class ValueTypeTokenValue<T, TProperty>
         : Value<TProperty>

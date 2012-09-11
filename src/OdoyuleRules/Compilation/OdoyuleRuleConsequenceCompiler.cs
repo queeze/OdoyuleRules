@@ -15,8 +15,9 @@ namespace OdoyuleRules.Compilation
     using System;
     using Configuration;
     using Configuration.RuntimeModelConfigurators;
-    using Models.RuntimeModel;
-    using Models.SemanticModel;
+    using RuntimeModel;
+    using SemanticModel;
+    using SemanticModel.Consequences;
 
 
     public class OdoyuleRuleConsequenceCompiler :

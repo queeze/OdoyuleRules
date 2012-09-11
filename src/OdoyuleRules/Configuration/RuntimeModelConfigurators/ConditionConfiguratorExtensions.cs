@@ -14,8 +14,8 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
 {
     using System;
     using System.Collections;
-    using Models.RuntimeModel;
     using OdoyuleRules.Conditionals;
+    using RuntimeModel;
 
 
     public static class ConditionConfiguratorExtensions

@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Compilation
 {
     using Configuration.RuntimeModelConfigurators;
-    using Models.SemanticModel;
+    using SemanticModel;
 
 
     public class OdoyuleRuleCompiler :

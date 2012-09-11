@@ -14,6 +14,7 @@ namespace OdoyuleRules.Configuration.Builders
 {
     using System;
     using RuntimeModelConfigurators;
+    using SemanticModel;
 
 
     public interface RulesEngineBuilder

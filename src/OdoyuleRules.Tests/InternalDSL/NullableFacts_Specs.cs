@@ -18,8 +18,8 @@ namespace OdoyuleRules.Tests.InternalDSL
     using System.Reflection;
     using Configuration;
     using Designer;
-    using Models.RuntimeModel;
     using NUnit.Framework;
+    using RuntimeModel.JoinNodes;
     using Visualizer;
 
 

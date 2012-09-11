@@ -14,8 +14,8 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
     using System.Collections.Generic;
-    using OdoyuleRules.Models.RuntimeModel;
     using OdoyuleRules.Visualization;
+    using RuntimeModel;
 
 
     public class EachNodeSelectorFactory<TValue, TElement> :

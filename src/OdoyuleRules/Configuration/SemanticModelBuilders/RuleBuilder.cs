@@ -12,7 +12,7 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration.SemanticModelBuilders
 {
-    using Models.SemanticModel;
+    using SemanticModel;
 
 
     public interface RuleBuilder

@@ -12,7 +12,8 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Conditionals
 {
-    using Models.RuntimeModel;
+    using RuntimeModel;
+
 
     public class NullableTokenValueFactory<T, TProperty> :
         TokenValueFactory<T, TProperty>

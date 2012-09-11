@@ -14,8 +14,8 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
     using System.Collections;
-    using OdoyuleRules.Models.RuntimeModel;
     using OdoyuleRules.Visualization;
+    using RuntimeModel;
 
 
     public class ExistsNodeSelector<T, TProperty> :

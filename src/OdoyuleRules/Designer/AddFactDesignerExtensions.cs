@@ -15,7 +15,7 @@ namespace OdoyuleRules.Designer
     using System;
     using Configuration;
     using Configuration.SemanticModelConfigurators;
-    using Models.SemanticModel;
+    using SemanticModel.Consequences;
 
 
     public static class AddFactDesignerExtensions

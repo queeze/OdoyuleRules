@@ -1,7 +1,7 @@
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
-    using Models.RuntimeModel;
+    using RuntimeModel;
     using Visualization;
 
 
