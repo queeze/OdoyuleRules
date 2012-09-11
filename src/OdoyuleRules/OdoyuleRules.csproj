@@ -37,6 +37,24 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\SemanticModelConfigurators\DelegateRuleConsequenceConfigurator.cs" />
+    <Compile Include="Configuration\SemanticModelConfigurators\RuleConsequenceConfigurator.cs" />
+    <Compile Include="Designer\AddFactDesignerExtensions.cs" />
+    <Compile Include="Designer\DelegateDesignerExtensions.cs" />
+    <Compile Include="Designer\JoinDesigner.cs" />
+    <Compile Include="Designer\Implementations\FactDesignerImpl.cs" />
+    <Compile Include="Designer\Interpreters\ConditionExpressionExtensions.cs" />
+    <Compile Include="Designer\Interpreters\ConditionExpressionParser.cs" />
+    <Compile Include="Designer\Interpreters\ConditionExpressionParserImpl.cs" />
+    <Compile Include="Designer\Interpreters\ConditionExpressionVisitor.cs" />
+    <Compile Include="Designer\Interpreters\LeftHandSideExpressionVisitor.cs" />
+    <Compile Include="Designer\Interpreters\RightHandSideExpressionVisitor.cs" />
+    <Compile Include="Designer\Implementations\JoinDesignerImpl.cs" />
+    <Compile Include="Designer\RuleDefinition.cs" />
+    <Compile Include="Designer\FactDesigner.cs" />
+    <Compile Include="Designer\ThenDesigner.cs" />
+    <Compile Include="Designer\Implementations\ThenDesignerImpl.cs" />
+    <Compile Include="Exceptions\RuleDesignerException.cs" />
     <Compile Include="Internals\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,9 +94,7 @@
     <Compile Include="Conditionals\ValueTypeConverter.cs" />
     <Compile Include="Conditionals\ValueTypeTokenValue.cs" />
     <Compile Include="Conditionals\ValueTypeTokenValueFactory.cs" />
-    <Compile Include="Configuration\AddFactConsequenceExtensions.cs" />
     <Compile Include="Configuration\Configurators\ConfiguratorExtensions.cs" />
-    <Compile Include="Configuration\Designer\DelegateRuleConsequenceConfigurator.cs" />
     <Compile Include="Configuration\EqualityConfiguratorExtensions.cs" />
     <Compile Include="Configuration\PropertyConfiguratorExtensions.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\ConditionConfiguratorExtensions.cs" />
@@ -91,7 +107,6 @@
     <Compile Include="Configuration\SemanticModelBuilders\OdoyuleRuleBuilder.cs" />
     <Compile Include="Configuration\Builders\RulesEngineBuilder.cs" />
     <Compile Include="Configuration\Builders\OdoyuleRulesEngineBuilder.cs" />
-    <Compile Include="Configuration\Designer\MultipleFactBinding.cs" />
     <Compile Include="Exceptions\RulesEngineConfigurationException.cs" />
     <Compile Include="Configuration\Configurators\ConfigurationResult.cs" />
     <Compile Include="Configuration\Configurators\ConfigurationResultImpl.cs" />
@@ -102,16 +117,13 @@
     <Compile Include="Configuration\Configurators\ValidationResultImpl.cs" />
     <Compile Include="Configuration\RulesEngineConfiguratorExtensions.cs" />
     <Compile Include="Configuration\SemanticModelConfigurators\RuleBuilderConfigurator.cs" />
-    <Compile Include="Configuration\DelegateRuleConsequenceExtensions.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\NodeLocator.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\Locators\WidenTypeNodeLocator.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\Locators\OuterJoinNodeLocator.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\Selectors\PropertyExpressionVisitor.cs" />
     <Compile Include="Configuration\SemanticModelConfigurators\RuleConditionConfigurator.cs" />
-    <Compile Include="Configuration\SemanticModelConfigurators\RuleConditionConfiguratorImpl.cs" />
     <Compile Include="Configuration\SemanticModelConfigurators\RuleConfigurator.cs" />
     <Compile Include="Configuration\SemanticModelConfigurators\OdoyuleRuleConfigurator.cs" />
-    <Compile Include="Configuration\SemanticModelConfigurators\RuleConsequenceConfigurator.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\Locators\JoinNodeLocator.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\Locators\LeftJoinNodeLocator.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\RulesEngineBuilderConfigurator.cs" />
@@ -146,19 +158,6 @@
     <Compile Include="Configuration\RuntimeModelConfigurators\Selectors\TypeNodeSelector.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\Selectors\TypeNodeSelectorFactory.cs" />
     <Compile Include="Configuration\RuntimeModelConfigurators\SemanticModelRuleConfigurator.cs" />
-    <Compile Include="Configuration\Designer\Binding.cs" />
-    <Compile Include="Configuration\Designer\FactRuleDefinitionConfigurator.cs" />
-    <Compile Include="Configuration\Designer\ConditionExpressionExtensions.cs" />
-    <Compile Include="Configuration\Designer\ConditionExpressionParser.cs" />
-    <Compile Include="Configuration\Designer\ConditionExpressionParserImpl.cs" />
-    <Compile Include="Configuration\Designer\LeftHandSideExpressionVisitor.cs" />
-    <Compile Include="Configuration\Designer\RightHandSideExpressionVisitor.cs" />
-    <Compile Include="Configuration\Designer\RuleDefinition.cs" />
-    <Compile Include="Configuration\Designer\RuleDefinitionConfigurator.cs" />
-    <Compile Include="Configuration\Designer\RuleConsequenceConfiguratorImpl.cs" />
-    <Compile Include="Configuration\Designer\ConditionExpressionVisitor.cs" />
-    <Compile Include="Configuration\Designer\ThenConfigurator.cs" />
-    <Compile Include="Configuration\Designer\ThenConfiguratorImpl.cs" />
     <Compile Include="FactHandle.cs" />
     <Compile Include="Graphing\Edge.cs" />
     <Compile Include="Graphing\GraphRulesEngineExtensions.cs" />
@@ -278,7 +277,6 @@
     <Compile Include="Visualization\VisualizationExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Configuration\RuleConfigurators\" />
     <Folder Include="Models\RuntimeModel\ProductionNodes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

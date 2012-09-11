@@ -10,20 +10,26 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Configuration
+namespace OdoyuleRules.Designer.Interpreters
 {
-    using System;
-    using Designer;
+    using System.Linq.Expressions;
 
 
-    public static class DelegateRuleConsequenceExtensions
+    public class LeftHandSideExpressionVisitor :
+        ExpressionVisitor
     {
-        public static void Delegate<T>(this ThenConfigurator<T> configurator, Action<T> callback)
-            where T : class
-        {
-            var consequenceConfigurator = new DelegateRuleConsequenceConfigurator<T>(callback);
+        MemberExpression _member;
 
-            configurator.AddConfigurator(consequenceConfigurator);
+        public MemberExpression Member
+        {
+            get { return _member; }
+        }
+
+        protected override Expression VisitMember(MemberExpression node)
+        {
+            _member = node;
+
+            return node;
         }
     }
 }

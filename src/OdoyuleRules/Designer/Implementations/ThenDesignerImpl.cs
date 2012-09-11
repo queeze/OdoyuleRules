@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -10,18 +10,18 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Configuration.Designer
+namespace OdoyuleRules.Designer
 {
-    using SemanticModelConfigurators;
+    using Configuration.SemanticModelConfigurators;
 
 
-    public class ThenConfiguratorImpl<T> :
-        ThenConfigurator<T>
+    public class ThenDesignerImpl<T> :
+        ThenDesigner<T>
         where T : class
     {
         readonly RuleConfigurator _configurator;
 
-        public ThenConfiguratorImpl(RuleConfigurator configurator)
+        public ThenDesignerImpl(RuleConfigurator configurator)
         {
             _configurator = configurator;
         }
@@ -32,14 +32,14 @@ namespace OdoyuleRules.Configuration.Designer
         }
     }
 
-    public class ThenConfiguratorImpl<TLeft, TRight> :
-        ThenConfigurator<TLeft, TRight>
-        where TLeft : class
+    public class ThenDesignerImpl<TLeft, TRight> :
+        ThenDesigner<TLeft, TRight>
         where TRight : class
+        where TLeft : class
     {
         readonly RuleConfigurator _configurator;
 
-        public ThenConfiguratorImpl(RuleConfigurator configurator)
+        public ThenDesignerImpl(RuleConfigurator configurator)
         {
             _configurator = configurator;
         }

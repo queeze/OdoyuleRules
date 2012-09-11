@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -10,17 +10,22 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Configuration.Designer
+namespace OdoyuleRules.Designer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
-    using OdoyuleRules.Models.SemanticModel;
+    using Configuration.SemanticModelConfigurators;
 
 
-    public interface ConditionExpressionParser
+    public interface ThenDesigner<T>
+        where T : class
     {
-        IEnumerable<RuleCondition> Parse<TFact>(Expression<Func<TFact, bool>> expression)
-            where TFact : class;
+        void AddConfigurator(RuleBuilderConfigurator consequenceConfigurator);
+    }
+
+
+    public interface ThenDesigner<TLeft, TRight>
+        where TLeft : class
+        where TRight : class
+    {
+        void AddConfigurator(RuleBuilderConfigurator consequenceConfigurator);
     }
 }

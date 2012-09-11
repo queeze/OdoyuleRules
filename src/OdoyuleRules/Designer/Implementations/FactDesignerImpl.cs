@@ -10,46 +10,45 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Configuration.Designer
+namespace OdoyuleRules.Designer
 {
     using System;
     using System.Linq.Expressions;
-    using SemanticModelConfigurators;
+    using Configuration.SemanticModelConfigurators;
 
 
-    public class FactRuleDefinitionConfigurator<T> :
-        RuleDefinitionConfigurator<T>
+    public class FactDesignerImpl<T> :
+        FactDesigner<T>
         where T : class
     {
         readonly RuleConfigurator _configurator;
 
-        public FactRuleDefinitionConfigurator(RuleConfigurator configurator)
+        public FactDesignerImpl(RuleConfigurator configurator)
         {
             _configurator = configurator;
         }
 
-        public RuleDefinitionConfigurator<T> When(Expression<Func<T, bool>> expression)
+        public FactDesigner<T> When(Expression<Func<T, bool>> expression)
         {
-            var configurator = new RuleConditionConfiguratorImpl<T>(expression);
+            var configurator = new RuleConditionConfigurator<T>(expression);
             _configurator.AddConfigurator(configurator);
 
             return this;
         }
 
-        public Binding<T, TRight> Join<TRight>()
+        public JoinDesigner<T, TRight> Join<TRight>()
             where TRight : class
         {
-            return new MultipleFactBinding<T, TRight>(_configurator);
+            return new JoinDesignerImpl<T, TRight>(_configurator);
         }
 
-        public RuleDefinitionConfigurator<T> Then(Action<ThenConfigurator<T>> configureCallback)
+        public FactDesigner<T> Then(Action<ThenDesigner<T>> configureCallback)
         {
-            var thenConfigurator = new ThenConfiguratorImpl<T>(_configurator);
+            var thenConfigurator = new ThenDesignerImpl<T>(_configurator);
 
             configureCallback(thenConfigurator);
 
             return this;
         }
-
     }
 }

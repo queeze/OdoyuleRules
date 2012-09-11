@@ -10,43 +10,44 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Configuration.Designer
+namespace OdoyuleRules.Designer
 {
     using System;
     using System.Linq.Expressions;
-    using SemanticModelConfigurators;
+    using Configuration.SemanticModelConfigurators;
 
 
-    public class MultipleFactBinding<TLeft, TRight> :
-        Binding<TLeft, TRight>
+    public class JoinDesignerImpl<TLeft, TRight> :
+        JoinDesigner<TLeft, TRight>
         where TLeft : class
         where TRight : class
     {
         readonly RuleConfigurator _configurator;
 
-        public MultipleFactBinding(RuleConfigurator configurator)
+        public JoinDesignerImpl(RuleConfigurator configurator)
         {
             _configurator = configurator;
         }
 
-        public Binding<TLeft, TRight> When(Expression<Func<TLeft, bool>> expression)
+        public JoinDesigner<TLeft, TRight> When(Expression<Func<TLeft, bool>> expression)
         {
-            var configurator = new RuleConditionConfiguratorImpl<TLeft>(expression);
+            var configurator = new RuleConditionConfigurator<TLeft>(expression);
             _configurator.AddConfigurator(configurator);
 
             return this;
         }
 
-        public Binding<TLeft, TRight> When(Expression<Func<TRight, bool>> expression)
+        public JoinDesigner<TLeft, TRight> When(Expression<Func<TRight, bool>> expression)
         {
-            var configurator = new RuleConditionConfiguratorImpl<TRight>(expression);
+            var configurator = new RuleConditionConfigurator<TRight>(expression);
             _configurator.AddConfigurator(configurator);
 
             return this;
         }
 
-        public Binding<TLeft, TRight> When(Expression<Func<TLeft, TRight, bool>> expression)
+        public JoinDesigner<TLeft, TRight> When(Expression<Func<TLeft, TRight, bool>> expression)
         {
+            throw new NotImplementedException("beta network joins are not done yet");
 //            IEnumerable<RuleConditionConfiguratorImpl<Token<TLeft,TRight>>> conditions = expression.ParseConditions()
 //                .Select(x => new RuleConditionConfiguratorImpl<Token<TLeft,TRight>>(x));
 //
@@ -58,27 +59,27 @@ namespace OdoyuleRules.Configuration.Designer
             return this;
         }
 
-        public Binding<TLeft, TRight> Then(Action<ThenConfigurator<TLeft>> leftAction)
+        public JoinDesigner<TLeft, TRight> Then(Action<ThenDesigner<TLeft>> leftAction)
         {
-            var thenConfigurator = new ThenConfiguratorImpl<TLeft>(_configurator);
+            var thenConfigurator = new ThenDesignerImpl<TLeft>(_configurator);
 
             leftAction(thenConfigurator);
 
             return this;
         }
 
-        public Binding<TLeft, TRight> Then(Action<ThenConfigurator<TRight>> rightAction)
+        public JoinDesigner<TLeft, TRight> Then(Action<ThenDesigner<TRight>> rightAction)
         {
-            var thenConfigurator = new ThenConfiguratorImpl<TRight>(_configurator);
+            var thenConfigurator = new ThenDesignerImpl<TRight>(_configurator);
 
             rightAction(thenConfigurator);
 
             return this;
         }
 
-        public Binding<TLeft, TRight> Then(Action<ThenConfigurator<TLeft, TRight>> configureCallback)
+        public JoinDesigner<TLeft, TRight> Then(Action<ThenDesigner<TLeft, TRight>> configureCallback)
         {
-            var thenConfigurator = new ThenConfiguratorImpl<TLeft, TRight>(_configurator);
+            var thenConfigurator = new ThenDesignerImpl<TLeft, TRight>(_configurator);
 
             configureCallback(thenConfigurator);
 

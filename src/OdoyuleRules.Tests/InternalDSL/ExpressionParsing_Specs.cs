@@ -16,7 +16,8 @@ namespace OdoyuleRules.Tests.InternalDSL
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using Configuration.Designer;
+    using Designer;
+    using Designer.Interpreters;
     using Models.SemanticModel;
     using NUnit.Framework;
 
@@ -136,7 +137,7 @@ namespace OdoyuleRules.Tests.InternalDSL
         {
             Expression<Func<B, bool>> expression = x => x.Value > 3 + 4 || x.Value == 16/2;
 
-            Assert.Throws<ArgumentException>(() => { expression.ParseConditions().ToList(); });
+            Assert.Throws<RuleDesignerException>(() => { expression.ParseConditions().ToList(); });
         }
 
 

@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -12,13 +12,32 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration.SemanticModelConfigurators
 {
-    public interface RuleConsequenceConfigurator
-    {
-    }
+    using System.Collections.Generic;
+    using Configurators;
+    using Models.SemanticModel;
+    using SemanticModelBuilders;
 
-    public interface RuleConsequenceConfigurator<T> :
-        RuleConditionConfigurator
+
+    public class RuleConsequenceConfigurator<T> :
+        RuleBuilderConfigurator
         where T : class
     {
+        readonly RuleConsequence<T> _consequence;
+
+        public RuleConsequenceConfigurator(RuleConsequence<T> consequence)
+        {
+            _consequence = consequence;
+        }
+
+        public IEnumerable<ValidationResult> ValidateConfiguration()
+        {
+            if (_consequence == null)
+                yield return this.Failure("Consequence", "must not be null");
+        }
+
+        public void Configure(RuleBuilder builder)
+        {
+            builder.AddConsequence(_consequence);
+        }
     }
 }

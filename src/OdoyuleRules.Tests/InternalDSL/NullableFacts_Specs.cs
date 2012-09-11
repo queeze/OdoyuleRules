@@ -17,7 +17,7 @@ namespace OdoyuleRules.Tests.InternalDSL
     using System.Linq;
     using System.Reflection;
     using Configuration;
-    using Configuration.Designer;
+    using Designer;
     using Models.RuntimeModel;
     using NUnit.Framework;
     using Visualizer;

@@ -56,10 +56,10 @@ namespace OdoyuleRules.Configuration.SemanticModelConfigurators
             _configurators.Add(configurator);
         }
 
-        public RuleDefinitionConfigurator<T> Fact<T>()
+        public FactDesigner<T> Fact<T>()
             where T : class
         {
-            return new FactRuleDefinitionConfigurator<T>(this);
+            return new FactDesignerImpl<T>(this);
         }
 
         public void SetName(string ruleName)

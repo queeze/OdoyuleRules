@@ -10,9 +10,20 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Configuration.Designer
+namespace OdoyuleRules.Designer
 {
-    public interface RuleDefinitionConfigurator
+    using System;
+    using System.Linq.Expressions;
+
+
+    public interface FactDesigner<T> 
+        where T : class
     {
+        FactDesigner<T> When(Expression<Func<T, bool>> expression);
+
+        FactDesigner<T> Then(Action<ThenDesigner<T>> configureCallback);
+
+        JoinDesigner<T, TRight> Join<TRight>()
+            where TRight : class;
     }
 }

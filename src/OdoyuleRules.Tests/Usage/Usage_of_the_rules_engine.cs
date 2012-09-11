@@ -14,7 +14,7 @@ namespace OdoyuleRules.Tests.Usage
 {
     using System.Linq;
     using Configuration;
-    using Configuration.Designer;
+    using Designer;
     using NUnit.Framework;
 
 

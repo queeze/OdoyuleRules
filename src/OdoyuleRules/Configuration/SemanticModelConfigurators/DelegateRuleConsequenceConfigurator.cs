@@ -10,36 +10,42 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Configuration.Designer
+namespace OdoyuleRules.Configuration.SemanticModelConfigurators
 {
+    using System;
     using System.Collections.Generic;
     using Configurators;
     using Models.SemanticModel;
     using SemanticModelBuilders;
-    using SemanticModelConfigurators;
 
 
-    public class RuleConsequenceConfiguratorImpl<T> :
-        RuleConsequenceConfigurator<T>,
+    public class DelegateRuleConsequenceConfigurator<T> :
         RuleBuilderConfigurator
         where T : class
     {
-        readonly RuleConsequence<T> _consequence;
+        readonly Action<Session, T> _callback;
 
-        public RuleConsequenceConfiguratorImpl(RuleConsequence<T> consequence)
+        public DelegateRuleConsequenceConfigurator(Action<Session, T> callback)
         {
-            _consequence = consequence;
+            _callback = callback;
+        }
+
+        public DelegateRuleConsequenceConfigurator(Action<T> callback)
+        {
+            _callback = (session, fact) => callback(fact);
         }
 
         public IEnumerable<ValidationResult> ValidateConfiguration()
         {
-            if (_consequence == null)
-                yield return this.Failure("Consequence", "must not be null");
+            if (_callback == null)
+                yield return this.Failure("Delegate", "must not be null");
         }
 
         public void Configure(RuleBuilder builder)
         {
-            builder.AddConsequence(_consequence);
+            DelegateConsequence<T> consequence = Consequences.Delegate(_callback);
+
+            builder.AddConsequence(consequence);
         }
     }
 }

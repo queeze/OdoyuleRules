@@ -12,14 +12,51 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration.SemanticModelConfigurators
 {
-    public interface RuleConditionConfigurator
-    {
-    }
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using Configurators;
+    using Designer.Interpreters;
+    using Models.SemanticModel;
+    using SemanticModelBuilders;
+    using Visualization;
 
 
-    public interface RuleConditionConfigurator<T> :
-        RuleConditionConfigurator
+    public class RuleConditionConfigurator<T> :
+        RuleBuilderConfigurator
         where T : class
     {
+        readonly IList<RuleCondition<T>> _conditions;
+        readonly Expression<Func<T, bool>> _expression;
+
+        public RuleConditionConfigurator(Expression<Func<T, bool>> expression)
+        {
+            _conditions = new List<RuleCondition<T>>();
+
+            _expression = expression;
+        }
+
+        public IEnumerable<ValidationResult> ValidateConfiguration()
+        {
+            RuleCondition[] conditions = _expression.ParseConditions().ToArray();
+
+            foreach (RuleCondition condition in conditions)
+            {
+                var ruleCondition = condition as RuleCondition<T>;
+                if (ruleCondition != null)
+                    _conditions.Add(ruleCondition);
+                else
+                    yield return this.Failure("Condition", "Must match expression type: " + typeof (T).GetShortName());
+            }
+        }
+
+        public void Configure(RuleBuilder builder)
+        {
+            foreach (var condition in _conditions)
+            {
+                builder.AddCondition(condition);
+            }
+        }
     }
 }

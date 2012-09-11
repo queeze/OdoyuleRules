@@ -1,4 +1,4 @@
-﻿// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -10,15 +10,15 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Configuration.Designer
+namespace OdoyuleRules.Designer.Interpreters
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq.Expressions;
     using System.Reflection;
-    using OdoyuleRules.Models.SemanticModel;
-    using OdoyuleRules.Visualization;
+    using Models.SemanticModel;
+    using Visualization;
 
 
     public class ConditionExpressionVisitor<TFact> :
@@ -43,10 +43,10 @@ namespace OdoyuleRules.Configuration.Designer
             if (node.Parameters.Count == 1)
             {
                 if (node.Body.Type != typeof (bool))
-                    throw new ArgumentException("A when condition must evaluate to a boolean result");
+                    throw new RuleDesignerException("A when condition must evaluate to a boolean result");
 
                 if (node.Parameters[0].Type != typeof (TFact))
-                    throw new ArgumentException("The fact type did not match the expression: "
+                    throw new RuleDesignerException("The fact type did not match the expression: "
                                                 + typeof (TFact).GetShortName());
 
                 _parameter = node.Parameters[0];
@@ -62,10 +62,10 @@ namespace OdoyuleRules.Configuration.Designer
                 case ExpressionType.Or:
                 case ExpressionType.OrAssign:
                 case ExpressionType.OrElse:
-                    throw new ArgumentException("Or conditions are not yet supported.");
+                    throw new RuleDesignerException("Or conditions are not yet supported.");
 
                 case ExpressionType.NotEqual:
-                    throw new ArgumentException("Not equal is not yet supported");
+                    throw new RuleDesignerException("Not equal is not yet supported");
 
                 case ExpressionType.Equal:
                     return ParseBinaryCondition(node, typeof (PropertyEqualCondition<,>));
@@ -102,7 +102,7 @@ namespace OdoyuleRules.Configuration.Designer
 
         protected override Expression VisitMember(MemberExpression node)
         {
-            if(node.Type == typeof(bool))
+            if (node.Type == typeof (bool))
             {
                 Visit(Expression.MakeBinary(ExpressionType.Equal, node, Expression.Constant(true)));
                 return node;
@@ -117,12 +117,12 @@ namespace OdoyuleRules.Configuration.Designer
             var leftVisitor = new LeftHandSideExpressionVisitor();
             leftVisitor.Visit(node.Left);
 
-            if(leftVisitor.Member == null)
-                throw new ArgumentException("The left-hand side must be a member expression");
+            if (leftVisitor.Member == null)
+                throw new RuleDesignerException("The left-hand side must be a member expression");
 
             var propertyInfo = leftVisitor.Member.Member as PropertyInfo;
             if (propertyInfo == null)
-                throw new ArgumentException();
+                throw new RuleDesignerException("The left-hand side must be a property");
 
             var valueVisitor = new RightHandSideExpressionVisitor();
             valueVisitor.Visit(node.Right);
@@ -130,7 +130,7 @@ namespace OdoyuleRules.Configuration.Designer
             object value = valueVisitor.Value;
 
             if (_parameter == null)
-                throw new ArgumentException("The fact was not an input parameter to the expression");
+                throw new RuleDesignerException("The fact was not an input parameter to the expression");
 
             Type valueType = value.GetType();
 

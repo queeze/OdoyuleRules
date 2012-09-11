@@ -21,7 +21,7 @@ namespace OdoyuleRules.Configuration.SemanticModelConfigurators
 
         void AddConfigurator(RuleBuilderConfigurator configurator);
 
-        RuleDefinitionConfigurator<T> Fact<T>()
+        FactDesigner<T> Fact<T>()
             where T : class;
     }
 }

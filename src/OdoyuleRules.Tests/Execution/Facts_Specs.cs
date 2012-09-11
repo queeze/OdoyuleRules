@@ -14,7 +14,7 @@ namespace OdoyuleRules.Tests.Execution
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Configuration.Designer;
+    using Designer;
     using NUnit.Framework;
 
 
