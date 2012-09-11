@@ -63,6 +63,22 @@ namespace OdoyuleRules.Tests.InternalDSL
         }
 
         [Test]
+        public void Should_be_able_to_handle_null_higher_value()
+        {
+            var segment = new SegmentImpl();
+
+            using (Session session = _engine.CreateSession())
+            {
+                session.Add<Segment>(segment);
+                session.Run();
+
+                List<FactHandle<Route>> routes = session.Facts<Route>().ToList();
+
+                Assert.AreEqual(0, routes.Count);
+            }
+        }
+
+        [Test]
         public void Should_be_able_to_handle_a_nullable_value_type()
         {
             using (Session session = _engine.CreateSession())

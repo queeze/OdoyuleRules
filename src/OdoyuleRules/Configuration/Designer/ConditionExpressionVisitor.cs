@@ -14,6 +14,7 @@ namespace OdoyuleRules.Configuration.Designer
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq.Expressions;
     using System.Reflection;
     using OdoyuleRules.Models.SemanticModel;
@@ -130,6 +131,17 @@ namespace OdoyuleRules.Configuration.Designer
 
             if (_parameter == null)
                 throw new ArgumentException("The fact was not an input parameter to the expression");
+
+            Type valueType = value.GetType();
+
+            if (valueType != propertyInfo.PropertyType)
+            {
+                TypeConverter fromConverter = TypeDescriptor.GetConverter(valueType);
+                if (fromConverter.CanConvertTo(propertyInfo.PropertyType))
+                {
+                    value = fromConverter.ConvertTo(value, propertyInfo.PropertyType);
+                }
+            }
 
             var args = new[]
                 {

@@ -70,20 +70,29 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
     {
         readonly RuntimeConfigurator _configurator;
         readonly NodeSelector _next;
+        readonly PropertyInfo _property;
         readonly PropertySelector<TProperty, TValue> _propertySelector;
         PropertyNode<T, TProperty, TValue> _node;
 
         public PropertyNodeSelector(RuntimeConfigurator configurator, NodeSelectorFactory nextSelectorFactory,
             PropertyInfo property, PropertySelector<TProperty, TValue> propertySelector)
         {
-            _next = nextSelectorFactory.Create<Token<T, TValue>>();
+            if (configurator == null) throw new ArgumentNullException("configurator");
+            if (property == null) throw new ArgumentNullException("property");
+            if (propertySelector == null) throw new ArgumentNullException("propertySelector");
+
+            if (nextSelectorFactory != null)
+                _next = nextSelectorFactory.Create<Token<T, TValue>>();
+
             _configurator = configurator;
             _propertySelector = propertySelector;
-
-            Property = property;
+            _property = property;
         }
 
-        public PropertyInfo Property { get; private set; }
+        public PropertyInfo Property
+        {
+            get { return _property; }
+        }
 
         public NodeSelector Next
         {
@@ -114,7 +123,8 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
                 _node = propertyNode;
             }
 
-            _next.Select(_node);
+            if (_next != null)
+                _next.Select(_node);
         }
 
         public void Select<TNode>(MemoryNode<TNode> node) where TNode : class
@@ -137,7 +147,8 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
                 _node = propertyNode;
             }
 
-            _next.Select(_node);
+            if (_next != null)
+                _next.Select(_node);
         }
 
         public override string ToString()
@@ -172,20 +183,29 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
     {
         readonly RuntimeConfigurator _configurator;
         readonly NodeSelector _next;
+        readonly PropertyInfo _property;
         readonly PropertySelector<TProperty, TValue> _propertySelector;
         Node<Token<Token<T1, T2>, TValue>> _node;
 
         public PropertyNodeSelector(RuntimeConfigurator configurator, NodeSelectorFactory nextSelectorFactory,
             PropertyInfo property, PropertySelector<TProperty, TValue> propertySelector)
         {
-            _next = nextSelectorFactory.Create<Token<Token<T1, T2>, TValue>>();
+            if (configurator == null) throw new ArgumentNullException("configurator");
+            if (property == null) throw new ArgumentNullException("property");
+            if (propertySelector == null) throw new ArgumentNullException("propertySelector");
+
             _configurator = configurator;
             _propertySelector = propertySelector;
+            _property = property;
 
-            Property = property;
+            if (nextSelectorFactory != null)
+                _next = nextSelectorFactory.Create<Token<Token<T1, T2>, TValue>>();
         }
 
-        public PropertyInfo Property { get; private set; }
+        public PropertyInfo Property
+        {
+            get { return _property; }
+        }
 
         public NodeSelector Next
         {
@@ -204,13 +224,14 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 
             if (_node == null)
             {
-                var fastProperty = new ReadOnlyProperty<T2, TProperty>(Property);
+                var fastProperty = new ReadOnlyProperty<T2, TProperty>(_property);
 
-                Activation<Token<T1, T2>> propertyNode = _configurator.Property<T1, T2, TProperty>(Property, (x, next) =>
-                    {
-                        if (x.Item2 != null)
-                            next(fastProperty.Get(x.Item2));
-                    });
+                Activation<Token<T1, T2>> propertyNode = _configurator.Property<T1, T2, TProperty>(_property,
+                    (x, next) =>
+                        {
+                            if (x.Item2 != null)
+                                next(fastProperty.Get(x.Item2));
+                        });
 
                 var parentNode = node as Node<Token<T1, T2>>;
                 if (parentNode == null)
@@ -232,13 +253,14 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 
             if (_node == null)
             {
-                var fastProperty = new ReadOnlyProperty<T2, TProperty>(Property);
+                var fastProperty = new ReadOnlyProperty<T2, TProperty>(_property);
 
-                Activation<Token<T1, T2>> propertyNode = _configurator.Property<T1, T2, TProperty>(Property, (x, next) =>
-                {
-                    if (x.Item2 != null)
-                        next(fastProperty.Get(x.Item2));
-                });
+                Activation<Token<T1, T2>> propertyNode = _configurator.Property<T1, T2, TProperty>(_property,
+                    (x, next) =>
+                        {
+                            if (x.Item2 != null)
+                                next(fastProperty.Get(x.Item2));
+                        });
 
                 var parentNode = node as MemoryNode<Token<T1, T2>>;
                 if (parentNode == null)
@@ -254,7 +276,7 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 
         public override string ToString()
         {
-            return string.Format("Property: [{0}], {1} => {2}", typeof (Token<T1, T2>).Tokens(), Property.Name,
+            return string.Format("Property: [{0}], {1} => {2}", typeof(Token<T1, T2>).Tokens(), _property.Name,
                 typeof (TProperty).Name);
         }
 
