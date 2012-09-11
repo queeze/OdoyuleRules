@@ -5,7 +5,6 @@
     using Configuration;
     using NUnit.Framework;
     using SemanticModel;
-    using SemanticModel.Consequences;
     using Visualization;
     using Visualizer;
 
@@ -109,8 +108,8 @@
                     consequence1,
                 };
 
-            _rule = new OdoyuleRule("RuleA", conditions, consequences);
-            _rule2 = new OdoyuleRule("RuleB", conditions, consequences);
+            _rule = new SemanticRule("RuleA", conditions, consequences);
+            _rule2 = new SemanticRule("RuleB", conditions, consequences);
         }
 
         class Customer

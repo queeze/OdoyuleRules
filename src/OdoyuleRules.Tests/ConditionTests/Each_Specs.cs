@@ -101,7 +101,7 @@ namespace OdoyuleRules.Tests.ConditionTests
                     Consequences.Delegate((Token<Token<Order, IList<OrderLine>>, Tuple<OrderLine, int>> x) => _results.Add(x.Item2))
                 };
 
-            Rule rule = new OdoyuleRule("RuleA", conditions, consequences);
+            Rule rule = new SemanticRule("RuleA", conditions, consequences);
 
             _engine = RulesEngineFactory.New(x => x.Add(rule));
         }

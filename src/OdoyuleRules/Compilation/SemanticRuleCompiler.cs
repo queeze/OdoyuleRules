@@ -33,7 +33,7 @@ namespace OdoyuleRules.Compilation
 
         void CompileRule(Rule rule)
         {
-            RuleConditionCompiler conditionCompiler = new SemanticModelRuleConditionCompiler(_configurator);
+            RuleConditionCompiler conditionCompiler = new SemanticRuleConditionCompiler(_configurator);
 
             foreach (RuleCondition condition in rule.Conditions)
             {

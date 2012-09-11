@@ -51,7 +51,7 @@ namespace OdoyuleRules.Configuration.SemanticModelBuilders
             if (string.IsNullOrEmpty(_ruleName))
                 throw new RulesEngineConfigurationException("Rule name was not set by configurator");
 
-            return new OdoyuleRule(_ruleName, _conditions, _consequences);
+            return new SemanticRule(_ruleName, _conditions, _consequences);
         }
     }
 }

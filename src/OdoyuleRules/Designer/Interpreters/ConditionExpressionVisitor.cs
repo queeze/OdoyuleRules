@@ -18,7 +18,6 @@ namespace OdoyuleRules.Designer.Interpreters
     using System.Linq.Expressions;
     using System.Reflection;
     using SemanticModel;
-    using SemanticModel.Conditions;
     using Visualization;
 
 

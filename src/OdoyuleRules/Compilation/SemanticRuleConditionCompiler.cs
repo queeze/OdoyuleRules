@@ -21,24 +21,23 @@ namespace OdoyuleRules.Compilation
     using RuntimeModel;
     using RuntimeModel.Nodes;
     using SemanticModel;
-    using SemanticModel.Conditions;
 
 
-    public class SemanticModelRuleConditionCompiler :
-        SemanticModelVisitorBase,
+    public class SemanticRuleConditionCompiler :
+        SemanticVisitorBase,
         RuleConditionCompiler
     {
         readonly IList<RuleNodeSelector> _alphaNodes;
         readonly RuntimeConfigurator _configurator;
 
-        public SemanticModelRuleConditionCompiler(RuntimeConfigurator configurator)
+        public SemanticRuleConditionCompiler(RuntimeConfigurator configurator)
         {
             _configurator = configurator;
             _alphaNodes = new List<RuleNodeSelector>();
         }
 
         public override bool Visit<T, TProperty>(PropertyNotNullCondition<T, TProperty> condition,
-            Func<SemanticModelVisitor, bool> next)
+            Func<SemanticVisitor, bool> next)
         {
             Compile(condition.PropertyExpression, x => new NotNullNodeSelectorFactory<TProperty>(x, _configurator));
 
@@ -46,7 +45,7 @@ namespace OdoyuleRules.Compilation
         }
 
         public override bool Visit<T, TProperty>(PropertyEqualCondition<T, TProperty> condition,
-            Func<SemanticModelVisitor, bool> next)
+            Func<SemanticVisitor, bool> next)
         {
             Compile(condition.PropertyExpression, x => new EqualNodeSelectorFactory(x, _configurator, condition.Value));
 
@@ -54,7 +53,7 @@ namespace OdoyuleRules.Compilation
         }
 
         public override bool Visit<T, TProperty>(PropertyNotEqualCondition<T, TProperty> condition,
-            Func<SemanticModelVisitor, bool> next)
+            Func<SemanticVisitor, bool> next)
         {
             Compile(condition.PropertyExpression,
                 x => new NotEqualNodeSelectorFactory<TProperty>(x, _configurator, condition.Value));
@@ -63,7 +62,7 @@ namespace OdoyuleRules.Compilation
         }
 
         public override bool Visit<T, TProperty>(PropertyGreaterThanCondition<T, TProperty> condition,
-            Func<SemanticModelVisitor, bool> next)
+            Func<SemanticVisitor, bool> next)
         {
             CompareNode<T, TProperty> compareNode = _configurator.GreaterThan<T, TProperty>(condition.Value);
 
@@ -73,7 +72,7 @@ namespace OdoyuleRules.Compilation
         }
 
         public override bool Visit<T, TProperty>(PropertyGreaterThanOrEqualCondition<T, TProperty> condition,
-            Func<SemanticModelVisitor, bool> next)
+            Func<SemanticVisitor, bool> next)
         {
             CompareNode<T, TProperty> compareNode = _configurator.GreaterThanOrEqual<T, TProperty>(condition.Value);
 
@@ -83,7 +82,7 @@ namespace OdoyuleRules.Compilation
         }
 
         public override bool Visit<T, TProperty>(PropertyLessThanCondition<T, TProperty> condition,
-            Func<SemanticModelVisitor, bool> next)
+            Func<SemanticVisitor, bool> next)
         {
             CompareNode<T, TProperty> compareNode = _configurator.LessThan<T, TProperty>(condition.Value);
 
@@ -93,7 +92,7 @@ namespace OdoyuleRules.Compilation
         }
 
         public override bool Visit<T, TProperty>(PropertyLessThanOrEqualCondition<T, TProperty> condition,
-            Func<SemanticModelVisitor, bool> next)
+            Func<SemanticVisitor, bool> next)
         {
             CompareNode<T, TProperty> compareNode = _configurator.LessThanOrEqual<T, TProperty>(condition.Value);
 
@@ -103,7 +102,7 @@ namespace OdoyuleRules.Compilation
         }
 
         public override bool Visit<T, TProperty>(PropertyExistsCondition<T, TProperty> condition,
-            Func<SemanticModelVisitor, bool> next)
+            Func<SemanticVisitor, bool> next)
         {
             Compile(condition.PropertyExpression,
                 x => new ExistsNodeSelectorFactory<TProperty>(x, _configurator));
@@ -112,7 +111,7 @@ namespace OdoyuleRules.Compilation
         }
 
         public override bool Visit<T, TProperty, TElement>(PropertyEachCondition<T, TProperty, TElement> condition,
-            Func<SemanticModelVisitor, bool> next)
+            Func<SemanticVisitor, bool> next)
         {
             Compile(condition.PropertyExpression,
                 x => new EachNodeSelectorFactory<TProperty, TElement>(x, _configurator));

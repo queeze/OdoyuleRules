@@ -20,7 +20,6 @@ namespace OdoyuleRules.Tests.InternalDSL
     using Designer.Interpreters;
     using NUnit.Framework;
     using SemanticModel;
-    using SemanticModel.Conditions;
 
 
     [TestFixture]

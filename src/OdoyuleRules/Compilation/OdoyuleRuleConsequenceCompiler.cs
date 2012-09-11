@@ -18,11 +18,10 @@ namespace OdoyuleRules.Compilation
     using RuntimeModel;
     using RuntimeModel.Nodes;
     using SemanticModel;
-    using SemanticModel.Consequences;
 
 
     public class OdoyuleRuleConsequenceCompiler :
-        SemanticModelVisitorBase,
+        SemanticVisitorBase,
         RuleConsequenceCompiler
     {
         readonly RuleConditionCompiler _conditionCompiler;
@@ -34,7 +33,7 @@ namespace OdoyuleRules.Compilation
             _conditionCompiler = conditionCompiler;
         }
 
-        public override bool Visit<T>(DelegateConsequence<T> consequence, Func<SemanticModelVisitor, bool> next)
+        public override bool Visit<T>(DelegateConsequence<T> consequence, Func<SemanticVisitor, bool> next)
         {
             _conditionCompiler.MatchJoinNode<T>(joinNode =>
                 {
@@ -46,7 +45,7 @@ namespace OdoyuleRules.Compilation
         }
 
         public override bool Visit<T, TFact>(AddFactConsequence<T, TFact> consequence,
-            Func<SemanticModelVisitor, bool> next)
+            Func<SemanticVisitor, bool> next)
         {
             _conditionCompiler.MatchJoinNode<T>(joinNode =>
                 {

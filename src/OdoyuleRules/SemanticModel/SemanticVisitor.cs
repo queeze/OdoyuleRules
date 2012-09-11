@@ -14,66 +14,64 @@ namespace OdoyuleRules.SemanticModel
 {
     using System;
     using System.Collections;
-    using Conditions;
-    using Consequences;
 
 
-    public interface SemanticModelVisitor
+    public interface SemanticVisitor
     {
-        bool Visit(Rule rule, Func<SemanticModelVisitor, bool> next);
+        bool Visit(Rule rule, Func<SemanticVisitor, bool> next);
 
-        bool Visit<T, TProperty>(PropertyEqualCondition<T, TProperty> condition, Func<SemanticModelVisitor, bool> next)
+        bool Visit<T, TProperty>(PropertyEqualCondition<T, TProperty> condition, Func<SemanticVisitor, bool> next)
             where T : class;
 
-        bool Visit<T, TProperty>(PropertyCompareCondition<T, TProperty> condition, Func<SemanticModelVisitor, bool> next)
+        bool Visit<T, TProperty>(PropertyCompareCondition<T, TProperty> condition, Func<SemanticVisitor, bool> next)
             where T : class;
 
 
         bool Visit<T, TProperty>(PropertyNotEqualCondition<T, TProperty> condition,
-                                 Func<SemanticModelVisitor, bool> next)
+                                 Func<SemanticVisitor, bool> next)
             where T : class;
 
         bool Visit<T, TProperty>(PropertyLessThanCondition<T, TProperty> condition,
-                                 Func<SemanticModelVisitor, bool> next)
+                                 Func<SemanticVisitor, bool> next)
             where T : class
             where TProperty : IComparable<TProperty>;
 
         bool Visit<T, TProperty>(PropertyLessThanOrEqualCondition<T, TProperty> condition,
-                                 Func<SemanticModelVisitor, bool> next)
+                                 Func<SemanticVisitor, bool> next)
             where T : class
             where TProperty : IComparable<TProperty>;
 
         bool Visit<T, TProperty>(PropertyGreaterThanCondition<T, TProperty> condition,
-                                 Func<SemanticModelVisitor, bool> next)
+                                 Func<SemanticVisitor, bool> next)
             where T : class
             where TProperty : IComparable<TProperty>;
 
         bool Visit<T, TProperty>(PropertyGreaterThanOrEqualCondition<T, TProperty> condition,
-                                 Func<SemanticModelVisitor, bool> next)
+                                 Func<SemanticVisitor, bool> next)
             where T : class
             where TProperty : IComparable<TProperty>;
 
         bool Visit<T, TProperty>(PropertyNotNullCondition<T, TProperty> condition,
-                                 Func<SemanticModelVisitor, bool> next)
+                                 Func<SemanticVisitor, bool> next)
             where T : class;
 
         bool Visit<T, TProperty>(PropertyExistsCondition<T, TProperty> condition,
-                                 Func<SemanticModelVisitor, bool> next)
+                                 Func<SemanticVisitor, bool> next)
             where T : class 
             where TProperty : class, IEnumerable;
 
         bool Visit<T, TProperty, TElement>(PropertyEachCondition<T, TProperty, TElement> condition,
-                                 Func<SemanticModelVisitor, bool> next)
+                                 Func<SemanticVisitor, bool> next)
             where T : class 
             where TProperty : class, IEnumerable;
 
-        bool Visit<T>(PredicateCondition<T> condition, Func<SemanticModelVisitor, bool> next)
+        bool Visit<T>(PredicateCondition<T> condition, Func<SemanticVisitor, bool> next)
             where T : class;
 
-        bool Visit<T>(DelegateConsequence<T> consequence, Func<SemanticModelVisitor, bool> next)
+        bool Visit<T>(DelegateConsequence<T> consequence, Func<SemanticVisitor, bool> next)
             where T : class;
 
-        bool Visit<T,TFact>(AddFactConsequence<T,TFact> consequence, Func<SemanticModelVisitor, bool> next)
+        bool Visit<T,TFact>(AddFactConsequence<T,TFact> consequence, Func<SemanticVisitor, bool> next)
             where T : class 
             where TFact : class;
     }

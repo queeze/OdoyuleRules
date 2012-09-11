@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Configuration
 {
     using System;
-    using SemanticModel.Consequences;
+    using SemanticModel;
 
 
     public static class Consequences

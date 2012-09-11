@@ -73,7 +73,7 @@
     <Compile Include="Compilation\SemanticRuleCompiler.cs" />
     <Compile Include="Compilation\RuleCompiler.cs" />
     <Compile Include="Compilation\RuleConditionCompiler.cs" />
-    <Compile Include="Compilation\SemanticModelRuleConditionCompiler.cs" />
+    <Compile Include="Compilation\SemanticRuleConditionCompiler.cs" />
     <Compile Include="Compilation\RuleConsequenceCompiler.cs" />
     <Compile Include="Compilation\OdoyuleRuleConsequenceCompiler.cs" />
     <Compile Include="Compilation\RuleNodeSelector.cs" />
@@ -268,13 +268,13 @@
     <Compile Include="SemanticModel\Conditions\PropertyNotNullCondition.cs" />
     <Compile Include="SemanticModel\Consequences\AddFactConsequence.cs" />
     <Compile Include="SemanticModel\Consequences\DelegateConsequence.cs" />
-    <Compile Include="SemanticModel\OdoyuleRule.cs" />
+    <Compile Include="SemanticModel\SemanticRule.cs" />
     <Compile Include="SemanticModel\Rule.cs" />
     <Compile Include="SemanticModel\RuleCondition.cs" />
     <Compile Include="SemanticModel\RuleConsequence.cs" />
-    <Compile Include="SemanticModel\SemanticModelVisitor.cs" />
-    <Compile Include="SemanticModel\SemanticModelVisitorBase.cs" />
-    <Compile Include="SemanticModel\SemanticModelVisitorSite.cs" />
+    <Compile Include="SemanticModel\SemanticVisitor.cs" />
+    <Compile Include="SemanticModel\SemanticVisitorBase.cs" />
+    <Compile Include="SemanticModel\AcceptSemanticVisitor.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Visualization\TextRuntimeVisitor.cs" />
     <Compile Include="Visualization\VisualizationExtensions.cs" />

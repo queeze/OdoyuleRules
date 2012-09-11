@@ -10,7 +10,7 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.SemanticModel.Conditions
+namespace OdoyuleRules.SemanticModel
 {
     using System;
 
@@ -59,7 +59,7 @@ namespace OdoyuleRules.SemanticModel.Conditions
             return (_predicate != null ? _predicate.GetHashCode() : 0);
         }
 
-        public bool Accept(SemanticModelVisitor visitor)
+        public bool Accept(SemanticVisitor visitor)
         {
             return visitor.Visit(this, x => true);
         }

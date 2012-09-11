@@ -17,7 +17,6 @@ namespace OdoyuleRules.Tests.Declaration
     using Configuration;
     using NUnit.Framework;
     using SemanticModel;
-    using SemanticModel.Consequences;
     using Visualization;
     using Visualizer;
 
@@ -149,8 +148,8 @@ namespace OdoyuleRules.Tests.Declaration
                     consequence1,
                 };
 
-            _rule = new OdoyuleRule("RuleA", conditions, consequences);
-            _rule2 = new OdoyuleRule("RuleB", conditions, consequences);
+            _rule = new SemanticRule("RuleA", conditions, consequences);
+            _rule2 = new SemanticRule("RuleB", conditions, consequences);
 
             conditions = new RuleCondition[]
                 {
@@ -163,7 +162,7 @@ namespace OdoyuleRules.Tests.Declaration
                     consequence2,
                 };
 
-            _rule3 = new OdoyuleRule("RuleC", conditions, consequences);
+            _rule3 = new SemanticRule("RuleC", conditions, consequences);
         }
 
         class Order

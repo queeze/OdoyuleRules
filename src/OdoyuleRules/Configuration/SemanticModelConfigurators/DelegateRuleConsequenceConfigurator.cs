@@ -15,7 +15,7 @@ namespace OdoyuleRules.Configuration.SemanticModelConfigurators
     using System;
     using System.Collections.Generic;
     using Configurators;
-    using SemanticModel.Consequences;
+    using SemanticModel;
     using SemanticModelBuilders;
 
 

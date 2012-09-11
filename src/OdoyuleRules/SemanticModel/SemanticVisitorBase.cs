@@ -14,41 +14,39 @@ namespace OdoyuleRules.SemanticModel
 {
     using System;
     using System.Collections;
-    using Conditions;
-    using Consequences;
 
 
-    public abstract class SemanticModelVisitorBase :
-        SemanticModelVisitor
+    public abstract class SemanticVisitorBase :
+        SemanticVisitor
     {
-        public virtual bool Visit(Rule rule, Func<SemanticModelVisitor, bool> next)
+        public virtual bool Visit(Rule rule, Func<SemanticVisitor, bool> next)
         {
             return next(this);
         }
 
         public virtual bool Visit<T, TProperty>(PropertyEqualCondition<T, TProperty> condition,
-                                                Func<SemanticModelVisitor, bool> next)
+                                                Func<SemanticVisitor, bool> next)
             where T : class
         {
             return next(this);
         }
 
         public virtual bool Visit<T, TProperty>(PropertyCompareCondition<T, TProperty> condition,
-                                        Func<SemanticModelVisitor, bool> next)
+                                        Func<SemanticVisitor, bool> next)
             where T : class
         {
             return next(this);
         }
 
         public virtual bool Visit<T, TProperty>(PropertyNotEqualCondition<T, TProperty> condition,
-                                                Func<SemanticModelVisitor, bool> next)
+                                                Func<SemanticVisitor, bool> next)
             where T : class
         {
             return next(this);
         }
 
         public virtual bool Visit<T, TProperty>(PropertyLessThanCondition<T, TProperty> condition,
-                                                Func<SemanticModelVisitor, bool> next)
+                                                Func<SemanticVisitor, bool> next)
             where T : class
             where TProperty : IComparable<TProperty>
         {
@@ -56,7 +54,7 @@ namespace OdoyuleRules.SemanticModel
         }
 
         public virtual bool Visit<T, TProperty>(PropertyLessThanOrEqualCondition<T, TProperty> condition,
-                                                Func<SemanticModelVisitor, bool> next)
+                                                Func<SemanticVisitor, bool> next)
             where T : class
             where TProperty : IComparable<TProperty>
         {
@@ -64,7 +62,7 @@ namespace OdoyuleRules.SemanticModel
         }
 
         public virtual bool Visit<T, TProperty>(PropertyGreaterThanCondition<T, TProperty> condition,
-                                                Func<SemanticModelVisitor, bool> next)
+                                                Func<SemanticVisitor, bool> next)
             where T : class
             where TProperty : IComparable<TProperty>
         {
@@ -72,7 +70,7 @@ namespace OdoyuleRules.SemanticModel
         }
 
         public virtual bool Visit<T, TProperty>(PropertyGreaterThanOrEqualCondition<T, TProperty> condition,
-                                                Func<SemanticModelVisitor, bool> next)
+                                                Func<SemanticVisitor, bool> next)
             where T : class
             where TProperty : IComparable<TProperty>
         {
@@ -80,14 +78,14 @@ namespace OdoyuleRules.SemanticModel
         }
 
         public virtual bool Visit<T, TProperty>(PropertyNotNullCondition<T, TProperty> condition,
-                                                Func<SemanticModelVisitor, bool> next)
+                                                Func<SemanticVisitor, bool> next)
             where T : class
         {
             return next(this);
         }
 
         public virtual bool Visit<T, TProperty>(PropertyExistsCondition<T, TProperty> condition,
-                                                Func<SemanticModelVisitor, bool> next)
+                                                Func<SemanticVisitor, bool> next)
             where T : class
             where TProperty : class, IEnumerable
         {
@@ -95,27 +93,27 @@ namespace OdoyuleRules.SemanticModel
         }
 
         public virtual bool Visit<T, TProperty, TElement>(PropertyEachCondition<T, TProperty, TElement> condition,
-                                                          Func<SemanticModelVisitor, bool> next)
+                                                          Func<SemanticVisitor, bool> next)
             where T : class
             where TProperty : class, IEnumerable
         {
             return next(this);
         }
 
-        public virtual bool Visit<T>(PredicateCondition<T> condition, Func<SemanticModelVisitor, bool> next)
+        public virtual bool Visit<T>(PredicateCondition<T> condition, Func<SemanticVisitor, bool> next)
             where T : class
         {
             return next(this);
         }
 
-        public virtual bool Visit<T>(DelegateConsequence<T> consequence, Func<SemanticModelVisitor, bool> next)
+        public virtual bool Visit<T>(DelegateConsequence<T> consequence, Func<SemanticVisitor, bool> next)
             where T : class
         {
             return next(this);
         }
 
         public virtual bool Visit<T, TFact>(AddFactConsequence<T, TFact> consequence,
-                                            Func<SemanticModelVisitor, bool> next) 
+                                            Func<SemanticVisitor, bool> next) 
             where T : class 
             where TFact : class
         {

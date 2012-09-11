@@ -18,7 +18,7 @@ namespace OdoyuleRules.Compilation
 
 
     public interface RuleConditionCompiler :
-        SemanticModelVisitor
+        SemanticVisitor
     {
         bool MatchJoinNode<T>(Action<MemoryNode<T>> callback)
             where T : class;

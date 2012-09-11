@@ -16,7 +16,7 @@ namespace OdoyuleRules.Compilation
 
 
     public interface RuleConsequenceCompiler :
-        SemanticModelVisitor
+        SemanticVisitor
     {
     }
 }
