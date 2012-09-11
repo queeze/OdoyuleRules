@@ -6,7 +6,6 @@ include FileTest
 require 'albacore'
 require File.dirname(__FILE__) + "/build_support/versioning.rb"
 
-BUILD_NUMBER_BASE = '0.1.0'
 PRODUCT = 'OdoyuleRules'
 CLR_TOOLS_VERSION = 'v4.0.30319'
 OUTPUT_PATH = 'bin/Release'
@@ -77,7 +76,7 @@ end
 desc "Runs unit tests"
 nunit :tests => [:compile] do |nunit|
 
-          nunit.command = File.join('src', 'packages','NUnit.Runners.2.6.0.12051', 'tools', 'nunit-console.exe')
+          nunit.command = File.join('src', 'packages','NUnit.Runners.2.6.1', 'tools', 'nunit-console.exe')
           nunit.options = "/framework=#{CLR_TOOLS_VERSION}", '/nothread', '/nologo', '/labels', "\"/xml=#{File.join(props[:artifacts], 'nunit-test-results.xml')}\""
           nunit.assemblies = FileList[File.join(props[:src], "OdoyuleRules.Tests/bin/Release", "OdoyuleRules.Tests.dll")]
 end

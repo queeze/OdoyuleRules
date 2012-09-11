@@ -16,7 +16,6 @@ namespace OdoyuleRules.Tests.InternalDSL
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Configuration;
     using Designer;
     using NUnit.Framework;
     using RuntimeModel.JoinNodes;
@@ -110,7 +109,9 @@ namespace OdoyuleRules.Tests.InternalDSL
                     x.RegisterPropertySelector(new ValuePropertySelectorFactory());
 
                     x.Rule<NestedValueRule>();
+                    x.Rule<NestedValueRule2>();
                     x.Rule<NullableIntRule>();
+                    x.Rule<NullableIntRule2>();
                 });
         }
 
@@ -278,6 +279,17 @@ namespace OdoyuleRules.Tests.InternalDSL
             }
         }
 
+        class NestedValueRule2 :
+            RuleDefinition
+        {
+            public NestedValueRule2()
+            {
+                Fact<Segment>()
+                    .When(x => x.SendingSystem.Value.Identifier.Value == "456")
+                    .Add(() => new Route());
+            }
+        }
+
         class NullableIntRule :
             RuleDefinition
         {
@@ -285,6 +297,17 @@ namespace OdoyuleRules.Tests.InternalDSL
             {
                 Fact<Subject>()
                     .When(x => x.Count == 27)
+                    .Add(() => new Route());
+            }
+        }
+
+        class NullableIntRule2 :
+            RuleDefinition
+        {
+            public NullableIntRule2()
+            {
+                Fact<Subject>()
+                    .When(x => x.Count == 42)
                     .Add(() => new Route());
             }
         }

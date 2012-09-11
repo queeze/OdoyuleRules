@@ -290,16 +290,11 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 
                 MethodInfo methodInfo = GetType().GetMethod("VisitTokenPropertyNode",
                     BindingFlags.NonPublic | BindingFlags.Instance);
-                bool matchesFirst = methodInfo.GetGenericArguments()[0].IsAssignableFrom(arguments[0]);
-                bool matchesSecond = methodInfo.GetGenericArguments()[1].IsAssignableFrom(arguments[1]);
-                bool matchesThird = methodInfo.GetGenericArguments()[2].IsAssignableFrom(typeof (TProperty));
 
-                bool matchesArguments = matchesFirst && matchesSecond && matchesThird;
+                MethodInfo method = methodInfo.MakeGenericMethod(arguments[0], arguments[1], typeof (TProperty),
+                    typeof (TValue));
 
-                bool keepGoing = !matchesArguments || (bool) methodInfo
-                                                                 .MakeGenericMethod(arguments[0], arguments[1],
-                                                                     typeof (TProperty))
-                                                                 .Invoke(this, new object[] {node, next});
+                bool keepGoing = (bool) method.Invoke(this, new object[] {node, next});
 
                 return keepGoing || base.Visit(node, next);
             }
