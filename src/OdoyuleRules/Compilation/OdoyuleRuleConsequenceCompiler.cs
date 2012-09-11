@@ -14,8 +14,9 @@ namespace OdoyuleRules.Compilation
 {
     using System;
     using Configuration;
-    using Configuration.RuntimeModelConfigurators;
+    using Configuration.RuntimeConfigurators;
     using RuntimeModel;
+    using RuntimeModel.Nodes;
     using SemanticModel;
     using SemanticModel.Consequences;
 
@@ -49,7 +50,7 @@ namespace OdoyuleRules.Compilation
         {
             _conditionCompiler.MatchJoinNode<T>(joinNode =>
                 {
-                    AddFactProductionNode<T, TFact> node = _configurator.AddFact(consequence.FactFactory);
+                    AddFactNode<T, TFact> node = _configurator.AddFact(consequence.FactFactory);
                     joinNode.AddActivation(node);
                 });
 

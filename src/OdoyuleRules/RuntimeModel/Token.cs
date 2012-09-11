@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -18,17 +18,21 @@ namespace OdoyuleRules.RuntimeModel
     using System.Text;
 
 
-    public interface Token
+    public class Token
     {
-        int Size { get; }
+        public static Token<T1, T2> Create<T1, T2>(ActivationContext<T1> item1, T2 item2)
+            where T1 : class
+        {
+            return new Token<T1, T2>(item1, item2);
+        }
     }
+
 
     [Serializable]
     public class Token<T1, T2> :
         IStructuralEquatable,
         IStructuralComparable,
-        IComparable,
-        Token
+        IComparable
         where T1 : class
     {
         readonly ActivationContext<T1> _item1;
@@ -48,6 +52,11 @@ namespace OdoyuleRules.RuntimeModel
         public T2 Item2
         {
             get { return _item2; }
+        }
+
+        public int Size
+        {
+            get { return 2; }
         }
 
         public int CompareTo(object obj)
@@ -86,11 +95,6 @@ namespace OdoyuleRules.RuntimeModel
         public int GetHashCode(IEqualityComparer comparer)
         {
             return CombineHashCodes(comparer.GetHashCode(_item1), comparer.GetHashCode(_item2));
-        }
-
-        public int Size
-        {
-            get { return 2; }
         }
 
         public override bool Equals(object obj)

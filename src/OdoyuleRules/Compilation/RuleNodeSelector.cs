@@ -13,11 +13,11 @@
 namespace OdoyuleRules.Compilation
 {
     using System;
-    using Configuration.RuntimeModelConfigurators;
+    using Configuration.RuntimeConfigurators;
     using Internals.Extensions;
     using RuntimeModel;
-    using RuntimeModel.FactNodes;
     using RuntimeModel.JoinNodes;
+    using RuntimeModel.Nodes;
 
 
     /// <summary>

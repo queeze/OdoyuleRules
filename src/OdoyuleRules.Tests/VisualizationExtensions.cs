@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Tests
 {
     using System;
-    using Configuration.RuntimeModelConfigurators.Selectors;
+    using Configuration.RuntimeConfigurators.Selectors;
 
 
     public static class TestExtensions

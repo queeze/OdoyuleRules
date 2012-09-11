@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Configuration
 {
     using System;
-    using OdoyuleRules.Conditionals;
+    using RuntimeModel.Values;
 
 
     public static class Conditionals
@@ -22,19 +22,12 @@ namespace OdoyuleRules.Configuration
         {
             Type underlyingType = Nullable.GetUnderlyingType(typeof (T));
             if (underlyingType != null)
-            {
-                Type nullableType = typeof (NullableConstantValue<>).MakeGenericType(underlyingType);
-                return (Value<T>) Activator.CreateInstance(nullableType, value);
-            }
+                return NullableConstantValue.New(underlyingType, value);
 
             if (typeof (T).IsValueType)
-            {
-                Type constantType = typeof (ConstantValue<>).MakeGenericType(typeof (T));
-                return (Value<T>) Activator.CreateInstance(constantType, value);
-            }
+                return ConstantValue.New(typeof (T), value);
 
-            Type referenceType = typeof (ReferenceConstantValue<>).MakeGenericType(typeof (T));
-            return (Value<T>) Activator.CreateInstance(referenceType, value);
+            return ReferenceConstantValue.New(typeof (T), value);
         }
 
         public static TokenValueFactory<T, TProperty> Property<T, TProperty>()

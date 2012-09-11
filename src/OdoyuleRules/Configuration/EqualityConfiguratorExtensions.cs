@@ -12,8 +12,9 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration
 {
+    using RuntimeConfigurators;
     using RuntimeModel;
-    using RuntimeModelConfigurators;
+    using RuntimeModel.Nodes;
 
 
     public static class EqualityConfiguratorExtensions

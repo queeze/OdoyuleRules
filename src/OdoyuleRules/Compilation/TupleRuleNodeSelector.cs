@@ -13,9 +13,10 @@
 namespace OdoyuleRules.Compilation
 {
     using System;
-    using Configuration.RuntimeModelConfigurators;
+    using Configuration.RuntimeConfigurators;
     using RuntimeModel;
     using RuntimeModel.JoinNodes;
+    using RuntimeModel.Nodes;
 
 
     public class TupleRuleNodeSelector<T1, T2> :

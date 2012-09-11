@@ -13,9 +13,11 @@
 namespace OdoyuleRules.Configuration
 {
     using System;
-    using OdoyuleRules.Conditionals;
+    using RuntimeConfigurators;
     using RuntimeModel;
-    using RuntimeModelConfigurators;
+    using RuntimeModel.Comparators;
+    using RuntimeModel.Nodes;
+    using RuntimeModel.Values;
 
 
     public static class CompareConfiguratorExtensions

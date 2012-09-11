@@ -13,9 +13,9 @@
 namespace OdoyuleRules.RuntimeModel
 {
     using System;
-    using Configuration.RuntimeModelConfigurators;
-    using Configuration.RuntimeModelConfigurators.Locators;
-    using FactNodes;
+    using Configuration.RuntimeConfigurators;
+    using Configuration.RuntimeConfigurators.Locators;
+    using Nodes;
     using Visualization;
 
 

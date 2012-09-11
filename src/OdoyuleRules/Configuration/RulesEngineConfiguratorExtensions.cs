@@ -13,7 +13,7 @@
 namespace OdoyuleRules
 {
     using System;
-    using Configuration.RuntimeModelConfigurators;
+    using Configuration.RuntimeConfigurators;
     using Configuration.SemanticModelConfigurators;
     using SemanticModel;
 
@@ -21,34 +21,34 @@ namespace OdoyuleRules
     public static class RulesEngineConfiguratorExtensions
     {
         [Obsolete("Use the nested Rules() for multiple rules")]
-        public static void Rule<TRule>(this RulesEngineConfigurator configurator)
+        public static void Rule<TRule>(this EngineConfigurator configurator)
             where TRule : RuleBuilderConfigurator, new()
         {
             Rule(configurator, () => new TRule());
         }
 
         [Obsolete("Use the nested Rules() for multiple rules")]
-        public static void Rule<TRule>(this RulesEngineConfigurator configurator, Func<TRule> ruleFactory)
+        public static void Rule<TRule>(this EngineConfigurator configurator, Func<TRule> ruleFactory)
             where TRule : RuleBuilderConfigurator
         {
             configurator.Rules(x => x.Add(ruleFactory));
         }
 
-        public static void Rules(this RulesEngineConfigurator configurator,
+        public static void Rules(this EngineConfigurator configurator,
             Action<DesignerRuleConfigurator> configureCallback)
         {
-            var designerConfigurator = new DesignerRuleConfiguratorImpl();
+            var designerConfigurator = new DesignerConfiguratorImpl();
 
             configureCallback(designerConfigurator);
 
             configurator.Add(designerConfigurator);
         }
 
-        public static void Add(this RulesEngineConfigurator configurator, params Rule[] rules)
+        public static void Add(this EngineConfigurator configurator, params Rule[] rules)
         {
             foreach (Rule rule in rules)
             {
-                var semanticModelRuleConfigurator = new SemanticModelRuleConfigurator(rule);
+                var semanticModelRuleConfigurator = new SemanticModelConfigurator(rule);
 
                 configurator.Add(semanticModelRuleConfigurator);
             }

@@ -13,11 +13,11 @@
 namespace OdoyuleRules.Tests.Execution
 {
     using Configuration;
-    using Configuration.RuntimeModelConfigurators;
+    using Configuration.RuntimeConfigurators;
     using NUnit.Framework;
     using RuntimeModel;
-    using RuntimeModel.FactNodes;
     using RuntimeModel.JoinNodes;
+    using RuntimeModel.Nodes;
 
 
     [TestFixture]

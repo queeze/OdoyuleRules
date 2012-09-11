@@ -14,7 +14,7 @@ namespace OdoyuleRules
 {
     using System;
     using Configuration.Configurators;
-    using Configuration.RuntimeModelConfigurators;
+    using Configuration.RuntimeConfigurators;
 
 
     /// <summary>
@@ -27,12 +27,12 @@ namespace OdoyuleRules
         /// </summary>
         /// <param name="configureCallback">The callback to perform the configuration</param>
         /// <returns>The new rules engine instance</returns>
-        public static RulesEngine New(Action<RulesEngineConfigurator> configureCallback)
+        public static RulesEngine New(Action<EngineConfigurator> configureCallback)
         {
             if (configureCallback == null)
                 throw new ArgumentNullException("configureCallback");
 
-            var configurator = new OdoyuleRulesEngineConfigurator();
+            var configurator = new OdoyuleEngineConfigurator();
 
             configureCallback(configurator);
 

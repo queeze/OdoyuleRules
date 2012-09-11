@@ -23,8 +23,8 @@ namespace OdoyuleRules.Visualizer
     using QuickGraph;
     using QuickGraph.Glee;
     using RuntimeModel;
-    using RuntimeModel.FactNodes;
     using RuntimeModel.JoinNodes;
+    using RuntimeModel.Nodes;
     using Color = Microsoft.Glee.Drawing.Color;
 
     public class RulesEngineGraphGenerator
@@ -52,7 +52,7 @@ namespace OdoyuleRules.Visualizer
                     {typeof (LeftJoinNode<,>), Color.LightGreen},
                     {typeof (ConditionNode<>), Color.Blue},
                     {typeof (DelegateProductionNode<>), Color.LightGray},
-                    {typeof (AddFactProductionNode<,>), Color.LightGray},
+                    {typeof (AddFactNode<,>), Color.LightGray},
                     {typeof (ConstantNode<>), Color.Magenta},
                 };
 
@@ -73,7 +73,7 @@ namespace OdoyuleRules.Visualizer
                     {typeof (LeftJoinNode<,>), Color.Black},
                     {typeof (ConditionNode<>), Color.White},
                     {typeof (DelegateProductionNode<>), Color.Black},
-                    {typeof (AddFactProductionNode<,>), Color.Black},
+                    {typeof (AddFactNode<,>), Color.Black},
                     {typeof (ConstantNode<>), Color.Black},
                 };
 

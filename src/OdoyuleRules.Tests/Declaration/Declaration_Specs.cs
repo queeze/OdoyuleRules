@@ -37,7 +37,7 @@ namespace OdoyuleRules.Tests.Declaration
                 session.Run();
             }
 
-            var visitor = new TextRuntimeModelVisitor();
+            var visitor = new TextRuntimeVisitor();
             rulesEngine.Accept(visitor);
 
             Console.WriteLine(visitor);
@@ -59,7 +59,7 @@ namespace OdoyuleRules.Tests.Declaration
                 session.Run();
             }
 
-            var visitor = new TextRuntimeModelVisitor();
+            var visitor = new TextRuntimeVisitor();
             rulesEngine.Accept(visitor);
 
             Console.WriteLine(visitor);
@@ -80,7 +80,7 @@ namespace OdoyuleRules.Tests.Declaration
                 session.Run();
             }
 
-            var visitor = new TextRuntimeModelVisitor();
+            var visitor = new TextRuntimeVisitor();
             rulesEngine.Accept(visitor);
 
             Console.WriteLine(visitor);

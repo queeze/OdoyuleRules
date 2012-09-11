@@ -15,10 +15,10 @@ namespace OdoyuleRules
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Configuration.RuntimeModelConfigurators;
+    using Configuration.RuntimeConfigurators;
     using Internals.Caching;
     using RuntimeModel;
-    using RuntimeModel.FactNodes;
+    using RuntimeModel.Nodes;
 
 
     public class OdoyuleRulesEngine :
@@ -53,7 +53,7 @@ namespace OdoyuleRules
             return new RuntimeSession(this, _objectCache);
         }
 
-        public bool Accept(RuntimeModelVisitor visitor)
+        public bool Accept(RuntimeVisitor visitor)
         {
             return visitor.Visit(this, next => _types.All(activation => activation.Accept(next)));
         }

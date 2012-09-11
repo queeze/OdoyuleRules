@@ -16,12 +16,12 @@ namespace OdoyuleRules.Graphing
     using System.Collections.Generic;
     using Internals.Caching;
     using RuntimeModel;
-    using RuntimeModel.FactNodes;
     using RuntimeModel.JoinNodes;
+    using RuntimeModel.Nodes;
     using Visualization;
 
     public class GraphRulesEngineVisitor :
-        RuntimeModelVisitorBase
+        RuntimeVisitorBase
     {
         readonly List<Edge> _edges = new List<Edge>();
         readonly Stack<Vertex> _stack;
@@ -42,14 +42,14 @@ namespace OdoyuleRules.Graphing
             get { return new RulesEngineGraph(_vertices, _edges); }
         }
 
-        public override bool Visit(RulesEngine rulesEngine, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit(RulesEngine rulesEngine, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(0, id => new Vertex(typeof (RulesEngine), typeof (object), "OdoyuleRules"));
 
             return Next(() => base.Visit(rulesEngine, next));
         }
 
-        public override bool Visit<T>(AlphaNode<T> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T>(AlphaNode<T> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id, id => new Vertex(typeof (AlphaNode<>), typeof (T), typeof (T).Tokens()));
 
@@ -64,7 +64,7 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T, TProperty,TValue>(PropertyNode<T, TProperty, TValue> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T, TProperty,TValue>(PropertyNode<T, TProperty, TValue> node, Func<RuntimeVisitor, bool> next)
         {
             var title = string.Format("{0}.{1}\n{2}", typeof (T).Tokens(), node.PropertyInfo.Name,
                 typeof(TProperty) != typeof(TValue) ? typeof(TValue).Name : "");
@@ -78,7 +78,7 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T, TProperty>(EqualNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T, TProperty>(EqualNode<T, TProperty> node, Func<RuntimeVisitor, bool> next)
         {
 //            _current = _vertices.Get(node.Id, id => new Vertex(typeof (EqualNode<,>), typeof (TProperty), "=="));
 //
@@ -88,7 +88,7 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T, TProperty>(ValueNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T, TProperty>(ValueNode<T, TProperty> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id,
                                      id =>
@@ -100,7 +100,7 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T>(ConditionNode<T> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T>(ConditionNode<T> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id, id => new Vertex(typeof (ConditionNode<>), typeof (T), "~"));
 
@@ -110,7 +110,7 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T, TProperty>(CompareNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T, TProperty>(CompareNode<T, TProperty> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id, id => new Vertex(typeof (CompareNode<,>), typeof (Token<T, TProperty>),
                                                                string.Format("{0} {1}", node.Comparator, node.Value)));
@@ -121,7 +121,7 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T, TProperty>(NotNullNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T, TProperty>(NotNullNode<T, TProperty> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id,
                                      id => new Vertex(typeof (NotNullNode<,>), typeof (Token<T, TProperty>), "not null"));
@@ -132,7 +132,7 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T, TProperty>(ExistsNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T, TProperty>(ExistsNode<T, TProperty> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id,
                                      id => new Vertex(typeof (ExistsNode<,>), typeof (Token<T, TProperty>), "exists"));
@@ -144,7 +144,7 @@ namespace OdoyuleRules.Graphing
         }
 
         public override bool Visit<T, TProperty, TElement>(EachNode<T, TProperty, TElement> node,
-                                                           Func<RuntimeModelVisitor, bool> next)
+                                                           Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id, id => new Vertex(typeof (EachNode<,,>), typeof (TElement),
                                                                typeof (T).Tokens() + "."
@@ -156,7 +156,7 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T>(ConstantNode<T> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T>(ConstantNode<T> node, Func<RuntimeVisitor, bool> next)
         {
             if (!_vertices.Has(node.Id))
             {
@@ -169,7 +169,7 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T>(JoinNode<T> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T>(JoinNode<T> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id, id => new Vertex(typeof (JoinNode<>), typeof (T), typeof (T).Tokens()));
 
@@ -183,7 +183,7 @@ namespace OdoyuleRules.Graphing
             return Next(node.RightActivation.Id, () => base.Visit(node, next));
         }
 
-        public override bool Visit<TLeft, TRight>(OuterJoinNode<TLeft, TRight> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<TLeft, TRight>(OuterJoinNode<TLeft, TRight> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id, id => new Vertex(typeof(OuterJoinNode<,>), typeof(Tuple<TLeft,TRight>), typeof(TLeft).Tokens() + "," + typeof(TRight).Tokens()));
 
@@ -197,7 +197,7 @@ namespace OdoyuleRules.Graphing
             return Next(node.RightActivation.Id, () => base.Visit(node, next));
         }
 
-        public override bool Visit<T, TDiscard>(LeftJoinNode<T, TDiscard> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T, TDiscard>(LeftJoinNode<T, TDiscard> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id,
                                      id => new Vertex(typeof (LeftJoinNode<,>), typeof (T), typeof (T).Tokens()));
@@ -213,7 +213,7 @@ namespace OdoyuleRules.Graphing
         }
 
         public override bool Visit<TInput, TOutput>(WidenTypeNode<TInput, TOutput> node,
-                                                    Func<RuntimeModelVisitor, bool> next)
+                                                    Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(--_noId, id => new Vertex(typeof(WidenTypeNode<,>), typeof(TInput), ""));
 
@@ -225,7 +225,7 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T>(DelegateProductionNode<T> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T>(DelegateProductionNode<T> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id,
                                      id =>
@@ -237,11 +237,11 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T, TFact>(AddFactProductionNode<T, TFact> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T, TFact>(AddFactNode<T, TFact> node, Func<RuntimeVisitor, bool> next)
         {
             _current = _vertices.Get(node.Id,
                                      id =>
-                                     new Vertex(typeof (AddFactProductionNode<,>), typeof (TFact),
+                                     new Vertex(typeof (AddFactNode<,>), typeof (TFact),
                                                 typeof (T).Tokens() + " \x279C " + typeof (TFact).GetShortName()));
 
             if (_stack.Count > 0)

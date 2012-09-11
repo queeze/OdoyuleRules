@@ -16,9 +16,10 @@ namespace OdoyuleRules.Configuration
     using System.Linq.Expressions;
     using System.Reflection;
     using Internals.Extensions;
+    using RuntimeConfigurators;
     using RuntimeModel;
     using RuntimeModel.JoinNodes;
-    using RuntimeModelConfigurators;
+    using RuntimeModel.Nodes;
 
 
     public static class PropertyConfiguratorExtensions

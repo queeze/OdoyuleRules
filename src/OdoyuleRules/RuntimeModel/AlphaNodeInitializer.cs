@@ -12,7 +12,7 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.RuntimeModel
 {
-    using FactNodes;
+    using Nodes;
 
 
     public interface AlphaNodeInitializer

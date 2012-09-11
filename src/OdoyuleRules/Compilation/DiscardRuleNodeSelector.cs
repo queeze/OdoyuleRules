@@ -13,10 +13,11 @@
 namespace OdoyuleRules.Compilation
 {
     using System;
-    using Configuration.RuntimeModelConfigurators;
+    using Configuration.RuntimeConfigurators;
     using Internals.Extensions;
     using RuntimeModel;
     using RuntimeModel.JoinNodes;
+    using RuntimeModel.Nodes;
 
 
     public class DiscardRuleNodeSelector<T, TDiscard> :

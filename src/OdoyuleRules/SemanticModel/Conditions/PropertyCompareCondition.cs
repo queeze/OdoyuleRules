@@ -15,7 +15,8 @@ namespace OdoyuleRules.SemanticModel.Conditions
     using System;
     using System.Linq.Expressions;
     using System.Reflection;
-    using Conditionals;
+    using RuntimeModel.Comparators;
+    using RuntimeModel.Values;
 
 
     public class PropertyCompareCondition<T, TProperty> :

@@ -12,9 +12,11 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Tests
 {
-    using Conditionals;
     using Configuration;
     using NUnit.Framework;
+    using RuntimeModel.Comparators;
+    using RuntimeModel.Values;
+
 
     [TestFixture]
     public class When_using_comparators_to_compare_values
@@ -29,17 +31,9 @@ namespace OdoyuleRules.Tests
 
             var comparator = new ValueEqualComparator<int>();
 
-            int xx = 0;
-            int yy = 0;
+            bool equal = comparator.Compare(left, converter);
 
-            comparator.Match(left, converter, (x, y) =>
-                {
-                    xx = x;
-                    yy = y;
-                });
-
-            Assert.AreEqual(42, xx);
-            Assert.AreEqual(42, yy);
+            Assert.IsTrue(equal);
         }
     }
 }
