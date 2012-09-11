@@ -13,6 +13,7 @@
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
 {
     using System;
+    using System.Reflection;
     using Models.RuntimeModel;
 
 
@@ -39,5 +40,14 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
             Action<OuterJoinNode<T1, T2>> callback)
             where T1 : class
             where T2 : class;
+
+        PropertySelector GetPropertySelector(PropertyInfo propertyInfo);
+        PropertySelector<T> GetPropertySelector<T>(PropertyInfo propertyInfo);
+
+        /// <summary>
+        /// Adds a property selector factory to the front of the list
+        /// </summary>
+        /// <param name="propertySelectorFactory"></param>
+        void AddPropertySelectorFactory(PropertySelectorFactory propertySelectorFactory);
     }
 }

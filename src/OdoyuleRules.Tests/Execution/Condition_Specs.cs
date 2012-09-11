@@ -37,7 +37,7 @@ namespace OdoyuleRules.Tests.Execution
 
             var engine = configurator.RulesEngine;
 
-            PropertyNode<A, decimal> propertyNode = configurator.Property<A, decimal>(x => x.Amount);
+            var propertyNode = configurator.Property((A x) => x.Amount) as PropertyNode<A, decimal, decimal>;
 
             ConditionNode<Token<A, decimal>> conditionNode = configurator.Condition<A, decimal>(x => x > 10000.0m);
             propertyNode.AddActivation(conditionNode);

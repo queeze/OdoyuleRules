@@ -15,41 +15,59 @@ namespace OdoyuleRules.Configuration
     using System;
     using System.Linq.Expressions;
     using System.Reflection;
-    using Internal;
+    using Internals.Extensions;
     using Models.RuntimeModel;
     using RuntimeModelConfigurators;
 
 
     public static class PropertyConfiguratorExtensions
     {
-        public static PropertyNode<T, TProperty> Property<T, TProperty>(this RuntimeConfigurator configurator,
+        public static Activation<T> Property<T, TProperty>(this RuntimeConfigurator configurator,
             Expression<Func<T, TProperty>> propertyExpression)
             where T : class
         {
             PropertyInfo propertyInfo = propertyExpression.GetPropertyInfo();
 
-            PropertyNode<T, TProperty> propertyNode =
-                configurator.CreateNode(id => new PropertyNode<T, TProperty>(id, propertyInfo));
-
-            return propertyNode;
+            return Property<T, TProperty>(configurator, propertyInfo);
         }
 
-        public static PropertyNode<T, TProperty> Property<T, TProperty>(this RuntimeConfigurator configurator,
+        public static Activation<T> Property<T, TProperty>(this RuntimeConfigurator configurator,
             PropertyInfo propertyInfo)
             where T : class
         {
-            PropertyNode<T, TProperty> propertyNode =
-                configurator.CreateNode(id => new PropertyNode<T, TProperty>(id, propertyInfo));
+            PropertySelector<TProperty> propertySelector = configurator.GetPropertySelector<TProperty>(propertyInfo);
 
-            return propertyNode;
+            Type propertyNodeType = typeof (PropertyNode<,,>)
+                .MakeGenericType(typeof (T), propertySelector.PropertyType, propertySelector.ValueType);
+
+            return configurator.CreateNode(
+                id => (Activation<T>) Activator.CreateInstance(propertyNodeType, id, propertyInfo, propertySelector));
         }
 
-        public static PropertyNode<T, TProperty> Property<T, TProperty>(this RuntimeConfigurator configurator,
-            PropertyInfo propertyInfo, Action<T, Action<TProperty>> propertyMatch)
+        public static Activation<Token<T1, T2>> Property<T1, T2, TProperty>(this RuntimeConfigurator configurator,
+            PropertyInfo propertyInfo,
+            Action<Token<T1, T2>, Action<TProperty>> propertyAction)
+            where T1 : class
+            where T2 : class
+        {
+            PropertySelector<TProperty> propertySelector = configurator.GetPropertySelector<TProperty>(propertyInfo);
+
+            Type propertyNodeType = typeof (PropertyNode<,,>)
+                .MakeGenericType(typeof (Token<T1, T2>), propertySelector.PropertyType, propertySelector.ValueType);
+
+            return configurator.CreateNode(
+                id =>
+                (Activation<Token<T1, T2>>)
+                Activator.CreateInstance(propertyNodeType, id, propertyInfo, propertySelector, propertyAction));
+        }
+
+        public static PropertyNode<T, TProperty, TValue> Property<T, TProperty, TValue>(
+            this RuntimeConfigurator configurator, PropertyInfo propertyInfo,
+            PropertySelector<TProperty, TValue> propertySelector)
             where T : class
         {
-            PropertyNode<T, TProperty> propertyNode =
-                configurator.CreateNode(id => new PropertyNode<T, TProperty>(id, propertyInfo, propertyMatch));
+            PropertyNode<T, TProperty, TValue> propertyNode = configurator.CreateNode(
+                id => new PropertyNode<T, TProperty, TValue>(id, propertyInfo, propertySelector));
 
             return propertyNode;
         }

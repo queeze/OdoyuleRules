@@ -13,26 +13,20 @@
 namespace OdoyuleRules.Configuration.Designer
 {
     using System;
-    using System.ComponentModel;
     using System.Linq.Expressions;
-    using Visualization;
 
 
+    /// <summary>
+    /// Inspects the right side of a binary expression
+    /// </summary>
     public class RightHandSideExpressionVisitor :
         ExpressionVisitor
     {
-        readonly Type _compareType;
-
-        TypeConverter _toConverter;
-
         Func<object> _value;
 
-        public RightHandSideExpressionVisitor(Type compareType)
+        public RightHandSideExpressionVisitor()
         {
-            _compareType = compareType;
-            _toConverter = TypeDescriptor.GetConverter(_compareType);
-
-            _value = () => { throw new InvalidOperationException("No match was found"); };
+            _value = () => { throw new InvalidOperationException("The right hand value was not found"); };
         }
 
         public object Value
@@ -42,35 +36,8 @@ namespace OdoyuleRules.Configuration.Designer
 
         protected override Expression VisitConstant(ConstantExpression node)
         {
-            if (node.Type == _compareType)
-            {
-                _value = () => node.Value;
-                return node;
-            }
-
-            _value = () => ConvertToCompareType(node.Value);
+            _value = () => node.Value;
             return node;
-        }
-
-        object ConvertToCompareType(object value)
-        {
-            if (value == null)
-                return null;
-
-            Type sourceType = value.GetType();
-
-            TypeConverter fromConverter = TypeDescriptor.GetConverter(sourceType);
-            if (fromConverter.CanConvertTo(_compareType))
-            {
-                return fromConverter.ConvertTo(value, _compareType);
-            }
-
-            if (_toConverter != null && _toConverter.CanConvertFrom(sourceType))
-            {
-                return _toConverter.ConvertFrom(value);
-            }
-
-            throw new ArgumentException("Could not convert value to compare type: " + sourceType.GetShortName());
         }
     }
 }

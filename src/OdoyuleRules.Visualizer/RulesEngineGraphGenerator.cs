@@ -17,7 +17,7 @@ namespace OdoyuleRules.Visualizer
     using System.Drawing.Imaging;
     using System.Linq;
     using Graphing;
-    using Internal.Caching;
+    using Internals.Caching;
     using Microsoft.Glee.Drawing;
     using Microsoft.Glee.GraphViewerGdi;
     using Models.RuntimeModel;
@@ -38,7 +38,7 @@ namespace OdoyuleRules.Visualizer
                 {
                     {typeof (AlphaNode<>), Color.Yellow},
                     {typeof (WidenTypeNode<,>), Color.DarkKhaki},
-                    {typeof (PropertyNode<,>), Color.Red},
+                    {typeof (PropertyNode<,,>), Color.Red},
                     {typeof (EachNode<,,>), Color.Red},
                     {typeof (EqualNode<,>), Color.Blue},
                     {typeof (ValueNode<,>), Color.Blue},
@@ -59,7 +59,7 @@ namespace OdoyuleRules.Visualizer
                 {
                     {typeof (AlphaNode<>), Color.Black},
                     {typeof (WidenTypeNode<,>), Color.Black},
-                    {typeof (PropertyNode<,>), Color.White},
+                    {typeof (PropertyNode<,,>), Color.White},
                     {typeof (EachNode<,,>), Color.White},
                     {typeof (EqualNode<,>), Color.White},
                     {typeof (ValueNode<,>), Color.White},

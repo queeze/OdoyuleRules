@@ -53,10 +53,12 @@
     <Compile Include="ConditionTests\Each_Specs.cs" />
     <Compile Include="ConditionTests\Exists_Specs.cs" />
     <Compile Include="Execution\Condition_Specs.cs" />
+    <Compile Include="Execution\Facts_Specs.cs" />
     <Compile Include="Execution\OuterJoin_Specs.cs" />
     <Compile Include="Execution\Production_Specs.cs" />
     <Compile Include="Factory_Specs.cs" />
     <Compile Include="InternalDSL\ExpressionParsing_Specs.cs" />
+    <Compile Include="InternalDSL\NullableFacts_Specs.cs" />
     <Compile Include="InternalDSL\RuleDesigner_Specs.cs" />
     <Compile Include="Parser_Specs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -48,7 +48,8 @@ namespace OdoyuleRules.Compilation
             Func<SemanticModelVisitor, bool> next)
         {
             RunNodeSelector(condition.PropertyExpression,
-                x => new EqualNodeSelectorFactory<TProperty>(x, _configurator, condition.Value));
+
+                x => new EqualNodeSelectorFactory(x, _configurator, condition.Value));
 
             return base.Visit(condition, next);
         }
@@ -210,7 +211,7 @@ namespace OdoyuleRules.Compilation
             NodeSelectorFactory selectorFactory)
             where T : class
         {
-            new PropertyExpressionVisitor<T>(selectorFactory, _configurator)
+            new PropertyExpressionVisitor<T>(_configurator, selectorFactory)
                 .CreateSelector(propertyExpression.Body)
                 .Select();
         }

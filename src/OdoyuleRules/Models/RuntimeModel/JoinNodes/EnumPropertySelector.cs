@@ -12,30 +12,34 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Models.RuntimeModel
 {
-    using System.Linq;
-    using Internals.Extensions;
+    using System;
 
 
-    public class AlphaNode<T> :
-        MemoryNodeImpl<T>,
-        MemoryNode<T>,
-        Activation
-        where T : class
+    /// <summary>
+    /// Selects a value type property, which of course can never be null
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TValue"> </typeparam>
+    public class EnumPropertySelector<T, TValue> :
+        PropertySelector<T, TValue>
     {
-        public AlphaNode(int id)
-            : base(id)
+        public Type PropertyType
         {
+            get { return typeof (T); }
         }
 
-        public void Activate<TActivation>(ActivationContext<TActivation> context)
-            where TActivation : class
+        public Type ValueType
         {
-            this.CastAs<Activation<TActivation>>().Activate(context);
+            get { return typeof (T); }
         }
 
-        public bool Accept(RuntimeModelVisitor visitor)
+        public bool TryGetValue(T property, out TValue value)
         {
-            return visitor.Visit(this, next => Successors.All(activation => activation.Accept(next)));
+            object obj = property;
+
+            value = (TValue) obj;
+
+            return true;
         }
     }
 }

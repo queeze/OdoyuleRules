@@ -89,7 +89,7 @@ namespace OdoyuleRules.Visualization
             return base.Visit(node, next);
         }
 
-        public override bool Visit<T, TProperty>(PropertyNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T, TProperty, TValue>(PropertyNode<T, TProperty, TValue> node, Func<RuntimeModelVisitor, bool> next)
         {
             Append("PropertyNode[{0}].{1} ({2})", Tokens<T>(), node.PropertyInfo.Name, typeof (TProperty).GetShortName());
 

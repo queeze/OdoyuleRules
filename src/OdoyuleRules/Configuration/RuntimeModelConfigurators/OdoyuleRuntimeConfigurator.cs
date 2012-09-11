@@ -13,9 +13,13 @@
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
 {
     using System;
+    using System.Collections.Generic;
+    using System.Reflection;
     using System.Threading;
+    using Internals.Caching;
     using Locators;
     using Models.RuntimeModel;
+    using Internals.Extensions;
 
 
     public class OdoyuleRuntimeConfigurator :
@@ -24,8 +28,15 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
         readonly OdoyuleRulesEngine _rulesEngine;
         int _nextNodeId;
 
+        readonly Cache<Type, PropertySelector> _propertySelectors;
+        readonly Stack<PropertySelectorFactory> _propertySelectorFactories;
+
         public OdoyuleRuntimeConfigurator()
         {
+            _propertySelectors = new DictionaryCache<Type, PropertySelector>();
+            _propertySelectorFactories = new Stack<PropertySelectorFactory>();
+            _propertySelectorFactories.Push(new DefaultPropertySelectorFactory());
+
             _rulesEngine = new OdoyuleRulesEngine(this);
         }
 
@@ -62,6 +73,39 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
         {
             var locator = new OuterJoinNodeLocator<T1, T2>(this, leftStart, rightStart);
             locator.Find(callback);
+        }
+
+        public PropertySelector GetPropertySelector(PropertyInfo propertyInfo)
+        {
+            foreach (var selectorFactory in _propertySelectorFactories)
+            {
+                PropertySelector propertySelector;
+                if (selectorFactory.TryGetPropertySelector(propertyInfo, out propertySelector))
+                {
+                    return propertySelector;
+                }
+            }
+
+            throw new OdoyuleRulesException("The property selector could not be created: " + propertyInfo.PropertyType.GetTypeName());
+        }
+
+        public PropertySelector<T> GetPropertySelector<T>(PropertyInfo propertyInfo)
+        {
+            foreach (var selectorFactory in _propertySelectorFactories)
+            {
+               PropertySelector<T> propertySelector;
+                if(selectorFactory.TryGetPropertySelector<T>(propertyInfo, out propertySelector))
+                {
+                    return propertySelector;
+                }
+            }
+
+            throw new OdoyuleRulesException("The property selector could not be created: " + typeof (T).GetTypeName());
+        }
+
+        public void AddPropertySelectorFactory(PropertySelectorFactory propertySelectorFactory)
+        {
+            _propertySelectorFactories.Push(propertySelectorFactory);
         }
 
         public void MatchJoinNode<T>(MemoryNode<T> left, Action<JoinNode<T>> callback)

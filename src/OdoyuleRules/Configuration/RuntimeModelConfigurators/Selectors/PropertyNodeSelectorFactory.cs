@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -14,17 +14,36 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
     using System.Reflection;
-    using OdoyuleRules.Models.RuntimeModel;
+    using Models.RuntimeModel;
 
 
+    public static class PropertyNodeSelectorFactory
+    {
+        public static NodeSelectorFactory Create(RuntimeConfigurator configurator, NodeSelectorFactory factory,
+            PropertyInfo propertyInfo)
+        {
+            Type type = typeof (PropertyNodeSelectorFactory<>).MakeGenericType(propertyInfo.PropertyType);
+
+            return (NodeSelectorFactory) Activator.CreateInstance(type, configurator, factory, propertyInfo);
+        }
+    }
+
+
+    /// <summary>
+    /// Creates a selector to find a property node, uses the RuntimeConfigurator to obtain the propery value
+    /// factory for the property so that value types, reference types, and user-specified types can be
+    /// properly accessed (to avoid null reference exceptions, etc.)
+    /// </summary>
+    /// <typeparam name="TProperty"></typeparam>
     public class PropertyNodeSelectorFactory<TProperty> :
         NodeSelectorFactory
     {
+        readonly RuntimeConfigurator _configurator;
         readonly NodeSelectorFactory _nextFactory;
         readonly PropertyInfo _propertyInfo;
-        RuntimeConfigurator _configurator;
 
-        public PropertyNodeSelectorFactory(NodeSelectorFactory nextFactory, RuntimeConfigurator configurator, PropertyInfo propertyInfo)
+        public PropertyNodeSelectorFactory(RuntimeConfigurator configurator, NodeSelectorFactory nextFactory,
+            PropertyInfo propertyInfo)
         {
             _nextFactory = nextFactory;
             _configurator = configurator;
@@ -34,24 +53,15 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
         public NodeSelector Create<T>()
             where T : class
         {
-            NodeSelector next = null;
-            if (_nextFactory != null)
-                next = _nextFactory.Create<Token<T, TProperty>>();
-
-            if(typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(Token<,>))
+            if (typeof (T).IsGenericType && typeof (T).GetGenericTypeDefinition() == typeof (Token<,>))
             {
-                var arguments = typeof (T).GetGenericArguments();
+                Type[] arguments = typeof (T).GetGenericArguments();
 
-                Type tokenType = typeof(PropertyNodeSelector<,,>).MakeGenericType(arguments[0], arguments[1], typeof(TProperty));
-                var tokenSelector = (NodeSelector)Activator.CreateInstance(tokenType, next, _configurator, _propertyInfo);
-
-                return tokenSelector;
+                return PropertyNodeSelector.Create(_configurator, _nextFactory, _propertyInfo, arguments[0],
+                    arguments[1]);
             }
 
-            Type type = typeof (PropertyNodeSelector<,>).MakeGenericType(typeof (T), typeof (TProperty));
-            var selector = (NodeSelector) Activator.CreateInstance(type, next, _configurator, _propertyInfo);
-
-            return selector;
+            return PropertyNodeSelector.Create<T, TProperty>(_configurator, _nextFactory, _propertyInfo);
         }
     }
 }

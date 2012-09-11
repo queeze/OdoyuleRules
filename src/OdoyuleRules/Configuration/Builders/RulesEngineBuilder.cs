@@ -12,10 +12,17 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration.Builders
 {
+    using System;
+    using RuntimeModelConfigurators;
+
+
     public interface RulesEngineBuilder
     {
         void AddRule(Rule rule);
 
         RulesEngine Build();
+
+
+        void AddRuntimeConfiguratorAction(Action<RuntimeConfigurator> callback);
     }
 }

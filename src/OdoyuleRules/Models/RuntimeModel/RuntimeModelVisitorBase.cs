@@ -55,13 +55,13 @@ namespace OdoyuleRules.Models.RuntimeModel
             return next(this);
         }
 
-        public virtual bool Visit<T>(DelegateProductionNode<T> node, Func<RuntimeModelVisitor, bool> next)
+        public virtual bool Visit<T, TProperty, TValue>(PropertyNode<T, TProperty, TValue> node, Func<RuntimeModelVisitor, bool> next) 
             where T : class
         {
             return next(this);
         }
 
-        public virtual bool Visit<T, TProperty>(PropertyNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
+        public virtual bool Visit<T>(DelegateProductionNode<T> node, Func<RuntimeModelVisitor, bool> next)
             where T : class
         {
             return next(this);

@@ -37,6 +37,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internals\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\SolutionVersion.cs">
       <Link>SolutionVersion.cs</Link>
     </Compile>
@@ -165,6 +168,13 @@
     <Compile Include="Exceptions\InternalRulesEngineException.cs" />
     <Compile Include="Models\ParseModel\RuleDeclaration.cs" />
     <Compile Include="Models\ParseModel\RuleSetImpl.cs" />
+    <Compile Include="Models\RuntimeModel\JoinNodes\DefaultPropertySelectorFactory.cs" />
+    <Compile Include="Models\RuntimeModel\JoinNodes\EnumPropertySelector.cs" />
+    <Compile Include="Models\RuntimeModel\JoinNodes\NullableTypePropertySelector.cs" />
+    <Compile Include="Models\RuntimeModel\JoinNodes\PropertySelector.cs" />
+    <Compile Include="Models\RuntimeModel\JoinNodes\PropertySelectorFactory.cs" />
+    <Compile Include="Models\RuntimeModel\JoinNodes\ReferenceTypePropertySelector.cs" />
+    <Compile Include="Models\RuntimeModel\JoinNodes\ValueTypePropertySelector.cs" />
     <Compile Include="Models\RuntimeModel\RuntimeModelVisitorSite.cs" />
     <Compile Include="Models\RuntimeModel\Activation.cs" />
     <Compile Include="Models\RuntimeModel\ActivationContext.cs" />
@@ -264,18 +274,6 @@
     <Compile Include="Exceptions\OdoyuleRulesException.cs" />
     <Compile Include="RulesEngineFactory.cs" />
     <Compile Include="Session.cs" />
-    <Compile Include="Internal\Caching\Cache.cs" />
-    <Compile Include="Internal\Caching\CacheItemCallback.cs" />
-    <Compile Include="Internal\Caching\ConcurrentCache.cs" />
-    <Compile Include="Internal\Caching\DictionaryCache.cs" />
-    <Compile Include="Internal\Caching\GenericTypeCache.cs" />
-    <Compile Include="Internal\Caching\KeySelector.cs" />
-    <Compile Include="Internal\Caching\MissingValueProvider.cs" />
-    <Compile Include="Internal\Caching\ReadCache.cs" />
-    <Compile Include="Internal\CastExtensions.cs" />
-    <Compile Include="Internal\ExpressionExtensions.cs" />
-    <Compile Include="Internal\Observable.cs" />
-    <Compile Include="Internal\ReadOnlyProperty.cs" />
     <Compile Include="Visualization\TextRuntimeModelVisitor.cs" />
     <Compile Include="Visualization\VisualizationExtensions.cs" />
   </ItemGroup>

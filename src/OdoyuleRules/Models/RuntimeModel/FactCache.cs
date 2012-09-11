@@ -16,7 +16,7 @@ namespace OdoyuleRules.Models.RuntimeModel
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-    using Internal.Caching;
+    using Internals.Caching;
 
 
     class FactCache

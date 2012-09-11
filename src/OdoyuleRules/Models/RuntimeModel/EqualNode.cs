@@ -14,7 +14,7 @@ namespace OdoyuleRules.Models.RuntimeModel
 {
     using System.Linq;
     using Configuration.RuntimeModelConfigurators;
-    using Internal.Caching;
+    using Internals.Caching;
 
 
     public class EqualNode<T, TProperty> :

@@ -19,7 +19,7 @@ namespace OdoyuleRules.Conditionals
         Value<T>
     {
         readonly Value<TInput> _input;
-        Func<TInput, T> _converter;
+        readonly Func<TInput, T> _converter;
 
         public ValueTypeConverter(Value<TInput> input)
         {
@@ -39,13 +39,13 @@ namespace OdoyuleRules.Conditionals
         Func<TInput, T> CreateTypeConverter()
         {
             TypeConverter fromConverter = TypeDescriptor.GetConverter(typeof (TInput));
-            if (fromConverter != null && fromConverter.CanConvertTo(typeof (T)))
+            if (fromConverter.CanConvertTo(typeof (T)))
             {
                 return x => (T) fromConverter.ConvertTo(x, typeof (T));
             }
 
             TypeConverter toConverter = TypeDescriptor.GetConverter(typeof (T));
-            if (toConverter != null && toConverter.CanConvertFrom(typeof (TInput)))
+            if (toConverter.CanConvertFrom(typeof (TInput)))
             {
                 return x => (T) toConverter.ConvertFrom(x);
             }

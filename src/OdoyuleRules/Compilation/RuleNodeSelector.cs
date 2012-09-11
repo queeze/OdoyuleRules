@@ -14,7 +14,7 @@ namespace OdoyuleRules.Compilation
 {
     using System;
     using Configuration.RuntimeModelConfigurators;
-    using Internal;
+    using Internals.Extensions;
     using Models.RuntimeModel;
 
 
@@ -46,8 +46,9 @@ namespace OdoyuleRules.Compilation
         public void Match<TT, TTDiscard>(Action<LeftJoinNode<TT, TTDiscard>> callback)
             where TT : class
         {
-            this.CallAs<RuleNodeSelector<Token<TT, TTDiscard>>>(
-                self => _configurator.MatchLeftJoinNode(self._node, callback));
+            var self = this.CastAs<RuleNodeSelector<Token<TT, TTDiscard>>>();
+                
+            _configurator.MatchLeftJoinNode(self._node, callback);
         }
 
         public bool Select<TSelect>(Action<MemoryNode<TSelect>> callback)

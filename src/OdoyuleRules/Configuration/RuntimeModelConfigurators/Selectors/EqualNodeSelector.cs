@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -13,24 +13,46 @@
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
-    using OdoyuleRules.Models.RuntimeModel;
-    using OdoyuleRules.Visualization;
+    using Internals.Extensions;
+    using Models.RuntimeModel;
+    using Visualization;
 
 
-    public class EqualNodeSelector<T, TProperty> :
+    public static class EqualNodeSelector
+    {
+        public static NodeSelector Create(RuntimeConfigurator configurator, Type tokenType,
+            NodeSelectorFactory nextSelectorFactory, object value)
+        {
+            Type[] arguments = tokenType.GetGenericArguments();
+            if (!arguments[1].IsInstanceOfType(value))
+                throw new ArgumentException("Value type does not match token type: " + value.GetType().GetTypeName());
+
+            Type type = typeof (EqualNodeSelector<,>)
+                .MakeGenericType(arguments);
+
+            var nodeSelector =
+                (NodeSelector)
+                Activator.CreateInstance(type, configurator, nextSelectorFactory, value);
+
+            return nodeSelector;
+        }
+    }
+
+
+    public class EqualNodeSelector<T, TValue> :
         RuntimeModelVisitorBase,
         NodeSelector
         where T : class
     {
         readonly RuntimeConfigurator _configurator;
         readonly NodeSelector _next;
-        readonly TProperty _value;
-        EqualNode<T, TProperty> _node;
+        readonly TValue _value;
+        EqualNode<T, TValue> _node;
 
-        public EqualNodeSelector(NodeSelector next, RuntimeConfigurator configurator, TProperty value)
+        public EqualNodeSelector(RuntimeConfigurator configurator, NodeSelectorFactory nextSelectorFactory, TValue value)
         {
             _value = value;
-            _next = next;
+            _next = nextSelectorFactory.Create<Token<T, TValue>>();
             _configurator = configurator;
         }
 
@@ -52,9 +74,9 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 
             if (_node == null)
             {
-                EqualNode<T, TProperty> equalNode = _configurator.Equal<T, TProperty>();
+                EqualNode<T, TValue> equalNode = _configurator.Equal<T, TValue>();
 
-                var parentNode = node as Node<Token<T, TProperty>>;
+                var parentNode = node as Node<Token<T, TValue>>;
                 if (parentNode == null)
                     throw new ArgumentException("Expected " + typeof (T).Tokens() + ", but was "
                                                 + typeof (TNode).Tokens());
@@ -86,7 +108,7 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 
         public override string ToString()
         {
-            return string.Format("Equal Node: [{0}], {1} => {2}", typeof (T).Tokens(), _value, typeof (TProperty).Name);
+            return string.Format("Equal Node: [{0}], {1} => {2}", typeof (T).Tokens(), _value, typeof (TValue).Name);
         }
     }
 }

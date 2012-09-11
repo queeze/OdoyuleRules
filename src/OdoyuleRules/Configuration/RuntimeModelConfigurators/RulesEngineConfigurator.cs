@@ -12,6 +12,9 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
 {
+    using Models.RuntimeModel;
+
+
     public interface RulesEngineConfigurator
     {
         /// <summary>
@@ -19,5 +22,11 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
         /// </summary>
         /// <param name="configurator"> </param>
         void Add(RulesEngineBuilderConfigurator configurator);
+
+        /// <summary>
+        /// Register a custom property selector factory for handling user-defined nullable types
+        /// </summary>
+        /// <param name="propertySelectorFactory"></param>
+        void RegisterPropertySelector(PropertySelectorFactory propertySelectorFactory);
     }
 }

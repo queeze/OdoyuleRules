@@ -12,21 +12,26 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Builders;
     using Configurators;
+    using Models.RuntimeModel;
 
 
     class OdoyuleRulesEngineConfigurator :
         RulesEngineConfigurator,
         Configurator
     {
-        IList<RulesEngineBuilderConfigurator> _ruleConfigurators;
+        readonly IList<RulesEngineBuilderConfigurator> _ruleConfigurators;
+        readonly IList<Action<RuntimeConfigurator>> _runtimeConfiguratorActions;
+
 
         public OdoyuleRulesEngineConfigurator()
         {
             _ruleConfigurators = new List<RulesEngineBuilderConfigurator>();
+            _runtimeConfiguratorActions = new List<Action<RuntimeConfigurator>>();
         }
 
         public IEnumerable<ValidationResult> ValidateConfiguration()
@@ -39,10 +44,20 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators
             _ruleConfigurators.Add(configurator);
         }
 
+        public void RegisterPropertySelector(PropertySelectorFactory propertySelectorFactory)
+        {
+            _runtimeConfiguratorActions.Add(x => x.AddPropertySelectorFactory(propertySelectorFactory));
+        }
+
         public RulesEngine Create()
         {
             RulesEngineBuilder builder = new OdoyuleRulesEngineBuilder();
 
+            foreach (var configuratorAction in _runtimeConfiguratorActions)
+            {
+                builder.AddRuntimeConfiguratorAction(configuratorAction);
+            }
+            
             builder = _ruleConfigurators.Aggregate(builder, (b, x) => x.Configure(b));
 
             return builder.Build();

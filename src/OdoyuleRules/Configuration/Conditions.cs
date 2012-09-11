@@ -16,7 +16,7 @@ namespace OdoyuleRules.Configuration
     using System.Collections;
     using System.Linq.Expressions;
     using System.Reflection;
-    using Internal;
+    using Internals.Extensions;
     using Models.SemanticModel;
 
 

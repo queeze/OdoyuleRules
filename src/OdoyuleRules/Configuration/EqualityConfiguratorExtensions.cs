@@ -21,10 +21,9 @@ namespace OdoyuleRules.Configuration
         public static EqualNode<T, TProperty> Equal<T, TProperty>(this RuntimeConfigurator configurator)
             where T : class
         {
-            EqualNode<T, TProperty> propertyNode =
-                configurator.CreateNode(id => new EqualNode<T, TProperty>(id, configurator));
+            EqualNode<T, TProperty> node = configurator.CreateNode(id => new EqualNode<T, TProperty>(id, configurator));
 
-            return propertyNode;
+            return node;
         }
     }
 }

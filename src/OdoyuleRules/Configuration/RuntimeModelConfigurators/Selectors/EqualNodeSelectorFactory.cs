@@ -1,4 +1,4 @@
-// Copyright 2011 Chris Patterson
+// Copyright 2011-2012 Chris Patterson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -13,17 +13,17 @@
 namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
 {
     using System;
-    using OdoyuleRules.Models.RuntimeModel;
+    using Models.RuntimeModel;
 
 
-    public class EqualNodeSelectorFactory<TValue> :
+    public class EqualNodeSelectorFactory :
         NodeSelectorFactory
     {
         readonly NodeSelectorFactory _nextFactory;
-        readonly TValue _value;
+        readonly object _value;
         RuntimeConfigurator _configurator;
 
-        public EqualNodeSelectorFactory(NodeSelectorFactory nextFactory, RuntimeConfigurator configurator, TValue value)
+        public EqualNodeSelectorFactory(NodeSelectorFactory nextFactory, RuntimeConfigurator configurator, object value)
         {
             _nextFactory = nextFactory;
             _value = value;
@@ -33,24 +33,10 @@ namespace OdoyuleRules.Configuration.RuntimeModelConfigurators.Selectors
         public NodeSelector Create<T>()
             where T : class
         {
-            NodeSelector next = null;
-            if (_nextFactory != null)
-                next = _nextFactory.Create<T>();
+            if (!typeof (T).IsGenericType || typeof (T).GetGenericTypeDefinition() != typeof (Token<,>))
+                throw new ArgumentException("Type was not a token type: " + typeof (T).FullName);
 
-            if(typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(Token<,>))
-            {
-                var arguments = typeof (T).GetGenericArguments();
-                if(arguments[1] != typeof(TValue))
-                    throw new ArgumentException("Value type does not match token type");
-
-                Type nodeType = typeof (EqualNodeSelector<,>).MakeGenericType(arguments);
-
-                var selector = (NodeSelector)Activator.CreateInstance(nodeType, next, _configurator, _value);
-
-                return selector;
-            }
-
-            throw new ArgumentException("Type was not a token type: " + typeof (T).FullName);
+            return EqualNodeSelector.Create(_configurator, typeof (T), _nextFactory, _value);
         }
     }
 }

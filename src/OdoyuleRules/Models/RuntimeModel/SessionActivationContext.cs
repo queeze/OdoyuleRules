@@ -13,7 +13,7 @@
 namespace OdoyuleRules.Models.RuntimeModel
 {
     using System;
-    using Internal;
+    using Internals.Extensions;
 
 
     class SessionActivationContext<T> :
@@ -37,7 +37,8 @@ namespace OdoyuleRules.Models.RuntimeModel
         public void Convert<TOutput>(Action<ActivationContext<TOutput>> callback)
             where TOutput : class
         {
-            this.CallAs(callback);
+            var self = this.CastAs<ActivationContext<TOutput>>();
+            callback(self);
         }
 
         public ActivationContext<TContext> CreateContext<TContext>(TContext fact)

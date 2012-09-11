@@ -49,7 +49,7 @@ namespace OdoyuleRules.Tests
             selector.ConsoleWriteLine();
 
             Assert.IsInstanceOf<TypeNodeSelector<A>>(selector);
-            Assert.IsInstanceOf<PropertyNodeSelector<A, B>>(selector.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<A, B,B>>(selector.Next);
             Assert.IsNull(selector.Next.Next);
         }
 
@@ -65,10 +65,10 @@ namespace OdoyuleRules.Tests
             selector.ConsoleWriteLine();
 
             Assert.IsInstanceOf<TypeNodeSelector<A>>(selector);
-            Assert.IsInstanceOf<PropertyNodeSelector<A, B>>(selector.Next);
-            Assert.IsInstanceOf<PropertyNodeSelector<A, B, C>>(selector.Next.Next);
-            Assert.IsInstanceOf<PropertyNodeSelector<Token<A, B>, C, string>>(selector.Next.Next.Next);
-            Assert.IsInstanceOf<PropertyNodeSelector<Token<Token<A, B>, C>, string, int>>(
+            Assert.IsInstanceOf<PropertyNodeSelector<A, B,B>>(selector.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<A, B, C, C>>(selector.Next.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<Token<A, B>, C, string, string>>(selector.Next.Next.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<Token<Token<A, B>, C>, string, int, int>>(
                 selector.Next.Next.Next.Next);
             Assert.IsNull(selector.Next.Next.Next.Next.Next);
         }
@@ -86,8 +86,8 @@ namespace OdoyuleRules.Tests
             selector.ConsoleWriteLine();
 
             Assert.IsInstanceOf<TypeNodeSelector<A>>(selector);
-            Assert.IsInstanceOf<PropertyNodeSelector<A, B>>(selector.Next);
-            Assert.IsInstanceOf<PropertyNodeSelector<A, B, C>>(selector.Next.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<A, B, B>>(selector.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<A, B, C, C>>(selector.Next.Next);
             Assert.IsNull(selector.Next.Next.Next);
         }
 
@@ -103,9 +103,9 @@ namespace OdoyuleRules.Tests
             selector.ConsoleWriteLine();
 
             Assert.IsInstanceOf<TypeNodeSelector<A>>(selector);
-            Assert.IsInstanceOf<PropertyNodeSelector<A, B>>(selector.Next);
-            Assert.IsInstanceOf<PropertyNodeSelector<A, B, C>>(selector.Next.Next);
-            Assert.IsInstanceOf<PropertyNodeSelector<Token<A, B>, C, string>>(selector.Next.Next.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<A, B,B>>(selector.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<A, B, C, C>>(selector.Next.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<Token<A, B>, C, string, string>>(selector.Next.Next.Next);
             Assert.IsNull(selector.Next.Next.Next.Next);
         }
 
@@ -121,8 +121,8 @@ namespace OdoyuleRules.Tests
             selector.ConsoleWriteLine();
 
             Assert.IsInstanceOf<TypeNodeSelector<A>>(selector);
-            Assert.IsInstanceOf<PropertyNodeSelector<A, B>>(selector.Next);
-            Assert.IsInstanceOf<PropertyNodeSelector<A, B, int[]>>(selector.Next.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<A, B, B>>(selector.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<A, B, int[], int[]>>(selector.Next.Next);
             Assert.IsInstanceOf<ArrayNodeSelector<Token<Token<A, B>, int[]>, int>>(selector.Next.Next.Next);
             Assert.IsNull(selector.Next.Next.Next.Next);
         }
@@ -139,7 +139,7 @@ namespace OdoyuleRules.Tests
             selector.ConsoleWriteLine();
 
             Assert.IsInstanceOf<TypeNodeSelector<A>>(selector);
-            Assert.IsInstanceOf<PropertyNodeSelector<A, IList<double>>>(selector.Next);
+            Assert.IsInstanceOf<PropertyNodeSelector<A, IList<double>, IList<double>>>(selector.Next);
             Assert.IsInstanceOf<ListNodeSelector<Token<A, IList<double>>, double>>(selector.Next.Next);
             Assert.IsNull(selector.Next.Next.Next);
         }

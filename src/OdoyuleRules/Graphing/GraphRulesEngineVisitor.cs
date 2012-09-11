@@ -14,7 +14,7 @@ namespace OdoyuleRules.Graphing
 {
     using System;
     using System.Collections.Generic;
-    using Internal.Caching;
+    using Internals.Caching;
     using Models.RuntimeModel;
     using Visualization;
 
@@ -62,10 +62,13 @@ namespace OdoyuleRules.Graphing
             return Next(() => base.Visit(node, next));
         }
 
-        public override bool Visit<T, TProperty>(PropertyNode<T, TProperty> node, Func<RuntimeModelVisitor, bool> next)
+        public override bool Visit<T, TProperty,TValue>(PropertyNode<T, TProperty, TValue> node, Func<RuntimeModelVisitor, bool> next)
         {
-            _current = _vertices.Get(node.Id, id => new Vertex(typeof (PropertyNode<,>), typeof (TProperty),
-                                                               typeof (T).Tokens() + "." + node.PropertyInfo.Name));
+            var title = string.Format("{0}.{1}\n{2}", typeof (T).Tokens(), node.PropertyInfo.Name,
+                typeof(TProperty) != typeof(TValue) ? typeof(TValue).Name : "");
+
+            _current = _vertices.Get(node.Id, id => new Vertex(typeof (PropertyNode<,,>), typeof (TProperty),
+                                                               title));
 
             if (_stack.Count > 0)
                 _edges.Add(new Edge(_stack.Peek(), _current, _current.TargetType.Name));

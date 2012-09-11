@@ -16,7 +16,7 @@ namespace OdoyuleRules
     using System.Collections.Generic;
     using System.Linq;
     using Configuration.RuntimeModelConfigurators;
-    using Internal.Caching;
+    using Internals.Caching;
     using Models.RuntimeModel;
 
 

@@ -123,7 +123,7 @@ namespace OdoyuleRules.Configuration.Designer
             if (propertyInfo == null)
                 throw new ArgumentException();
 
-            var valueVisitor = new RightHandSideExpressionVisitor(propertyInfo.PropertyType);
+            var valueVisitor = new RightHandSideExpressionVisitor();
             valueVisitor.Visit(node.Right);
 
             object value = valueVisitor.Value;
