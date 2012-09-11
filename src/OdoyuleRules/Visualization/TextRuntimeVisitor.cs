@@ -15,7 +15,6 @@ namespace OdoyuleRules.Visualization
     using System;
     using System.Text;
     using RuntimeModel;
-    using RuntimeModel.JoinNodes;
     using RuntimeModel.Nodes;
 
 

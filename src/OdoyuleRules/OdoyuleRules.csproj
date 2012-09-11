@@ -37,6 +37,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\RuntimeConfigurators\PropertySelector.cs" />
+    <Compile Include="Configuration\RuntimeConfigurators\PropertySelectorFactory.cs" />
     <Compile Include="Configuration\RuntimeConfigurators\PropertySelectors\DefaultPropertySelectorFactory.cs" />
     <Compile Include="Configuration\RuntimeConfigurators\PropertySelectors\EnumPropertySelector.cs" />
     <Compile Include="Configuration\RuntimeConfigurators\PropertySelectors\NullableTypePropertySelector.cs" />
@@ -154,39 +156,6 @@
     <Compile Include="Configuration\Conditions.cs" />
     <Compile Include="Configuration\Consequences.cs" />
     <Compile Include="OdoyuleRulesEngine.cs" />
-    <Compile Include="ParseModel\ConditionDeclaration.cs" />
-    <Compile Include="ParseModel\ConsequenceDeclaration.cs" />
-    <Compile Include="ParseModel\Declaration.cs" />
-    <Compile Include="ParseModel\DeclarationType.cs" />
-    <Compile Include="ParseModel\RuleDeclaration.cs" />
-    <Compile Include="ParseModel\RuleSetImpl.cs" />
-    <Compile Include="Parsing\AbstractCharacterParser.cs" />
-    <Compile Include="Parsing\AbstractParser.cs" />
-    <Compile Include="Parsing\Binary.cs" />
-    <Compile Include="Parsing\ClassRuleCondition.cs" />
-    <Compile Include="Parsing\Comparator.cs" />
-    <Compile Include="Parsing\ComparatorType.cs" />
-    <Compile Include="Parsing\Operators\DivideOperator.cs" />
-    <Compile Include="Parsing\Comparators\EqualComparator.cs" />
-    <Compile Include="Parsing\Comparators\GreaterThanComparator.cs" />
-    <Compile Include="Parsing\Comparators\GreaterThanOrEqualComparator.cs" />
-    <Compile Include="Parsing\Comparators\LessThanComparator.cs" />
-    <Compile Include="Parsing\Comparators\LessThanOrEqualComparator.cs" />
-    <Compile Include="Parsing\ListSeparator.cs" />
-    <Compile Include="Parsing\Operators\MinusOperator.cs" />
-    <Compile Include="Parsing\MonadParserExtensions.cs" />
-    <Compile Include="Parsing\Operators\MultiplyOperator.cs" />
-    <Compile Include="Parsing\Comparators\NotEqualComparator.cs" />
-    <Compile Include="Parsing\Operator.cs" />
-    <Compile Include="Parsing\OperatorType.cs" />
-    <Compile Include="Parsing\Parser.cs" />
-    <Compile Include="Parsing\Operators\PlusOperator.cs" />
-    <Compile Include="Parsing\Result.cs" />
-    <Compile Include="Parsing\RuleConditionImpl.cs" />
-    <Compile Include="Parsing\RuleDefinition.cs" />
-    <Compile Include="Parsing\RuleParser.cs" />
-    <Compile Include="Parsing\StringRuleParser.cs" />
-    <Compile Include="Parsing\Variable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RulesEngine.cs" />
     <Compile Include="Exceptions\OdoyuleRulesException.cs" />
@@ -214,8 +183,6 @@
     <Compile Include="RuntimeModel\Comparators\ValueEqualComparator.cs" />
     <Compile Include="RuntimeModel\ContextMemory.cs" />
     <Compile Include="RuntimeModel\FactCache.cs" />
-    <Compile Include="RuntimeModel\JoinNodes\PropertySelector.cs" />
-    <Compile Include="RuntimeModel\JoinNodes\PropertySelectorFactory.cs" />
     <Compile Include="RuntimeModel\MemoryNode.cs" />
     <Compile Include="RuntimeModel\Node.cs" />
     <Compile Include="RuntimeModel\Nodes\AddFactNode.cs" />
@@ -279,7 +246,9 @@
     <Compile Include="Visualization\TextRuntimeVisitor.cs" />
     <Compile Include="Visualization\VisualizationExtensions.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="RuntimeModel\JoinNodes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -20,7 +20,6 @@ namespace OdoyuleRules.Configuration.RuntimeConfigurators
     using Internals.Extensions;
     using Locators;
     using OdoyuleRules.RuntimeModel;
-    using OdoyuleRules.RuntimeModel.JoinNodes;
     using OdoyuleRules.RuntimeModel.Nodes;
     using PropertySelectors;
 
@@ -90,20 +89,6 @@ namespace OdoyuleRules.Configuration.RuntimeConfigurators
             }
 
             throw new OdoyuleRulesException("The property selector could not be created: " + propertyInfo.PropertyType.GetTypeName());
-        }
-
-        public PropertySelector<T> GetPropertySelector<T>(PropertyInfo propertyInfo)
-        {
-            foreach (var selectorFactory in _propertySelectorFactories)
-            {
-               PropertySelector<T> propertySelector;
-                if(selectorFactory.TryGetPropertySelector<T>(propertyInfo, out propertySelector))
-                {
-                    return propertySelector;
-                }
-            }
-
-            throw new OdoyuleRulesException("The property selector could not be created: " + typeof (T).GetTypeName());
         }
 
         public void AddPropertySelectorFactory(PropertySelectorFactory propertySelectorFactory)

@@ -16,9 +16,9 @@ namespace OdoyuleRules.Tests.InternalDSL
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using Configuration.RuntimeConfigurators;
     using Designer;
     using NUnit.Framework;
-    using RuntimeModel.JoinNodes;
     using Visualizer;
 
 
@@ -119,19 +119,6 @@ namespace OdoyuleRules.Tests.InternalDSL
         class ValuePropertySelectorFactory :
             PropertySelectorFactory
         {
-            public bool TryGetPropertySelector<TProperty>(PropertyInfo propertyInfo, out PropertySelector<TProperty> propertySelector)
-            {
-                PropertySelector result;
-                if(TryGetPropertySelector(propertyInfo, out result))
-                {
-                    propertySelector = (PropertySelector<TProperty>) result;
-                    return true;
-                }
-
-                propertySelector = null;
-                return false;
-            }
-
             public bool TryGetPropertySelector(PropertyInfo propertyInfo, out PropertySelector propertySelector)
             {
                 var propertyType = propertyInfo.PropertyType;

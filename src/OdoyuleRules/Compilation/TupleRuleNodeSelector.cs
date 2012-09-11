@@ -15,7 +15,6 @@ namespace OdoyuleRules.Compilation
     using System;
     using Configuration.RuntimeConfigurators;
     using RuntimeModel;
-    using RuntimeModel.JoinNodes;
     using RuntimeModel.Nodes;
 
 

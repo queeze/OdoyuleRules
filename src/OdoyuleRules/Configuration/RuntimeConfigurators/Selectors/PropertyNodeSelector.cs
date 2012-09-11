@@ -14,7 +14,6 @@ namespace OdoyuleRules.Configuration.RuntimeConfigurators.Selectors
     using System.Reflection;
     using Internals.Reflection;
     using RuntimeModel;
-    using RuntimeModel.JoinNodes;
     using RuntimeModel.Nodes;
     using Visualization;
 
@@ -25,7 +24,7 @@ namespace OdoyuleRules.Configuration.RuntimeConfigurators.Selectors
             NodeSelectorFactory nextSelectorFactory,
             PropertyInfo propertyInfo)
         {
-            PropertySelector<TProperty> propertySelector = configurator.GetPropertySelector<TProperty>(propertyInfo);
+            PropertySelector propertySelector = configurator.GetPropertySelector(propertyInfo);
 
             Type type = typeof(PropertyNodeSelector<,,>)
                 .MakeGenericType(typeof(T), propertySelector.PropertyType, propertySelector.ValueType);

@@ -15,7 +15,6 @@ namespace OdoyuleRules.Tests.Execution
     using Configuration.RuntimeConfigurators;
     using NUnit.Framework;
     using RuntimeModel;
-    using RuntimeModel.JoinNodes;
     using RuntimeModel.Nodes;
 
 

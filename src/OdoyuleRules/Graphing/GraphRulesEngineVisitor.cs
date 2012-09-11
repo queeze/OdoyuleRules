@@ -16,7 +16,6 @@ namespace OdoyuleRules.Graphing
     using System.Collections.Generic;
     using Internals.Caching;
     using RuntimeModel;
-    using RuntimeModel.JoinNodes;
     using RuntimeModel.Nodes;
     using Visualization;
 

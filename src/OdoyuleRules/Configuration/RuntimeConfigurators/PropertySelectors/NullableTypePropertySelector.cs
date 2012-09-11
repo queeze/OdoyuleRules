@@ -13,7 +13,6 @@
 namespace OdoyuleRules.Configuration.RuntimeConfigurators.PropertySelectors
 {
     using System;
-    using OdoyuleRules.RuntimeModel.JoinNodes;
 
 
     public class NullableTypePropertySelector<T> :

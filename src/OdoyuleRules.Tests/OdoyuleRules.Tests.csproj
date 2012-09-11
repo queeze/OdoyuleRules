@@ -68,6 +68,10 @@
     <Compile Include="VisualizationExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OdoyuleRules.Dsl\OdoyuleRules.Dsl.csproj">
+      <Project>{30C95BC1-A0CD-482F-87C1-0E804D393DAD}</Project>
+      <Name>OdoyuleRules.Dsl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OdoyuleRules.Visualizer\OdoyuleRules.Visualizer.csproj">
       <Project>{7F50D7AB-DB82-42EF-AE55-60B7BED7D6CD}</Project>
       <Name>OdoyuleRules.Visualizer</Name>

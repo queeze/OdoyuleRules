@@ -18,7 +18,6 @@ namespace OdoyuleRules.Configuration
     using Internals.Extensions;
     using RuntimeConfigurators;
     using RuntimeModel;
-    using RuntimeModel.JoinNodes;
     using RuntimeModel.Nodes;
 
 
@@ -37,7 +36,7 @@ namespace OdoyuleRules.Configuration
             PropertyInfo propertyInfo)
             where T : class
         {
-            PropertySelector<TProperty> propertySelector = configurator.GetPropertySelector<TProperty>(propertyInfo);
+            PropertySelector propertySelector = configurator.GetPropertySelector(propertyInfo);
 
             Type propertyNodeType = typeof (PropertyNode<,,>)
                 .MakeGenericType(typeof (T), propertySelector.PropertyType, propertySelector.ValueType);
@@ -52,7 +51,7 @@ namespace OdoyuleRules.Configuration
             where T1 : class
             where T2 : class
         {
-            PropertySelector<TProperty> propertySelector = configurator.GetPropertySelector<TProperty>(propertyInfo);
+            PropertySelector propertySelector = configurator.GetPropertySelector(propertyInfo);
 
             Type propertyNodeType = typeof (PropertyNode<,,>)
                 .MakeGenericType(typeof (Token<T1, T2>), propertySelector.PropertyType, propertySelector.ValueType);

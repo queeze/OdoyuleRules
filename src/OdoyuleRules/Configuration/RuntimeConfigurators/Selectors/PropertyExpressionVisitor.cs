@@ -15,7 +15,6 @@ namespace OdoyuleRules.Configuration.RuntimeConfigurators.Selectors
     using System.Linq.Expressions;
     using System.Reflection;
     using Configurators;
-    using RuntimeModel.JoinNodes;
 
 
     /// <summary>

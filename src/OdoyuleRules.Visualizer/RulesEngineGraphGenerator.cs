@@ -23,7 +23,6 @@ namespace OdoyuleRules.Visualizer
     using QuickGraph;
     using QuickGraph.Glee;
     using RuntimeModel;
-    using RuntimeModel.JoinNodes;
     using RuntimeModel.Nodes;
     using Color = Microsoft.Glee.Drawing.Color;
 

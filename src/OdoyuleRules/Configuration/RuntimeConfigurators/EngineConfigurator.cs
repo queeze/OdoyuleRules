@@ -10,9 +10,6 @@
 // License for the specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Configuration.RuntimeConfigurators
 {
-    using RuntimeModel.JoinNodes;
-
-
     public interface EngineConfigurator
     {
         /// <summary>

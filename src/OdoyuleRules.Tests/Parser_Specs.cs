@@ -1,8 +1,9 @@
 namespace OdoyuleRules.Tests
 {
     using System;
+    using Dsl.Parsing;
     using NUnit.Framework;
-    using Parsing;
+
 
     [TestFixture]
     public class Parser_specs
