@@ -10,12 +10,15 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Dsl
+namespace OdoyuleRules.Dsl.ParseModel
 {
-    public enum DeclarationType
+    public abstract class Declaration
     {
-        Rule,
-        Condition,
-        Consequence
+        public DeclarationType DeclarationType { get; private set; }
+
+        protected Declaration(DeclarationType declarationType)
+        {
+            DeclarationType = declarationType;
+        }
     }
 }

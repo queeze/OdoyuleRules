@@ -12,5 +12,5 @@
 // specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Dsl.Parsing
 {
-    public delegate Result<TInput, TValue> Parser<TInput, TValue>(TInput input);
+    public delegate Result<TResult> Parser<in TInput, out TResult>(TInput input);
 }

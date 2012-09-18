@@ -10,23 +10,17 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Dsl
+namespace OdoyuleRules.Dsl.ParseModel
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-
-    public class RuleDeclaration :
-        Declaration
+    public enum DeclarationType
     {
-        readonly IList<ConditionDeclaration> _conditions;
-        readonly IList<ConsequenceDeclaration> _consequences;
-
-        public RuleDeclaration(IEnumerable<ConditionDeclaration> conditions, IEnumerable<ConsequenceDeclaration> consequences)
-            : base(DeclarationType.Rule)
-        {
-            _conditions = conditions.ToList();
-            _consequences = consequences.ToList();
-        }
+        Rule,
+        Condition,
+        Consequence,
+        Variable,
+        VariableTypeCondition,
+        TypeCondition,
+        CompareCondition,
+        Namespace
     }
 }

@@ -8,12 +8,26 @@
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed 
 // on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
 // License for the specific language governing permissions and limitations under the License.
-namespace OdoyuleRules.Dsl.Parsing
+namespace OdoyuleRules.Dsl
 {
-    public interface Result<out T>
-    {
-        T Value { get; }
+    using System.Collections.Generic;
+    using ParseModel;
+    using Parsing;
 
-        string Rest { get; }
+
+    public class OdoyuleRuleParser :
+        RuleParser
+    {
+        public IEnumerable<RuleDeclaration> Parse(string text)
+        {
+            string rest = text;
+            Result<RuleDeclaration> result;
+            while ( ( result = Rule(rest)) != null)
+            {
+                yield return result.Value;
+
+                rest = result.Rest;
+            }
+        }
     }
 }

@@ -57,11 +57,13 @@
     <Compile Include="Execution\Facts_Specs.cs" />
     <Compile Include="Execution\OuterJoin_Specs.cs" />
     <Compile Include="Execution\Production_Specs.cs" />
+    <Compile Include="ExternalDSL\Invalid_Specs.cs" />
+    <Compile Include="ExternalDSL\PropertyCondition_Specs.cs" />
     <Compile Include="Factory_Specs.cs" />
     <Compile Include="InternalDSL\ExpressionParsing_Specs.cs" />
     <Compile Include="InternalDSL\NullableFacts_Specs.cs" />
     <Compile Include="InternalDSL\RuleDesigner_Specs.cs" />
-    <Compile Include="Parser_Specs.cs" />
+    <Compile Include="ExternalDSL\Parser_Specs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property_Specs.cs" />
     <Compile Include="Usage\Usage_of_the_rules_engine.cs" />

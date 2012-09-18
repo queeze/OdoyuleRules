@@ -24,7 +24,7 @@ namespace OdoyuleRules.Dsl.Parsing
         {
             return input =>
                 {
-                    Result<TInput, TValue> result = parser(input);
+                    Result<TValue> result = parser(input);
                     if (result == null || !pred(result.Value))
                         return null;
 
@@ -37,36 +37,36 @@ namespace OdoyuleRules.Dsl.Parsing
         {
             return input =>
                 {
-                    Result<TInput, TValue> result = parser(input);
+                    Result<TValue> result = parser(input);
                     if (result == null)
                         return null;
 
-                    return new Result<TInput, TSelect>(selector(result.Value), result.Rest);
+                    return new Success<TSelect>(selector(result.Value), result.Rest);
                 };
         }
 
-        public static Parser<TInput, TSelect> SelectMany<TInput, TValue, TIntermediate, TSelect>(
-            this Parser<TInput, TValue> parser,
-            Func<TValue, Parser<TInput, TIntermediate>> selector,
+        public static Parser<string, TSelect> SelectMany<TValue, TIntermediate, TSelect>(
+            this Parser<string, TValue> parser,
+            Func<TValue, Parser<string, TIntermediate>> selector,
             Func<TValue, TIntermediate, TSelect> projector)
         {
             return input =>
                 {
-                    Result<TInput, TValue> result = parser(input);
+                    Result<TValue> result = parser(input);
                     if (result == null)
                         return null;
 
                     TValue val = result.Value;
-                    Result<TInput, TIntermediate> nextResult = selector(val)(result.Rest);
+                    Result<TIntermediate> nextResult = selector(val)(result.Rest);
                     if (nextResult == null)
                         return null;
 
-                    return new Result<TInput, TSelect>(projector(val, nextResult.Value), nextResult.Rest);
+                    return new Success<TSelect>(projector(val, nextResult.Value), nextResult.Rest);
                 };
         }
 
-        public static Parser<TInput, TValue> Or<TInput, TValue>(this Parser<TInput, TValue> first,
-                                                                Parser<TInput, TValue> second)
+        public static Parser<string, TValue> Or<TValue>(this Parser<string, TValue> first,
+                                                                Parser<string, TValue> second)
         {
             return input => first(input) ?? second(input);
         }
@@ -82,9 +82,9 @@ namespace OdoyuleRules.Dsl.Parsing
                 };
         }
 
-        public static Parser<TInput, TSecondValue> And<TInput, TFirstValue, TSecondValue>(
-            this Parser<TInput, TFirstValue> first,
-            Parser<TInput, TSecondValue> second)
+        public static Parser<string, TSecondValue> And<TFirstValue, TSecondValue>(
+            this Parser<string, TFirstValue> first,
+            Parser<string, TSecondValue> second)
         {
             return input =>
                 {

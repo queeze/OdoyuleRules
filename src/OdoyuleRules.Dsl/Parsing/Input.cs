@@ -10,10 +10,7 @@
 // License for the specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Dsl.Parsing
 {
-    public interface Result<out T>
+    public interface Input
     {
-        T Value { get; }
-
-        string Rest { get; }
     }
 }
