@@ -20,13 +20,26 @@ namespace OdoyuleRules.Dsl
     {
         public IEnumerable<RuleDeclaration> Parse(string text)
         {
-            string rest = text;
-            Result<RuleDeclaration> result;
-            while ( ( result = Rule(rest)) != null)
-            {
-                yield return result.Value;
+            Input input = new StringInput(text);
 
-                rest = result.Rest;
+            Result<RuleDeclaration> result;
+            while ((result = Rule(input)) is Success<RuleDeclaration>)
+            {
+                var success = result as Success<RuleDeclaration>;
+
+                yield return success.Value;
+
+                input = success.Rest;
+            }
+
+            var failure = result as Failure<RuleDeclaration>;
+            if (failure != null)
+            {
+                if (!failure.FailedInput.IsEnd)
+                    throw new RuleParserException(
+                        string.Format("Error parsing rule input, line {0}, column {1}: {2}", failure.FailedInput.Line,
+                            failure.FailedInput.Column,
+                            failure.FailedInput.Text.Substring(failure.FailedInput.Offset)));
             }
         }
     }

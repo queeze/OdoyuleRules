@@ -83,7 +83,8 @@ rule YourRule
     when 
         MyClass(Name == 'Mary', City == 'Tulsa')
     then
-end";
+end
+";
 
             Console.WriteLine(text);
 

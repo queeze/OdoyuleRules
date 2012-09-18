@@ -33,16 +33,12 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionVersion.cs">
       <Link>SolutionVersion.cs</Link>
     </Compile>
+    <Compile Include="Exceptions\RuleParserException.cs" />
     <Compile Include="OdoyuleRuleParser.cs" />
     <Compile Include="ParseModel\CompareConditionDeclaration.cs" />
     <Compile Include="ParseModel\DeclarationType.cs" />
@@ -54,8 +50,10 @@
     <Compile Include="ParseModel\Declaration.cs" />
     <Compile Include="ParseModel\VariableTypeConditionDeclaration.cs" />
     <Compile Include="ParseModel\VariableDeclaration.cs" />
+    <Compile Include="Parsing\Failure.cs" />
+    <Compile Include="Parsing\FailureImpl.cs" />
     <Compile Include="Parsing\Input.cs" />
-    <Compile Include="Parsing\StringParser.cs" />
+    <Compile Include="Parsing\InputParser.cs" />
     <Compile Include="ParseModel\Binary.cs" />
     <Compile Include="ParseModel\Comparators\Comparator.cs" />
     <Compile Include="ParseModel\Comparators\EqualComparator.cs" />
@@ -67,7 +65,7 @@
     <Compile Include="ParseModel\Comparators\ComparatorType.cs" />
     <Compile Include="Parsing\StringInput.cs" />
     <Compile Include="Parsing\ListSeparator.cs" />
-    <Compile Include="Parsing\MonadParserExtensions.cs" />
+    <Compile Include="Parsing\ParserExtensions.cs" />
     <Compile Include="ParseModel\Operators\Operator.cs" />
     <Compile Include="ParseModel\Operators\DivideOperator.cs" />
     <Compile Include="ParseModel\Operators\MinusOperator.cs" />
@@ -77,10 +75,17 @@
     <Compile Include="Parsing\Parser.cs" />
     <Compile Include="Parsing\Result.cs" />
     <Compile Include="Parsing\Success.cs" />
+    <Compile Include="Parsing\SuccessImpl.cs" />
     <Compile Include="RuleParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OdoyuleRules\OdoyuleRules.csproj">
+      <Project>{75BB63FF-AFD7-458F-9276-1A32F2F150BE}</Project>
+      <Name>OdoyuleRules</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

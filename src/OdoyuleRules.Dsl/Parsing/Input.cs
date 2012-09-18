@@ -12,5 +12,13 @@ namespace OdoyuleRules.Dsl.Parsing
 {
     public interface Input
     {
+        string Text { get; }
+        char Char { get; }
+        bool IsEnd { get; }
+        int Offset { get; }
+        int Line { get; }
+        int Column { get; }
+
+        Input Next();
     }
 }

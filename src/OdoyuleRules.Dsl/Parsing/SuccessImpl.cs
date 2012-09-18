@@ -10,7 +10,26 @@
 // License for the specific language governing permissions and limitations under the License.
 namespace OdoyuleRules.Dsl.Parsing
 {
-    public interface Result<out T>
+    public class SuccessImpl<T> :
+        Success<T>
     {
+        readonly Input _rest;
+        readonly T _value;
+
+        public SuccessImpl(T value, Input rest)
+        {
+            _value = value;
+            _rest = rest;
+        }
+
+        public T Value
+        {
+            get { return _value; }
+        }
+
+        public Input Rest
+        {
+            get { return _rest; }
+        }
     }
 }

@@ -18,20 +18,20 @@ namespace OdoyuleRules.Dsl
 
 
     public abstract class RuleParser :
-        StringParser
+        InputParser
     {
-        protected readonly Parser<string, string> DottedId;
+        protected readonly Parser<string> DottedId;
 
-        protected readonly Parser<string, char> FirstSymbolChar;
-        protected readonly Parser<string, char> IdSeparator;
+        protected readonly Parser<char> FirstSymbolChar;
+        protected readonly Parser<char> IdSeparator;
 
-        protected readonly Parser<string, ConditionDeclaration[]> MatchConditions;
-        protected readonly Parser<string, NamespaceDeclaration> Namespace;
-        protected readonly Parser<string, ConditionDeclaration> NextCondition;
-        protected readonly Parser<string, char> SymbolChar;
-        protected readonly Parser<string, TypeConditionDeclaration> TypeMatch;
-        protected readonly Parser<string, VariableDeclaration> Variable;
-        protected readonly Parser<string, VariableTypeConditionDeclaration> VariableTypeCondition;
+        protected readonly Parser<ConditionDeclaration[]> MatchConditions;
+        protected readonly Parser<NamespaceDeclaration> Namespace;
+        protected readonly Parser<ConditionDeclaration> NextCondition;
+        protected readonly Parser<char> SymbolChar;
+        protected readonly Parser<TypeConditionDeclaration> TypeMatch;
+        protected readonly Parser<VariableDeclaration> Variable;
+        protected readonly Parser<VariableTypeConditionDeclaration> VariableTypeCondition;
 
         public RuleParser()
         {
@@ -134,8 +134,7 @@ namespace OdoyuleRules.Dsl
                         select new TypeConditionDeclaration(className, conditions);
 
             Namespace = from w in Whitespace
-                        from prefix in Id
-                        where prefix == "using"
+                        from prefix in Keyword("using")
                         from ns in DottedId
                         select new NamespaceDeclaration(ns);
 
@@ -151,50 +150,51 @@ namespace OdoyuleRules.Dsl
                                     from t in TypeMatch
                                     select new VariableTypeConditionDeclaration(v, t);
 
-            Rule = from open in Id
-                   where open == "rule"
+            Rule = from bws in Whitespace
+                   from open in Keyword("rule")
                    from name in QuotedString.Or(Id)
                    from nss in ZeroOrMore(Namespace)
-                   from when in Id
-                   where when == "when"
+                   from ws in Whitespace
+                   from when in Keyword("when")
                    from conditions in
                        ZeroOrMore(VariableTypeCondition.Or<ConditionDeclaration>(TypeMatch).Or(Condition))
-                   from then in Id
-                   where then == "then"
-                   from theEnd in Id
-                   where theEnd == "end"
+                   from ws2 in Whitespace
+                   from then in Keyword("then")
+                   from ws3 in Whitespace
+                   from theEnd in Keyword("end")
+                   from ews in Whitespace
                    select new RuleDeclaration(name, nss, conditions, Enumerable.Empty<ConsequenceDeclaration>());
         }
 
 
-        protected Parser<string, ListSeparator> ListSeparator { get; private set; }
+        protected Parser<ListSeparator> ListSeparator { get; private set; }
 
-        protected Parser<string, Comparator> Equal { get; private set; }
-        protected Parser<string, Comparator> NotEqual { get; private set; }
-        protected Parser<string, Comparator> GreaterThan { get; private set; }
-        protected Parser<string, Comparator> GreaterThanOrEqual { get; private set; }
-        protected Parser<string, Comparator> LessThan { get; private set; }
-        protected Parser<string, Comparator> LessThanOrEqual { get; private set; }
-        protected Parser<string, Comparator> Comparators { get; private set; }
+        protected Parser<Comparator> Equal { get; private set; }
+        protected Parser<Comparator> NotEqual { get; private set; }
+        protected Parser<Comparator> GreaterThan { get; private set; }
+        protected Parser<Comparator> GreaterThanOrEqual { get; private set; }
+        protected Parser<Comparator> LessThan { get; private set; }
+        protected Parser<Comparator> LessThanOrEqual { get; private set; }
+        protected Parser<Comparator> Comparators { get; private set; }
 
-        protected Parser<string, Operator> Multiply { get; private set; }
-        protected Parser<string, Operator> Divide { get; private set; }
-        protected Parser<string, Operator> Plus { get; private set; }
-        protected Parser<string, Operator> Minus { get; private set; }
-        protected Parser<string, Operator> Operators { get; private set; }
+        protected Parser<Operator> Multiply { get; private set; }
+        protected Parser<Operator> Divide { get; private set; }
+        protected Parser<Operator> Plus { get; private set; }
+        protected Parser<Operator> Minus { get; private set; }
+        protected Parser<Operator> Operators { get; private set; }
 
-        protected Parser<string, char[]> Whitespace { get; private set; }
+        protected Parser<char[]> Whitespace { get; private set; }
 
-        protected Parser<string, char[]> NewLine { get; private set; }
+        protected Parser<char[]> NewLine { get; private set; }
 
-        protected Parser<string, string> Id { get; private set; }
+        protected Parser<string> Id { get; private set; }
 
-        protected Parser<string, string> QuotedString { get; private set; }
+        protected Parser<string> QuotedString { get; private set; }
 
-        protected Parser<string, char[]> Printable { get; private set; }
+        protected Parser<char[]> Printable { get; private set; }
 
-        protected Parser<string, RuleDeclaration> Rule { get; private set; }
+        protected Parser<RuleDeclaration> Rule { get; private set; }
 
-        protected Parser<string, ConditionDeclaration> Condition { get; private set; }
+        protected Parser<ConditionDeclaration> Condition { get; private set; }
     }
 }

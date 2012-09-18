@@ -16,11 +16,10 @@ namespace OdoyuleRules.Dsl.Parsing
     public class StringInput :
         Input
     {
-        public string Text { get; private set; }
-        readonly string _text;
-        readonly int _offset;
-        readonly int _line;
         readonly int _column;
+        readonly int _line;
+        readonly int _offset;
+        readonly string _text;
 
         public StringInput(string text)
             : this(text, 0)
@@ -29,32 +28,23 @@ namespace OdoyuleRules.Dsl.Parsing
 
         StringInput(string text, int offset, int line = 1, int column = 1)
         {
-            Text = text;
-
             _text = text;
             _offset = offset;
             _line = line;
             _column = column;
         }
 
-        public Input Advance()
+        public string Text
         {
-            if (AtEnd)
-                throw new InvalidOperationException("The input is already at the end of the source.");
-
-            return new StringInput(_text, _offset + 1, Current == '\n'
-                                                           ? _line + 1
-                                                           : _line, Current == '\n'
-                                                                        ? 1
-                                                                        : _column + 1);
+            get { return _text; }
         }
 
-        public char Current
+        public char Char
         {
             get { return _text[_offset]; }
         }
 
-        public bool AtEnd
+        public bool IsEnd
         {
             get { return _offset == _text.Length; }
         }
@@ -74,6 +64,20 @@ namespace OdoyuleRules.Dsl.Parsing
             get { return _column; }
         }
 
+        public Input Next()
+        {
+            if (IsEnd)
+                throw new InvalidOperationException("The end of the input text was already reached.");
+
+            return new StringInput(_text, _offset + 1,
+                Char == '\n'
+                    ? _line + 1
+                    : _line,
+                Char == '\n'
+                    ? 1
+                    : _column + 1);
+        }
+
         public override string ToString()
         {
             return string.Format("Line {0}, Column {1}", _line, _column);
@@ -81,8 +85,8 @@ namespace OdoyuleRules.Dsl.Parsing
 
         public override bool Equals(object obj)
         {
-            var i = obj as StringInput;
-            return i != null && i._text == _text && i._offset == _offset;
+            var input = obj as StringInput;
+            return input != null && input._text == _text && input._offset == _offset;
         }
 
         public override int GetHashCode()
