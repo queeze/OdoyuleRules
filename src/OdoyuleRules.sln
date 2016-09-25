@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdoyuleRules", "OdoyuleRules\OdoyuleRules.csproj", "{75BB63FF-AFD7-458F-9276-1A32F2F150BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdoyuleRules.Tests", "OdoyuleRules.Tests\OdoyuleRules.Tests.csproj", "{CCB34CF1-5B74-4CCE-935D-FC035D6917DE}"
@@ -8,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdoyuleRules.Visualizer", "OdoyuleRules.Visualizer\OdoyuleRules.Visualizer.csproj", "{7F50D7AB-DB82-42EF-AE55-60B7BED7D6CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdoyuleRules.Dsl", "OdoyuleRules.Dsl\OdoyuleRules.Dsl.csproj", "{30C95BC1-A0CD-482F-87C1-0E804D393DAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester", "Tester\Tester.csproj", "{9D1F2CC9-B446-417E-BA2A-051892CAFD90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,16 @@ Global
 		{30C95BC1-A0CD-482F-87C1-0E804D393DAD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{30C95BC1-A0CD-482F-87C1-0E804D393DAD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{30C95BC1-A0CD-482F-87C1-0E804D393DAD}.Release|x86.ActiveCfg = Release|Any CPU
+		{9D1F2CC9-B446-417E-BA2A-051892CAFD90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D1F2CC9-B446-417E-BA2A-051892CAFD90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D1F2CC9-B446-417E-BA2A-051892CAFD90}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9D1F2CC9-B446-417E-BA2A-051892CAFD90}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9D1F2CC9-B446-417E-BA2A-051892CAFD90}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9D1F2CC9-B446-417E-BA2A-051892CAFD90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D1F2CC9-B446-417E-BA2A-051892CAFD90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D1F2CC9-B446-417E-BA2A-051892CAFD90}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9D1F2CC9-B446-417E-BA2A-051892CAFD90}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9D1F2CC9-B446-417E-BA2A-051892CAFD90}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

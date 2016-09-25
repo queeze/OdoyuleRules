@@ -41,6 +41,7 @@ namespace OdoyuleRules.SemanticModel
         public virtual bool Visit<T, TProperty>(PropertyNotEqualCondition<T, TProperty> condition,
                                                 Func<SemanticVisitor, bool> next)
             where T : class
+			where TProperty : IComparable<TProperty>
         {
             return next(this);
         }

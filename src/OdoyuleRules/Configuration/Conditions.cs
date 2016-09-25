@@ -46,6 +46,7 @@ namespace OdoyuleRules.Configuration
         public static PropertyNotEqualCondition<T, TProperty> NotEqual<T, TProperty>(
             Expression<Func<T, TProperty>> propertyExpression, TProperty value)
             where T : class
+			where TProperty : IComparable<TProperty>
         {
             PropertyInfo propertyInfo = propertyExpression.GetPropertyInfo();
 

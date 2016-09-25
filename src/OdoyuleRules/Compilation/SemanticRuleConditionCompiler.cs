@@ -55,10 +55,11 @@ namespace OdoyuleRules.Compilation
         public override bool Visit<T, TProperty>(PropertyNotEqualCondition<T, TProperty> condition,
             Func<SemanticVisitor, bool> next)
         {
-            Compile(condition.PropertyExpression,
-                x => new NotEqualNodeSelectorFactory<TProperty>(x, _configurator, condition.Value));
+			CompareNode<T, TProperty> compareNode = _configurator.NotEqual<T, TProperty>(condition.Value);
 
-            return base.Visit(condition, next);
+			AddCompareCondition(condition.PropertyExpression, compareNode);
+
+			return base.Visit(condition, next);
         }
 
         public override bool Visit<T, TProperty>(PropertyGreaterThanCondition<T, TProperty> condition,

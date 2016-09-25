@@ -21,7 +21,8 @@ namespace OdoyuleRules.SemanticModel
         PropertyCondition<T, TProperty>,
         RuleCondition<T>,
         IEquatable<PropertyNotEqualCondition<T, TProperty>>
-        where T : class
+		where T : class
+		where TProperty : IComparable<TProperty>
     {
         readonly TProperty _value;
 
@@ -59,7 +60,10 @@ namespace OdoyuleRules.SemanticModel
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            unchecked
+            {
+                return (base.GetHashCode()*397) ^ _value.GetHashCode();
+            }
         }
     }
 }

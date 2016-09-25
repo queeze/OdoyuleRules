@@ -170,6 +170,7 @@
     <Compile Include="RuntimeModel\AlphaNodeInitializer.cs" />
     <Compile Include="RuntimeModel\AlphaNodeInitializerImpl.cs" />
     <Compile Include="RuntimeModel\Comparators\Comparator.cs" />
+    <Compile Include="RuntimeModel\Comparators\ValueNotEqualComparator.cs" />
     <Compile Include="RuntimeModel\Comparators\GreaterThanOrEqualValueComparator.cs" />
     <Compile Include="RuntimeModel\Comparators\GreaterThanValueComparator.cs" />
     <Compile Include="RuntimeModel\Comparators\LessThanOrEqualValueComparator.cs" />

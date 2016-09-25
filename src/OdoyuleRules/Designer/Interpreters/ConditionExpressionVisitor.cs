@@ -65,7 +65,7 @@ namespace OdoyuleRules.Designer.Interpreters
                     throw new RuleDesignerException("Or conditions are not yet supported.");
 
                 case ExpressionType.NotEqual:
-                    throw new RuleDesignerException("Not equal is not yet supported");
+		            return ParseBinaryCondition(node, typeof (PropertyNotEqualCondition<,>));
 
                 case ExpressionType.Equal:
                     return ParseBinaryCondition(node, typeof (PropertyEqualCondition<,>));

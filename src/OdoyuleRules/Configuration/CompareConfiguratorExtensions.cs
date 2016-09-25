@@ -42,6 +42,16 @@ namespace OdoyuleRules.Configuration
             return configurator.CreateNode(id => new CompareNode<T, TProperty>(id, tokenValue, comparator, value));
         }
 
+		public static CompareNode<T, TProperty> NotEqual<T, TProperty>(this RuntimeConfigurator configurator,
+		  TProperty value)
+			where T : class
+			where TProperty : IComparable<TProperty>
+		{
+			var comparator = new ValueNotEqualComparator<TProperty>();
+
+			return Compare<T, TProperty>(configurator, comparator, value);
+		}
+
         public static CompareNode<T, TProperty> GreaterThan<T, TProperty>(this RuntimeConfigurator configurator,
             TProperty value)
             where T : class
